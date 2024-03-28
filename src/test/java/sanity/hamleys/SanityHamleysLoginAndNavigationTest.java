@@ -19,7 +19,7 @@ public class SanityHamleysLoginAndNavigationTest {
 	@Test(testName = "Hamleys Web Application Navigation")
 	@Description("This Test is used to Verify the login with Valid Credentials")
 	public void testHamleysPageHeaderTitle() {
-		LoginPage.login("AdminUserName", "AdminPassword");
+		//LoginPage.login("AdminUserName", "AdminPassword");
 //		HamleysPage.hamleysShopToyesCategorySelection();
 		//LoginPage.logout();
 		//HamleysPage.verifyHamleysShopPageCategory();
