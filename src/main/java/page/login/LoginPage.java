@@ -10,18 +10,15 @@ import enums.login.LoginPageEnum;
 public class LoginPage {
 	/**
 	 * This method is used to Login into the application
+	 * 
 	 * @param usernameKey
 	 * @param passwordKey
 	 * @author RShivam
 	 * @lastmodifiedby RShivam
 	 */
 
-	public static void launchBrowserURL() {
-		UtilitiesCommon.launchApplication();
-	}
-
 	public static void login(String usernameKey, String passwordKey) {
-
+		UtilitiesCommon.launchApplication();
 		UtilitiesCommon.click(LoginPageEnum.HOMEPAGE_ACCEPT_XPATH);
 		UtilitiesCommon.click(LoginPageEnum.LOGINPAGE_LOGIN_REGISTER_XPATH);
 		String username = UtilitiesCommon.getEnvironmentData(usernameKey);
@@ -38,6 +35,7 @@ public class LoginPage {
 
 	/**
 	 * This method is used to re-Login into the application after Logout
+	 * 
 	 * @param usernameKey
 	 * @param passwordKey
 	 * @author RShivam
