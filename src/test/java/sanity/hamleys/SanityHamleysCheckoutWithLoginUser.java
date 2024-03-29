@@ -12,7 +12,8 @@ public class SanityHamleysCheckoutWithLoginUser {
 
 	@Test(testName = "Hamleys verify Checkout with login user")
 	@Description("This Test is used to Verify the login with Valid Credentials")
-	public void testHanleysCheckoutLoginUser() throws InterruptedException{
+	public void testHanleysCheckoutLoginUser() throws InterruptedException {
+		LoginPage.launchBrowserURL();
 		LoginPage.login("AdminUserName", "AdminPassword");
 		Thread.sleep(6000);
 		HamleysPage.hamleysShopToyesCategorySelection();
@@ -20,7 +21,5 @@ public class SanityHamleysCheckoutWithLoginUser {
 		HamleysPage.hamleysCartBagSelect();
 		Thread.sleep(6000);
 		HamleysPage.hamleysContinueCheckout();
-	
 	}
-
 }
