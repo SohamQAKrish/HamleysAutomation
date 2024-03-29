@@ -24,14 +24,15 @@ public enum HamleysCheckoutEnum {
 			"//img[contains(@src, 'loader-1.gif') and @alt='Loading...' and @title='Loading...' and @style='position: absolute;']"),
 	HAMLEYS_CLICK_ON_CHECKOUT_BUTTON_XPATH(
 			"//a[@class='action showcart' and @onclick='getPricesAndQuantitieslogo()' and @href='https://mcstaging.hamleys.com/checkout/cart/']"),
-	HAMLEYS_CLICK_ON_BAG_XAPTH(
-			"//span[contains(text(),'View Bag & Checkout')]"),
-	HAMLEYS_CLICK_ON_CONTINUETOCHECKOUT_BUTTON_XPATH(
-			"//button[@type='button' and @data-role='proceed-to-checkout' and @title='Continue to Checkout' and contains(@class, 'action primary checkout')]"),
-	HAMLEYS_CLICK_GO_TO_PAYMENT_XAPTH(
-			"//button[@data-role='opc-continue' and @type='submit' and contains(@class, 'button action continue primary go-to-payment')]"),
-	HAMLEYS_SELECT_PAYMENTMETHOD_CREDITCARD_XPATH("//label[@class='label' and @for='adyen_cc']");
+	HAMLEYS_CLICK_ON_BAG_CSS("a.action.viewcart.button[title='View Bag & Checkout']"),
 
+	HAMLEYS_CLICK_ON_CONTINUETOCHECKOUT_BUTTON_XPATH(
+			"//button[@class='action primary checkout' and @title='Continue to Checkout']"),
+	HAMLEYS_CLICK_GO_TO_PAYMENT_XPATH(
+			"//span[contains(text(), 'Go to payment')]");
+	
+
+	
 	private final String label;
 
 	HamleysCheckoutEnum(String label) {
