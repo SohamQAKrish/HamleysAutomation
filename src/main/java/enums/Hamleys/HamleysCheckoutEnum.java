@@ -14,9 +14,6 @@ package enums.Hamleys;
  */
 public enum HamleysCheckoutEnum {
 
-//	HAMLEYS_HOMEPAGE_SHOPTOYS_CATEGORIES_XPATH(
-//			"//a[@href='https://mcstaging.hamleys.com/shop-toys.html' and @class='level-top ui-menu-item-wrapper' and @id='ui-id-2']"),
-//	HAMLEYS_HOMEPAGE_SHOPYOYES_LOADING_CSS(".loading-mask"),
 	HAMLEYS_HOMEPAGE_SHOPTOYES_CATEGORIES_XPATH("//a[@id='ui-id-2']"),
 	HAMLEYS_ADD_TO_PRODUCT_XPATH(
 			"//button[@type='submit' and @title='Add to bag' and contains(@class, 'tocart') and contains(@class, 'primary') and @data-objectid='30460']"),
@@ -28,11 +25,8 @@ public enum HamleysCheckoutEnum {
 
 	HAMLEYS_CLICK_ON_CONTINUETOCHECKOUT_BUTTON_XPATH(
 			"//button[@class='action primary checkout' and @title='Continue to Checkout']"),
-	HAMLEYS_CLICK_GO_TO_PAYMENT_XPATH(
-			"//span[contains(text(), 'Go to payment')]");
-	
+	HAMLEYS_CLICK_GO_TO_PAYMENT_XPATH("//span[contains(text(), 'Go to payment')]");
 
-	
 	private final String label;
 
 	HamleysCheckoutEnum(String label) {
