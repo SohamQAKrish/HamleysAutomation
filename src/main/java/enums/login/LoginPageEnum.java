@@ -15,10 +15,7 @@ package enums.login;
  * @lastmodifiedby RShivam 
  * This class will contain all the Enums for Login Page
  */
-
-//updated by RShivam
 public enum LoginPageEnum {
-	
 	HOMEPAGE_ACCEPT_XPATH("//button[contains(@class, 'amgdprcookie-button') and contains(text(), 'Accept')]"),
 	LOGINPAGE_LOGIN_REGISTER_XPATH("//a[contains(text(),'Sign In / Register')]"),
 	LOGINPAGE_USERNAME_TEXT_BOX_CSS("#email"),
@@ -26,8 +23,6 @@ public enum LoginPageEnum {
 	LOGINPAGE_LOGIN_BUTTON_XPATH("//span[contains(text(), 'Sign in')]"),
 	LOGIN_ACCOUNT_CLICK_XPATH("//a[@href='https://mcstaging.hamleys.com/customer/account/']"),
 	LOGIN_SIGNOUT_CLICK_XPATH("//a[contains(text(),'Sign out')]");
-
-	
 
 	/**
 	 * Override the toString() method to return the label instead of the declared name.*/

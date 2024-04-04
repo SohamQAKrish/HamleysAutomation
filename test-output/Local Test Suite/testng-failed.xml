@@ -6,11 +6,11 @@
     <parameter name="defaultTimeout" value="${defaultTimeout}"/>
     <parameter name="browser" value="${browser}"/>
     <classes>
-      <class name="sanity.hamleys.SanityHamleysCheckoutWithLoginUser">
+      <class name="sanity.hamleys.SanityHamleysAddProductToWishlist">
         <methods>
-          <include name="testHanleysCheckoutLoginUser"/>
+          <include name="testAddProductToWishlist"/>
         </methods>
-      </class> <!-- sanity.hamleys.SanityHamleysCheckoutWithLoginUser -->
+      </class> <!-- sanity.hamleys.SanityHamleysAddProductToWishlist -->
     </classes>
   </test> <!-- Local Tests(failed) -->
 </suite> <!-- Failed suite [Local Test Suite] -->
