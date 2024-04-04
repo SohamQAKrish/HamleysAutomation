@@ -82,8 +82,8 @@ RegressionMarketplaceTest:
 SanityHamleysLoginAndNavigationTest:
  - testHamleysPageHeaderTitle:
     HamleysHeader: "Home Page"
- - testOnitSukaMenCategoryNavigation:
-    OnitSukaMenPageTitle: "Men"
 SanityHamleysCheckoutWithLoginUser:
  - testHanleysCheckoutLoginUser:
+SanityHamleysAddProductToWishlist:
+ - testAddProductToWishlist:
     
