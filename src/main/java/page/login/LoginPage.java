@@ -10,13 +10,11 @@ import enums.login.LoginPageEnum;
 public class LoginPage {
 	/**
 	 * This method is used to Login into the application
-	 * 
 	 * @param usernameKey
 	 * @param passwordKey
 	 * @author RShivam
 	 * @lastmodifiedby RShivam
 	 */
-
 	public static void login(String usernameKey, String passwordKey) {
 		UtilitiesCommon.launchApplication();
 		UtilitiesCommon.click(LoginPageEnum.HOMEPAGE_ACCEPT_XPATH);
@@ -26,22 +24,18 @@ public class LoginPage {
 		UtilitiesCommon.log("Logging in with User name : " + username);
 		UtilitiesCommon.enterValue(LoginPageEnum.LOGINPAGE_USERNAME_TEXT_BOX_CSS, username);
 		UtilitiesCommon.enterValue(LoginPageEnum.LOGINPAGE_PASSWORD_TEXT_BOX_CSS,
-				UtilitiesCommon.getDecryptedPassword(password));
+		UtilitiesCommon.getDecryptedPassword(password));
 		UtilitiesCommon.click(LoginPageEnum.LOGINPAGE_LOGIN_BUTTON_XPATH);
 //		UtilitiesCommon.click(LoginPageEnum.LOGIN_ACCOUNT_CLICK_XPATH);
 //		UtilitiesCommon.click(LoginPageEnum.LOGIN_SIGNOUT_CLICK_XPATH);
-
 	}
-
 	/**
 	 * This method is used to re-Login into the application after Logout
-	 * 
 	 * @param usernameKey
 	 * @param passwordKey
 	 * @author RShivam
 	 * @lastmodifiedby RShivam
 	 */
-
 	public static void reloginAfterLogout(String usernameKey, String passwordKey) {
 		UtilitiesCommon.openUrl();
 		UtilitiesCommon.click(LoginPageEnum.HOMEPAGE_ACCEPT_XPATH);
@@ -51,15 +45,7 @@ public class LoginPage {
 		UtilitiesCommon.log("Logging in with User name : " + username);
 		UtilitiesCommon.enterValue(LoginPageEnum.LOGINPAGE_USERNAME_TEXT_BOX_CSS, username);
 		UtilitiesCommon.enterValue(LoginPageEnum.LOGINPAGE_PASSWORD_TEXT_BOX_CSS,
-				UtilitiesCommon.getDecryptedPassword(password));
+		UtilitiesCommon.getDecryptedPassword(password));
 		UtilitiesCommon.click(LoginPageEnum.LOGINPAGE_LOGIN_BUTTON_XPATH);
-
-	}
-
-//	public static void logout() {
-//		UtilitiesCommon.applicationLogout();
-//		
-//		UtilitiesCommon.click(LoginPageEnum.LOGIN_SIGNOUT_CLICK_XPATH);
-//		
-//	}
+    }
 }
