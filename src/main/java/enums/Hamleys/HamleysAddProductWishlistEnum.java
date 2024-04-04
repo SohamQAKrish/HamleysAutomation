@@ -4,7 +4,8 @@ public enum HamleysAddProductWishlistEnum {
 	HAMLEYS_ACCEPT_XPATH("//button[contains(@class, 'amgdprcookie-button') and contains(text(), 'Accept')]"),
 	HAMLEYS_SELECT_PRODUCT_FROM_TOP10_XPATH("//a[@class='product-item-photo']/span/span/img[contains(@class, 'product-image-photo')]"),
 	HAMLEYS_CLICK_PRODUCT_GETTEXT_XPATH("//span[@class='base' and @data-ui-id='page-title-wrapper' and @itemprop='name']"),
-	HAMLESY_SELECT_WISHLISTFROM_PDP_CSS("#wishlistCustom");
+	HAMLESY_SELECT_WISHLISTFROM_PDP_CSS("#wishlistCustom"),
+	HAMLEYS_GETTEXT_FROMLOGIN_PAGE_XPATH("//div[contains(text(),'You must login or register to add items to your wi')]");
 
 	private final String label;
 

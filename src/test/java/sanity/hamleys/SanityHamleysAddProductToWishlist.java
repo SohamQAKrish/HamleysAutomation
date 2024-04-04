@@ -17,12 +17,12 @@ public class SanityHamleysAddProductToWishlist {
 	 * @author RShivam
 	 * @lastmodifiedby RShivam
 	 */
-	@Test(testName = "Hamleys verify Wishlist Product from without login")
+	@Test(testName = "Hamleys verify Wishlist Product from with login")
 	@Description("This Test is used to Verify the wishlist product with Valid Credentials")
 	public void testAddProductToWishlist() throws InterruptedException {
 		UtilitiesCommon.launchApplication();
 		WishlistPage.testProductFromHomeScreen();
 		WishlistPage.testProductDetailsPage();
-		Thread.sleep(5000);
+		WishlistPage.testLoginForWishlist("AdminUserName", "AdminPassword");
 	}
 }

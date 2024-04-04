@@ -34,6 +34,7 @@ public class WishlistPage {
 	 */
 	public static void testLoginForWishlist(String usernameKey, String passwordKey) {
 		UtilitiesCommon.click(HamleysAddProductWishlistEnum.HAMLESY_SELECT_WISHLISTFROM_PDP_CSS);
+		UtilitiesCommon.getElementText(HamleysAddProductWishlistEnum.HAMLEYS_GETTEXT_FROMLOGIN_PAGE_XPATH);
 		String username = UtilitiesCommon.getEnvironmentData(usernameKey);
 		String password = UtilitiesCommon.getEnvironmentData(passwordKey);
 		UtilitiesCommon.log("Logging in with User name : " + username);
