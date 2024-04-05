@@ -24,5 +24,7 @@ public class SanityHamleysAddProductToWishlist {
 		WishlistPage.testProductFromHomeScreen();
 		WishlistPage.testProductDetailsPage();
 		WishlistPage.testLoginForWishlist("AdminUserName", "AdminPassword");
+		Thread.sleep(6000);
+		WishlistPage.testRemoveProductFromWishlist();
 	}
 }
