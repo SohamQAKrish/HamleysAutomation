@@ -11,7 +11,7 @@
 				<methods>
 					<include name="testAddProductToWishlist" />
 				</methods>
-			</class>
+				</class>
 		</classes>
 	</test>
 </suite>
