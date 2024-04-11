@@ -86,4 +86,8 @@ SanityHamleysCheckoutWithLoginUser:
  - testHanleysCheckoutLoginUser:
 SanityHamleysAddProductToWishlist:
  - testAddProductToWishlist:
+SanityHamleysSearchProductToCart:
+ - testSearchProductToCart:
+    SearchText: "Hamleys® Bear Dinosaur Hat"
+    ProductTitle: "Hamleys Bear Dinosaur Hat"
     

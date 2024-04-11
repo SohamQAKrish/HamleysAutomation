@@ -43,4 +43,12 @@ public class WishlistPage {
 		UtilitiesCommon.getDecryptedPassword(password));
 		UtilitiesCommon.click(LoginPageEnum.LOGINPAGE_LOGIN_BUTTON_XPATH);
 	}
+	/**
+	 * This method is used to Remove product From Wishlist.
+	 * @author RShivam
+	 * @lastmodifiedby RShivam
+	 */
+	public static void testRemoveProductFromWishlist() {
+		//UtilitiesCommon.waitForElementIsPresent(HamleysAddProductWishlistEnum.HAMELEYS_REMOVE_PRODUCTFROM_WISHLIST_XPATH);
+		UtilitiesCommon.click(HamleysAddProductWishlistEnum.HAMELEYS_REMOVE_PRODUCTFROM_WISHLIST_XPATH);	}
 }
