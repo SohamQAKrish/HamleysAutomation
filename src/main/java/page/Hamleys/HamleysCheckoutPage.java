@@ -20,7 +20,6 @@ public class HamleysCheckoutPage {
 			UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_HOMEPAGE_SHOPTOYES_CATEGORIES_XPATH);
 			UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_ADD_TO_PRODUCT_XPATH);
 			UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_ADD_TO_PRODUCT_XPATH);
-
 		} catch (Exception e) {
 			System.out.println("An error occurred while clicking the element: " + e.getMessage());
 		}
@@ -36,7 +35,6 @@ public class HamleysCheckoutPage {
 			UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_CLICK_ON_BAG_CSS);
 			UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_CLICK_ON_BAG_CSS);
 		} catch (CustomExceptions e) {
-
 			System.out.println("Error: Locator is not correct.");
 			e.printStackTrace(); // Print the stack trace for debugging
 		}

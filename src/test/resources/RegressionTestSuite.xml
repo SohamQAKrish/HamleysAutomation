@@ -7,8 +7,7 @@
 		<parameter name="testrailSuiteID" value="304"/>
 		<parameter name="defaultTimeout" value="${defaultTimeout}" />
 		<packages>
-		    <package name="regression.home" />
-			<package name="regression.marketplace" />
+		    <package name="regression.*" />
 		</packages>
 	</test>
 </suite>

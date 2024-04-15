@@ -512,9 +512,8 @@ public class UtilitiesCommon {
 	 * This method is used to Logout from the application.
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby shivamR
 	 */
-	// Update by ShivamR
 	public static void applicationLogout() {
 		navigateToPage("https://mcstaging.hamleys.com/customer/account/");
 		// HomePage.logout();
@@ -2350,12 +2349,4 @@ public class UtilitiesCommon {
 		WebElement element = driver.findElement(locator);
 		executeJS("arguments[0].scrollIntoView(true);", element);
 	}
-
-//	public static WebDriver click(HamleysCheckoutEnum hamleysHomepageShoptoysSubmenuXpath, Actions act) {
-//		wait.until(ExpectedConditions.presenceOfElementLocated(getLocator(hamleysHomepageShoptoysSubmenuXpath)));
-//		WebElement elementTobeHovered = getElement(hamleysHomepageShoptoysSubmenuXpath);
-//		builder.moveToElement(elementTobeHovered).build().perform();
-//		return driver;
-//	}
-	
 }
