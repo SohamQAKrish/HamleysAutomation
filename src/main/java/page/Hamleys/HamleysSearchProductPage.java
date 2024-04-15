@@ -5,14 +5,12 @@ import enums.Hamleys.HamleysSearchProductToEnum;
 
 /**
  * This method is used to verify Search product flow.
- * 
  * @author RShivam
  * @lastmodifiedby RShivam
  */
 public class HamleysSearchProductPage {
 	/**
 	 * This method is used enter text in search bar.
-	 * 
 	 * @author RShivam
 	 * @lastmodifiedby RShivam
 	 */
@@ -22,7 +20,6 @@ public class HamleysSearchProductPage {
 	}
 	/**
 	 * This method is used Select Product from Search List.
-	 * 
 	 * @author RShivam
 	 * @lastmodifiedby RShivam
 	 */
@@ -39,7 +36,6 @@ public class HamleysSearchProductPage {
 	}
 	/**
 	 * This method is used Click on Add To Cart.
-	 * 
 	 * @author RShivam
 	 * @lastmodifiedby RShivam
 	 */

@@ -5,7 +5,8 @@ import enums.login.LoginPageEnum;
 
 /**
  * @author RShivam
- * @lastmodifiedby RShivam This class will contain all the Login page methods
+ * @lastmodifiedby RShivam 
+ * This class will contain all the Login page methods
  */
 public class LoginPage {
 	/**
@@ -26,8 +27,6 @@ public class LoginPage {
 		UtilitiesCommon.enterValue(LoginPageEnum.LOGINPAGE_PASSWORD_TEXT_BOX_CSS,
 		UtilitiesCommon.getDecryptedPassword(password));
 		UtilitiesCommon.click(LoginPageEnum.LOGINPAGE_LOGIN_BUTTON_XPATH);
-//		UtilitiesCommon.click(LoginPageEnum.LOGIN_ACCOUNT_CLICK_XPATH);
-//		UtilitiesCommon.click(LoginPageEnum.LOGIN_SIGNOUT_CLICK_XPATH);
 	}
 	/**
 	 * This method is used to re-Login into the application after Logout

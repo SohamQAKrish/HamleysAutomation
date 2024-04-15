@@ -1,16 +1,14 @@
 package enums.Hamleys;
 
 /**
- * This enum will store objects available on RShivam Home page.
- * 
+ * This enum will store objects available on Checkout page.
  * @author RShivam
- * @lastmodifiedby RShivam
+ * @lastmodifiedby spandit
  */
 
 /*
  * Note: Enum key should be in capital case and should end with either of below
- * locator types: ID, XPATH, LINKTEXT, PARTIALLINKTEXT, CSS, NAME, TAGNAME,
- * CLASSNAME
+ * locator types: ID, XPATH, LINKTEXT, PARTIALLINKTEXT, CSS, NAME, TAGNAME,CLASSNAME
  */
 public enum HamleysCheckoutEnum {
 	HAMLEYS_HOMEPAGE_SHOPTOYES_CATEGORIES_XPATH("//a[@id='ui-id-2']"),

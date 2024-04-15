@@ -1,5 +1,15 @@
 package enums.Hamleys;
 
+/* This enum will store objects available on Product Wishlist page.
+* @author RShivam
+* @lastmodifiedby spandit
+*/
+
+/*
+* Note: Enum key should be in capital case and should end with either of below
+* locator types: ID, XPATH, LINKTEXT, PARTIALLINKTEXT, CSS, NAME, TAGNAME,CLASSNAME
+*/
+
 public enum HamleysAddProductWishlistEnum {
 	HAMLEYS_ACCEPT_XPATH("//button[contains(@class, 'amgdprcookie-button') and contains(text(), 'Accept')]"),
 	HAMLEYS_SELECT_PRODUCT_FROM_TOP10_XPATH("//a[@class='product-item-photo']/span/span/img[contains(@class, 'product-image-photo')]"),

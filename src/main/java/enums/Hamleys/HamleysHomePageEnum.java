@@ -10,7 +10,7 @@ ID, XPATH, LINKTEXT, PARTIALLINKTEXT, CSS, NAME, TAGNAME, CLASSNAME */
 
 public enum HamleysHomePageEnum {
 	HAMLEYS_PAGE_TITLE_CSS(".page-header"),
-	Hamleys("span[class='base'] font font"),
+	HAMLEYS("span[class='base'] font font"),
 	HAMLEYS_HOME_SHOP_TOYS_CATEGORIES_XPATH("//span[contains(text(), 'Shop toys')]/ancestor::div[@class='top-menu top-menu__container top-menu--desktop']");
 
 	/**
