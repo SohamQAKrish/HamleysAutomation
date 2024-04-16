@@ -1,13 +1,11 @@
 package page.Hamleys;
 
-import common.CustomExceptions;
 import common.UtilitiesCommon;
 import enums.Hamleys.HamleysCheckoutEnum;
-
 /**
+ * This class will contain all the Checkout methods
  * @author RShivam
  * @lastmodifiedby RShivam
- * This class will contain all the Checkout methods
  */
 public class HamleysCheckoutPage {	
 	/**
@@ -15,14 +13,11 @@ public class HamleysCheckoutPage {
 	 * @author RShivam
 	 * @lastmodifiedby RShivam
 	 */
-	public static void hamleysShopToyesCategorySelection() {		
-		try {
+	public static void hamleysShopToyesCategorySelection() {	
+		    UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_HOMEPAGE_SHOPTOYES_CATEGORIES_XPATH);
 			UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_HOMEPAGE_SHOPTOYES_CATEGORIES_XPATH);
 			UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_ADD_TO_PRODUCT_XPATH);
 			UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_ADD_TO_PRODUCT_XPATH);
-		} catch (Exception e) {
-			System.out.println("An error occurred while clicking the element: " + e.getMessage());
-		}
 	}	
 	/**
 	 * This method is used to click on cart icon and then click on BAGs.
@@ -30,14 +25,9 @@ public class HamleysCheckoutPage {
 	 * @lastmodifiedby RShivam
 	 */
 	public static void hamleysCartBagSelect() {		
-		try {
 			UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_CLICK_ON_CHECKOUT_BUTTON_XPATH);
 			UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_CLICK_ON_BAG_CSS);
 			UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_CLICK_ON_BAG_CSS);
-		} catch (CustomExceptions e) {
-			System.out.println("Error: Locator is not correct.");
-			e.printStackTrace(); // Print the stack trace for debugging
-		}
 	}	
 	/**
 	 * This method is used to click on Continue to checkout button.
@@ -49,5 +39,21 @@ public class HamleysCheckoutPage {
 		UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_CLICK_ON_CONTINUETOCHECKOUT_BUTTON_XPATH);
 		UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_CLICK_GO_TO_PAYMENT_XPATH);
 		UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_CLICK_GO_TO_PAYMENT_XPATH);
+	}
+	/**
+	 * This method is used to select a credit card payment method and enter details
+	 * @author RShivam
+	 * @lastmodifiedby RShivam
+	 */
+	public static void hamleysEnterCreditCardDetals() {
+		UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_SELECT_CREDITCARD_AS_PAYMENTMETHOD_XPATH);
+		UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_SELECT_CREDITCARD_AS_PAYMENTMETHOD_XPATH);
+		UtilitiesCommon.enterValue(HamleysCheckoutEnum.HAMLEYS_ENTER_CREDITCARD_XPATH, UtilitiesCommon.getTestData("CardNumber"));
+		UtilitiesCommon.enterValue(HamleysCheckoutEnum.HAMLEYS_ENTER_EXPIRYDATE_XPATH, UtilitiesCommon.getTestData("ExpDate"));
+		UtilitiesCommon.enterValue(HamleysCheckoutEnum.HAMLEYS_ENTER_CVV_XPATH, UtilitiesCommon.getTestData("CVV"));
+		UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_SELECT_CHECKBOX_PRIVACY_XPATH);
+		UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_SELECT_CHECKBOX_PRIVACY_XPATH);
+		UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_CLICK_ON_PLACE_ORDER);
+		UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_CLICK_ON_PLACE_ORDER);		
 	}
 }

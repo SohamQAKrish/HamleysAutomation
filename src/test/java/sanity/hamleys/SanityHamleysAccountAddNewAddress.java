@@ -20,7 +20,7 @@ public class SanityHamleysAccountAddNewAddress {
 	 */
 	@Test(testName = "Hamleys verify the Add New Address/Delete Recently Added Address From Account with Login User")
 	@Description("This Test is used to Verify Add New Address & Delete Address with Login Users")
-	public void testAddNewAddressFromAccount() throws InterruptedException {
+	public void testAddNewAddressFromAccount(){
 		LoginPage.login("AdminUserName", "AdminPassword");
 		HamleysAccountAddNewAddress.hamleysAccessAccountAfterLoginUser();
 		HamleysAccountAddNewAddress.hamleysAddNewAddressForm();	

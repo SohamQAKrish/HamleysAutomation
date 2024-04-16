@@ -3,6 +3,9 @@ SanityHamleysLoginAndNavigationTest:
     HamleysHeader: "Home Page"
 SanityHamleysCheckoutWithLoginUser:
  - testHanleysCheckoutLoginUser:
+    CardNumber: "4111111111111111"
+    ExpDate: "03/30"
+    CVV: "737"
 SanityHamleysAddProductToWishlist:
  - testAddProductToWishlist:
 SanityHamleysSearchProductToCart:
