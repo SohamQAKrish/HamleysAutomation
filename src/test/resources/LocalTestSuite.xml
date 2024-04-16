@@ -7,12 +7,11 @@
 		<parameter name="browser" value="${browser}" />
 		<parameter name="defaultTimeout" value="${defaultTimeout}" />
 		<classes>
-			<class name="sanity.hamleys.SanityHamleysSearchProductToCart">
+			<class name="sanity.hamleys.SanityHamleysAccountAddNewAddress">
 				<methods>
-					<include name="testSearchProductToCart" />
+					<include name="testAddNewAddressFromAccount" />
 				</methods>
-				</class>
+			</class>
 		</classes>
 	</test>
 </suite>
-

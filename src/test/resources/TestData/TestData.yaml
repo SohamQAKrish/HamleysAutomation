@@ -1,10 +1,20 @@
 SanityHamleysLoginAndNavigationTest:
- - testHamleysLogin:
+ - testHamleysPageHeaderTitle:
+    HamleysHeader: "Home Page"
 SanityHamleysCheckoutWithLoginUser:
- - testHamleysCheckoutLoginUser:
+ - testHanleysCheckoutLoginUser:
 SanityHamleysAddProductToWishlist:
  - testAddProductToWishlist:
 SanityHamleysSearchProductToCart:
  - testSearchProductToCart:
     SearchText: "Hamleys® Bear Dinosaur Hat"
     ProductTitle: "Hamleys Bear Dinosaur Hat"
+SanityHamleysAccountAddNewAddress:
+ - testAddNewAddressFromAccount:
+    FirstName: "SHM Automation"
+    LastName: "Test"
+    PhoneNumber: "520000000"
+    StreetAddress: "Britain Street"
+    City: "Giddaluru"
+    ZipCode: "523357"
+    
