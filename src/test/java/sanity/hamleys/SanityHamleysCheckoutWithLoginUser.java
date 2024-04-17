@@ -2,7 +2,6 @@ package sanity.hamleys;
 
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import io.qameta.allure.Description;
 import page.Hamleys.HamleysCheckoutPage;
 import page.login.LoginPage;

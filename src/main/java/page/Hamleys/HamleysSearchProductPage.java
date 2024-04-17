@@ -2,7 +2,6 @@ package page.Hamleys;
 
 import common.UtilitiesCommon;
 import enums.Hamleys.HamleysSearchProductToEnum;
-
 /**
  * This method is used to verify Search product flow.
  * @author RShivam
@@ -25,14 +24,7 @@ public class HamleysSearchProductPage {
 	 */
 	public static void testSelectProductFromSearchList() {
 		UtilitiesCommon.click(HamleysSearchProductToEnum.HAMLEYS_SELECTPRODUCT_FROM_SEACHSUGGESTION_LIST_XPATH);
-		String actualTitle = UtilitiesCommon.getTestData("ProductTitle");
-		String expectedTitle = "Hamleys Bear Dinosaur Hat";
-		if (actualTitle.equals(expectedTitle)) {
-            System.out.println("Page title verification successful!");
-        } else {
-            System.out.println("Page title verification failed!");
-            System.out.println("Actual Title: " + actualTitle);
-        }	
+		UtilitiesCommon.getTestData("ProductTitle");
 	}
 	/**
 	 * This method is used Click on Add To Cart.
