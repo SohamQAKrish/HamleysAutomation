@@ -1,5 +1,12 @@
 package enums.Hamleys;
-
+/* This enum will store objects available on Add New Address page.
+@author RShivam
+@lastmodifiedby RShivam
+*/
+/*
+Note: Enum key should be in capital case and should end with either of below
+locator types: ID, XPATH, LINKTEXT, PARTIALLINKTEXT, CSS, NAME, TAGNAME,CLASSNAME
+*/
 public enum HamleysAccountAddNewAddressEnum {
 	HAMLEYS_ACCESS_ACCOUNT_XPATH("//a[text()='Account']"),
 	HAMLEYS_SELECT_ADDRESSBOOK_XPATH("//a[contains(text(),'Address Book')]"),
@@ -20,7 +27,6 @@ public enum HamleysAccountAddNewAddressEnum {
 	HamleysAccountAddNewAddressEnum(String label) {
 		this.label = label;
 	}
-
 	@Override
 	public String toString() {
 		return this.label;

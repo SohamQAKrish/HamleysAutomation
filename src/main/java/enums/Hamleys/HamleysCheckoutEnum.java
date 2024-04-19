@@ -1,6 +1,6 @@
 package enums.Hamleys;
 /**
- * This enum will store objects available on Hamleys Project for Checkout Screen with Login User
+ * This enum will store objects available on Checkout Screen with Login User
  * @author RShivam
  * @lastmodifiedby RShivam
  */
