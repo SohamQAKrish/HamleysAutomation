@@ -26,6 +26,7 @@ public class SanityHamleysCheckoutAsGuestUser {
 		HamleysCheckoutAsGuestUserPage.hamleysAddtoCartProduct();
 		UtilitiesCommon.waitForMilliseconds(5000);
 		HamleysCheckoutAsGuestUserPage.hamleysSelectMiniCart();
+		UtilitiesCommon.waitForMilliseconds(3000);
 		HamleysCheckoutAsGuestUserPage.hamleysContinueToCheckoutScreen();
 		UtilitiesCommon.waitForMilliseconds(2000);
 		HamleysCheckoutAsGuestUserPage.hamleysSelectCheckoutAsGuestUser();
