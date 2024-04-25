@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="sanity.onitsuka.SanityOnitsukaLoginAndNavigationTest">
+      <class name="sanity.hamleys.SanityHamleysAddProductToWishlist">
         <methods>
-          <include name="testOnitSukaPageHeaderTitle"/>
+          <include name="testAddProductToWishlist"/>
         </methods>
-      </class> <!-- sanity.onitsuka.SanityOnitsukaLoginAndNavigationTest -->
+      </class> <!-- sanity.hamleys.SanityHamleysAddProductToWishlist -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
