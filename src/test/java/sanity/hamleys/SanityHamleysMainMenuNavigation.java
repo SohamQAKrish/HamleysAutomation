@@ -18,10 +18,14 @@ public class SanityHamleysMainMenuNavigation {
 	 * @lastmodifiedby RShivam
 	 */
 	@Test(testName = "Hamleys verify the Main Menu Navigation without login User")
-	@Description("This Test is used to Verify Main Menu Navigation by accessing category & Sub-Category")
-	public void testMainMenuNavigation() {
+	@Description("This Test is used to Verify Main Menu Navigation by accessing main category")
+	public void testMainMenuNavigation(){
 		UtilitiesCommon.launchApplication();
-		HamleysMainMenuNavigationPage.verifyMainMenuCategoryLinks();
-		HamleysMainMenuNavigationPage.hoverOverShopCategory();
+		HamleysMainMenuNavigationPage.clickOnShopCategoryLink();
+		HamleysMainMenuNavigationPage.clickOnChristmasCategoryLink();		
+		HamleysMainMenuNavigationPage.clickOnByAgeTestCategoryLink();
+		HamleysMainMenuNavigationPage.clickOnByBrandCategoryLink();
+		HamleysMainMenuNavigationPage.clickBlackFridayCategoryLink();
+		HamleysMainMenuNavigationPage.clickGamingCategoryLink();			
 	}
 }

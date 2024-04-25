@@ -7,8 +7,18 @@ package enums.Hamleys;
 ID, XPATH, LINKTEXT, PARTIALLINKTEXT, CSS, NAME, TAGNAME, CLASSNAME */
 public enum HamleysMainMenuNavigationEnum {
 	HAMLEYS_GUEST_ACCEPT_XPATH("//button[contains(@class, 'amgdprcookie-button') and contains(text(), 'Accept')]"),
-	HAMLEYS_MAINMENU_ALL_CATEGORY_XAPATH("//ul[@id='ui-id-2']"),
-	HAMLEYS_SHOP_CATEGORY_CSS("#ui-id-3");
+	HAMLEYS_SHOP_CATEGORY_XPATH("//a[@id='ui-id-3']"),
+	HAMLEYS_VERIFY_SHOP_TITLE_TEXT_XPATH("//h1[contains(text(),'Shop toys')]"),
+	HAMLEYS_VERIFY_CHRISTMAS_CATEGORY_XPATH("//a[@id='ui-id-4']"),
+	HAMLEYS_VERIFY_CHRISMAS_TITLE_TEXT_XPATH("//h1[contains(text(),'Christmas')]"),
+	HAMELYS_BYAGETEST_CATEGORY_XPATH("//a[@id='ui-id-5']"),
+	HAMLEYS_VERIFY_BYAGETEST_TEXT_XPATH("//h1[contains(text(),'By age Test')]"),
+	HAMLEYS_BYBRAND_CATEGORY_XPATH("//a[@id='ui-id-8']"),
+	HAMLEYS_VERIFY_BYBRAND_TEXT_XPATH("//h2[contains(text(),'Shop by brand')]"),
+	HAMLEYS_BLACKFRIDAY_CATEGORY_XPATH("//a[@id='ui-id-11']"),
+	HAMLEYS_BLACKFRIDAY_CATEGORY_TITLE_TEXT_XPATH("//h1[contains(text(),'Black Friday')]"),
+	HAMLEYS_GAMING_CATEGORY_XPATH("//a[@id='ui-id-12']"),
+	HAMLEYS_GAMING_CATGORY_TEXT_XPATH("//h1[contains(text(),'Gaming')]");
 	/**
 	 * Override the toString() method to return the label instead of the declared name.
 	 */ 
