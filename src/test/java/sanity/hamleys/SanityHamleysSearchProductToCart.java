@@ -5,8 +5,6 @@ import org.testng.annotations.Test;
 import common.UtilitiesCommon;
 import io.qameta.allure.Description;
 import page.Hamleys.HamleysSearchProductPage;
-import page.login.LoginPage;
-
 /**
  * This class will contain all Sanity tests related to Search product and add to cart across the Hamleys application.
  * @author RShivam
@@ -16,15 +14,13 @@ import page.login.LoginPage;
 public class SanityHamleysSearchProductToCart {
 	/**
 	 * @author RShivam
-	 * @throws InterruptedException
+	 * @throws InterruptedException 
 	 * @lastmodifiedby RShivam
 	 */
 	@Test(testName = "Hamleys Search product & Add to Cart")
 	@Description("This Test is used to Search Functionality and Add the product to the cart")
-	public void testSearchProductToCart()
-	{
+	public void testSearchProductToCart(){
 		UtilitiesCommon.launchApplication();
-		LoginPage.login("AdminUserName", "AdminPassword");
 		HamleysSearchProductPage.testEnterTextSearchBar();
 		HamleysSearchProductPage.testSelectProductFromSearchList();
 		HamleysSearchProductPage.testAddToCart();

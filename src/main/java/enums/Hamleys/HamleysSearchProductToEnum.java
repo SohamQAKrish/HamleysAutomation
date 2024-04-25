@@ -1,16 +1,13 @@
 package enums.Hamleys;
-
 /**
- * This enum will store objects available on Search Product page.
+ * This enum will store objects available on Search Screen flow
  * @author RShivam
- * @lastmodifiedby spandit
+ * @lastmodifiedby RShivam
  */
-
 /*
  * Note: Enum key should be in capital case and should end with either of below
- * locator types: ID, XPATH, LINKTEXT, PARTIALLINKTEXT, CSS, NAME, TAGNAME,CLASSNAME
+ * locator types: ID, XPATH, LINKTEXT, PARTIALLINKTEXT, CSS, NAME, TAGNAME, CLASSNAME
  */
-
 public enum HamleysSearchProductToEnum {
 	HAMLEYS_SEARCH_ACCEPT_XPATH("//button[contains(@class, 'amgdprcookie-button') and contains(text(), 'Accept')]"),
 	HAMELEYS_ENTERTEXTINSERCH_CSS("#autocomplete-0-input"),
@@ -22,7 +19,6 @@ public enum HamleysSearchProductToEnum {
 	HamleysSearchProductToEnum(String label) {
 		this.label = label;
 	}
-
 	@Override
 	public String toString() {
 		return this.label;
