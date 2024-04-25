@@ -1,8 +1,6 @@
 SanityHamleysLoginAndNavigationTest:
  - testHamleysPageHeaderTitle:
     HamleysHeader: "Home Page"
-SanityHamleysCheckoutWithLoginUser:
- - testHanleysCheckoutLoginUser:
 SanityHamleysAddProductToWishlist:
  - testAddProductToWishlist:
 SanityHamleysSearchProductToCart:
@@ -31,4 +29,10 @@ SanityHamleysCheckoutAsGuestUser:
     CVV: "737"
 SanityHamleysMainMenuNavigation:
  - testMainMenuNavigation:
- 
+SanityHamleysLoginLogout:
+ - testLoginLogout:
+SanityHamleysCheckoutWithLoginUser:
+ - testHanleysCheckoutLoginUser:
+    CardNumber: "4111111111111111"
+    ExpDate: "0330"
+    CVV: "737"
