@@ -31,4 +31,8 @@ SanityHamleysCheckoutAsGuestUser:
     ZipCode: "523357"
     CardNumber: "4111 1111 1111 1111"
     ExpDate: "0330"
-    CVV: "737"   
+    CVV: "737"
+SanityHamleysMainMenuNavigation:
+ - testMainMenuNavigation:
+SanityHamleysLoginLogout:
+ - testLoginLogout:
