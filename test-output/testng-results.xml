@@ -2,16 +2,16 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-03-28T13:16:08 IST" name="Local Test Suite" finished-at="2024-03-28T13:17:13 IST" duration-ms="65613">
+  <suite started-at="2024-04-04T18:24:14 IST" name="Local Test Suite" finished-at="2024-04-04T18:26:00 IST" duration-ms="105107">
     <groups>
     </groups>
-    <test started-at="2024-03-28T13:16:08 IST" name="Local Tests" finished-at="2024-03-28T13:17:13 IST" duration-ms="65613">
-      <class name="sanity.hamleys.SanityHamleysCheckoutWithLoginUser">
-        <test-method signature="testHanleysCheckoutLoginUser()[pri:0, instance:sanity.hamleys.SanityHamleysCheckoutWithLoginUser@5972d253]" started-at="2024-03-28T13:16:10 IST" name="testHanleysCheckoutLoginUser" finished-at="2024-03-28T13:17:08 IST" duration-ms="58313" status="PASS">
+    <test started-at="2024-04-04T18:24:14 IST" name="Local Tests" finished-at="2024-04-04T18:26:00 IST" duration-ms="105107">
+      <class name="sanity.hamleys.SanityHamleysAddProductToWishlist">
+        <test-method signature="testAddProductToWishlist()[pri:0, instance:sanity.hamleys.SanityHamleysAddProductToWishlist@64f555e7]" started-at="2024-04-04T18:24:23 IST" name="testAddProductToWishlist" finished-at="2024-04-04T18:25:47 IST" duration-ms="84428" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testHanleysCheckoutLoginUser -->
-      </class> <!-- sanity.hamleys.SanityHamleysCheckoutWithLoginUser -->
+        </test-method> <!-- testAddProductToWishlist -->
+      </class> <!-- sanity.hamleys.SanityHamleysAddProductToWishlist -->
     </test> <!-- Local Tests -->
   </suite> <!-- Local Test Suite -->
 </testng-results>

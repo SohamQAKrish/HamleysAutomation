@@ -2356,7 +2356,6 @@ public class UtilitiesCommon {
 		WebElement element = driver.findElement(locator);
 		executeJS("arguments[0].scrollIntoView(true);", element);
 	}
-
 	/**
 	 * This method will scroll down till bottom of the page
 	 * @author RShivam
@@ -2368,7 +2367,6 @@ public class UtilitiesCommon {
 	}
 	/**
 	 * This method is to return the page title
-	 * 
 	 * @author RShivam
 	 * @lastmodifiedby RShivam
 	 */
