@@ -4,7 +4,7 @@ SanityHamleysLoginAndNavigationTest:
 SanityHamleysCheckoutWithLoginUser:
  - testHanleysCheckoutLoginUser:
     CardNumber: "4111111111111111"
-    ExpDate: "0330"
+    ExpDate: "03/30"
     CVV: "737"
 SanityHamleysAddProductToWishlist:
  - testAddProductToWishlist:
@@ -26,10 +26,10 @@ SanityHamleysCheckoutAsGuestUser:
     FirstName: "GuestU"
     LastName: "Shivam"
     PhoneNumber: "520000000"
-    StreetRoad: "London Cafe"
-    City: "London"
-    ZipCode: "SE13 6QA"
-    CardNumber: "4111111111111111"
+    StreetRoad: "Britain Street"
+    City: "Giddaluru"
+    ZipCode: "523357"
+    CardNumber: "4111 1111 1111 1111"
     ExpDate: "0330"
     CVV: "737"
 SanityHamleysMainMenuNavigation:
