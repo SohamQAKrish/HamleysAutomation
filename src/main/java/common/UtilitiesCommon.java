@@ -169,10 +169,10 @@ public class UtilitiesCommon {
 	 * This method is used to setup the webdriver wait instance.
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby RShivam
 	 */
-	public static void setupWebdriverWait() {
-		wait = new WebDriverWait(driver, waitTime);
+	public static void setupWebdriverWait(int waitTimeInSeconds) {
+		wait = new WebDriverWait(driver, waitTimeInSeconds);
 	}
 
 	/**
@@ -477,7 +477,7 @@ public class UtilitiesCommon {
 	 * recording.
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby RShivam
 	 */
 	public static void launchApplication() {
 		log(browser + " browser is initialized");
@@ -488,7 +488,7 @@ public class UtilitiesCommon {
 			driver.manage().window().maximize();
 		}
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		setupWebdriverWait();
+		setupWebdriverWait(60);
 		setupJavaScriptExecutor();
 		setupActionsBuilder();
 		applicationUrl = UtilitiesCommon.getEnvironmentData(ATTRIBUTE_APPLICATION);
@@ -2357,11 +2357,23 @@ public class UtilitiesCommon {
 		executeJS("arguments[0].scrollIntoView(true);", element);
 	}
 
-//	public static WebDriver click(HamleysCheckoutEnum hamleysHomepageShoptoysSubmenuXpath, Actions act) {
-//		wait.until(ExpectedConditions.presenceOfElementLocated(getLocator(hamleysHomepageShoptoysSubmenuXpath)));
-//		WebElement elementTobeHovered = getElement(hamleysHomepageShoptoysSubmenuXpath);
-//		builder.moveToElement(elementTobeHovered).build().perform();
-//		return driver;
-//	}
-	
+	/**
+	 * This method will scroll down till bottom of the page
+	 * @author RShivam
+	 * @lastmodifiedby RShivam
+	 */
+	public static void scrolltillPageEnd() {
+		JavascriptExecutor js1 = (JavascriptExecutor) driver;
+		js1.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+	}
+	/**
+	 * This method is to return the page title
+	 * 
+	 * @author RShivam
+	 * @lastmodifiedby RShivam
+	 */
+	public static String getTitle() {
+		String Pagetitle = driver.getTitle();
+		return Pagetitle;
+	}
 }
