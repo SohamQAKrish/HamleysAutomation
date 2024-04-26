@@ -1,18 +1,12 @@
 package enums.Hamleys;
-
 /**
- * This enum will store objects available on Login page.
- * @author spandit
- * @lastmodifiedby spandit
+ * This enum will store objects available on Login and Sign out Page 
+ * @author RShivam
+ * @lastmodifiedby RShivam
  */
 /*
  * Note: Enum key should be in capital case and should end with either of below
- * locator types: ID, XPATH, LINKTEXT, PARTIALLINKTEXT, CSS, NAME, TAGNAME, CLASSNAME 
- */
-/**
- * @author RShivam
- * @lastmodifiedby RShivam 
- * This class will contain all the Enums for Login Page
+ * locator types: ID, XPATH, LINKTEXT, PARTIALLINKTEXT, CSS, NAME, TAGNAME, CLASSNAME
  */
 public enum HamleysLoginLogoutEnum {
 	HOMEPAGE_ACCEPT_XPATH("//button[contains(@class, 'amgdprcookie-button') and contains(text(), 'Accept')]"),
