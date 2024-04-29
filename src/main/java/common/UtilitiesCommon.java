@@ -81,6 +81,7 @@ import testrail.APIException;
  * @author spandit
  * @lastmodifiedby spandit
  */
+@Test
 public class UtilitiesCommon {
 	private static final String DEFAULT_ENVIRONMENT = "QA";
 	private static final String DEFAULT_BROWSER = "chrome";
@@ -123,6 +124,7 @@ public class UtilitiesCommon {
 	private static boolean isLocalSuite;
 	private static String suiteName;
 	public static final String HUB_URL = "http://hub:4444/wd/hub";
+	private static final long TIMEOUT_IN_SECONDS = 0;
 	private static boolean remoteWebDriver = false;
 	public static boolean isUserLoggedIn = false;
 
@@ -167,15 +169,15 @@ public class UtilitiesCommon {
 	 * This method is used to setup the webdriver wait instance.
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby RShivam
 	 */
-	public static void setupWebdriverWait() {
-		wait = new WebDriverWait(driver, waitTime);
+	public static void setupWebdriverWait(int waitTimeInSeconds) {
+		wait = new WebDriverWait(driver, waitTimeInSeconds);
 	}
 
 	/**
 	 * This method is used to setup the JavaScript Executor Instance.
-	 * 
+	 *  
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
@@ -475,7 +477,7 @@ public class UtilitiesCommon {
 	 * recording.
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby RShivam
 	 */
 	public static void launchApplication() {
 		log(browser + " browser is initialized");
@@ -485,8 +487,8 @@ public class UtilitiesCommon {
 			driver = new FirefoxDriver();
 			driver.manage().window().maximize();
 		}
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		setupWebdriverWait();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		setupWebdriverWait(60);
 		setupJavaScriptExecutor();
 		setupActionsBuilder();
 		applicationUrl = UtilitiesCommon.getEnvironmentData(ATTRIBUTE_APPLICATION);
@@ -503,7 +505,7 @@ public class UtilitiesCommon {
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
-	public static void openUrl() {
+	public static void openUrl() { 
 		driver.get(applicationUrl);
 
 	}
@@ -512,7 +514,7 @@ public class UtilitiesCommon {
 	 * This method is used to Logout from the application.
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby shivamR
+	 * @lastmodifiedby RShivam
 	 */
 	public static void applicationLogout() {
 		navigateToPage("https://mcstaging.hamleys.com/customer/account/");
@@ -575,7 +577,7 @@ public class UtilitiesCommon {
 		verifyAttribute(envAttributes, attributeKey, "Environment Attribute is not present for Environment - "
 				+ environment + " in Environment.yaml file : " + attributeKey);
 		return envAttributes.get(attributeKey);
-	}
+	} 
 
 	/**
 	 * This method is used to set the Environment Data to map
@@ -820,9 +822,9 @@ public class UtilitiesCommon {
 		WebElement element = getElement(enumValue);
 		waitForElementIsClickable(element);
 		executeJS(JAVASCRIPT_BORDER, element);
-		element.click();
+		element.click(); 
 	}
-
+ 
 	/**
 	 * This method will perform click operation on the element available on the web
 	 * page by using dynamic xpath.
@@ -1213,6 +1215,12 @@ public class UtilitiesCommon {
 	public static void waitForElementIsPresent(Enum<?> enumValue) {
 		wait.until(ExpectedConditions.presenceOfElementLocated(getLocator(enumValue)));
 	}
+	
+	public static WebElement waitForElementIsPresent(By locator) {
+	    WebDriverWait wait = new WebDriverWait(driver, TIMEOUT_IN_SECONDS);
+	    return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+	}
+
 
 	/**
 	 * This method will check if the element is visible
@@ -1909,7 +1917,6 @@ public class UtilitiesCommon {
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
-	@Test
 	public static void setTestCaseNameInAllure(ITestResult result) {
 		Method method = result.getMethod().getConstructorOrMethod().getMethod();
 		if (method.isAnnotationPresent(Test.class) && !method.getAnnotation(Test.class).testName().isBlank()) {
@@ -2342,11 +2349,30 @@ public class UtilitiesCommon {
 	 * 
 	 * @param enumValue Enum Value
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby spandit 
 	 */
 	public static void javaScriptScrollToElement(Enum<?> enumValue) {
 		By locator = getLocator(enumValue);
 		WebElement element = driver.findElement(locator);
 		executeJS("arguments[0].scrollIntoView(true);", element);
+	}
+
+	/**
+	 * This method will scroll down till bottom of the page
+	 * @author RShivam
+	 * @lastmodifiedby RShivam
+	 */
+	public static void scrolltillPageEnd() {
+		JavascriptExecutor js1 = (JavascriptExecutor) driver;
+		js1.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+	}
+	/**
+	 * This method is to return the page title
+	 * @author RShivam
+	 * @lastmodifiedby RShivam
+	 */
+	public static String getTitle() {
+		String Pagetitle = driver.getTitle();
+		return Pagetitle;
 	}
 }

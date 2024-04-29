@@ -36,3 +36,6 @@ SanityHamleysMainMenuNavigation:
  - testMainMenuNavigation:
 SanityHamleysLoginLogout:
  - testLoginLogout:
+SanityHamleysFooterNavigation:
+ - testHamleysFooterVerify:
+ 
