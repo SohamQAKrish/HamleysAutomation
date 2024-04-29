@@ -7,6 +7,7 @@
 		<parameter name="defaultTimeout" value="${defaultTimeout}" />
 		<classes>
 			<class name="sanity.hamleys.SanityHamleysLoginLogout">
+			
 				<methods>
 					<include name="testLoginLogout" />
 				</methods>
