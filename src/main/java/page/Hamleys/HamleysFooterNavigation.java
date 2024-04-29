@@ -1,12 +1,9 @@
 package page.Hamleys;
 
-import static org.testng.Assert.assertTrue;
-
+import static org.testng.Assert.assertTrue; 
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import common.UtilitiesCommon;
 import enums.Hamleys.HamleysFooterNavigationEnum;
 

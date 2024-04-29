@@ -2,7 +2,6 @@ package sanity.hamleys;
 
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import common.UtilitiesCommon;
 import io.qameta.allure.Description;
 import page.Hamleys.HamleysFooterNavigation;
