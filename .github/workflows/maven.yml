@@ -42,4 +42,4 @@ jobs:
       - name: Set Allure HTML report link 
         if: success()
         run: |
-          echo "::set-output name=allure_html_report_link::https://github.com/SohamQAKrish/HamleysAutomation/tree/hamleys01/allure-results"
+          echo "::set-output name=allure_html_report_link::https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
