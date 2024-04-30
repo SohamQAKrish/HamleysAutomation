@@ -42,17 +42,4 @@ jobs:
       - name: Set Allure HTML report link 
         if: success()
         run: |
-          echo "allure_html_report_link=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" > env.list
-          echo "::set-env-file env.list"
-        shell: bash
-
-      - name: Download Allure HTML Report Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: allure-html-report
-          path: allure-artifact
-
-      - name: Display Allure HTML Report Path
-        run: |
-          dir allure-artifact
-          type allure-artifact\allure-report-html\index.html
+          echo "::set-output name=allure_html_report_link::https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
