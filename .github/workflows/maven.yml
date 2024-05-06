@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -18,6 +17,9 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+          server-id: github
+          server-username: ${{ github.actor }}
+          server-password: ${{ secrets.GITHUB_TOKEN }}
         
       - name: Generate Allure Report
         run: |
@@ -26,12 +28,6 @@ jobs:
 
           # Generate the Allure report
           mvn allure:report
-
-      - name: Deploy Allure report to GitHub Pages
-        uses: actions/setup-java@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: /allure-results
 
       - name: Get GitHub Pages URL
         id: pages_url
