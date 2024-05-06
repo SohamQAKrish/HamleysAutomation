@@ -33,12 +33,6 @@ jobs:
           allure generate allure-results --clean
           allure open
 
-      - name: Upload Allure Report as Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: allure-report
-          path: target/allure-report
-
       - name: Create GitHub Allure Report URL
         run: |
           echo "Allure report URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts"
