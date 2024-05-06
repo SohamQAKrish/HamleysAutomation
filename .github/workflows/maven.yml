@@ -21,9 +21,9 @@ jobs:
           server-id: github
           server-username: ${{ github.actor }}
           server-password: ${{ secrets.GITHUB_TOKEN }}
-          
+
       - name: Install Allure CLI
-        run: choco install allure-commandline -y
+        run: npm install -g allure-commandline
         
       - name: Build and test with Maven
         run: mvn clean test
