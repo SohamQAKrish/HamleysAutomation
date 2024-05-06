@@ -9,7 +9,7 @@ package enums.Hamleys;
  * locator types: ID, XPATH, LINKTEXT, PARTIALLINKTEXT, CSS, NAME, TAGNAME, CLASSNAME
  */
 public enum HamleysCheckoutEnum {
-	HAMLEYS_HOMEPAGE_SHOPTOYES_CATEGORIES_XPATH("//a[@id='ui-id-3']"),
+	HAMLEYS_HOMEPAGE_SHOPTOYES_CATEGORIES_XPATH("//a[@id='ui-id-3']"), 
 	HAMLEYS_ADD_TO_PRODUCT_XPATH("//button[@type='submit' and @title='Add to bag' and contains(@class, 'tocart') and contains(@class, 'primary') and @data-objectid='30460']"),
 	HAMLEYS_CLICK_CHECKOU_LOADING_MASK_XPATH("//img[contains(@src, 'loader-1.gif') and @alt='Loading...' and @title='Loading...' and @style='position: absolute;']"),
 	HAMLEYS_CLICK_ON_CHECKOUT_BUTTON_XPATH("//a[@class='action showcart' and @onclick='getPricesAndQuantitieslogo()' and @href='https://mcstaging.hamleys.com/checkout/cart/']"),
@@ -17,18 +17,21 @@ public enum HamleysCheckoutEnum {
 	HAMLEYS_CLICK_ON_CONTINUETOCHECKOUT_BUTTON_XPATH("//button[@class='action primary checkout' and @title='Continue to Checkout']"),
 	HAMLEYS_CLICK_GO_TO_PAYMENT_XPATH("//span[contains(text(), 'Go to payment')]"),
 	HAMLEYS_SELECT_CREDITCARD_AS_PAYMENTMETHOD_XPATH("//span[contains(text(),'Credit or Debit Card')]"),
-	HAMLEYS_ENTER_CREDITCARD_XPATH("//span[@data-uid=\"adyen-checkout-encryptedCardNumber-1713270882054\"]"),
-	HAMLEYS_ENTER_EXPIRYDATE_XPATH("//span[@data-uid=\"adyen-checkout-encryptedExpiryDate-1713270882055\"]"),
-	HAMLEYS_ENTER_CVV_XPATH("//span[@data-uid=\"adyen-checkout-encryptedSecurityCode-1713270882056\"]"),
-	HAMLEYS_SELECT_CHECKBOX_PRIVACY_XPATH("//input[@id=\\\"agreement_adyen_cc_1\\\"]"),
-	HAMLEYS_CLICK_ON_PLACE_ORDER("//button[@class=\"action primary checkout\" and @title=\"Place Order\"]");
+	HAMLEYS_ENTER_CREDITCARD_XPATH("//input[@placeholder='1234 5678 9012 3456']"),
+	HAMLEYS_SWITCHTOIFRAM_CARD_CSS("iframe[title='Iframe for card number']"),
+	HAMLEYS_ENTER_EXPIRYDATE_XPATH("//input[@placeholder='MM/YY']"),
+	HAMLEYS_SWITCH_EXPIRYDATE_IFRAME_CSS("iframe[title='Iframe for expiry date']"),	
+	HAMLEYS_ENTER_CVV_XPATH("//input[@placeholder='3 digits']"),
+	HAMLEYS_SWITCH_CVV_CSS("iframe[title='Iframe for security code']"),
+	HAMLEYS_SELECT_CHECKBOX_PRIVACY_XPATH("//div[@class='checkout-agreement field choice required']//input[@id='agreement_adyen_cc_1' and @name='agreement[1]' and @value='1']"),
+	HAMLEYS_CLICK_ON_PLACE_ORDER_XPATH("//button[@title='Place Order']/ancestor::form[@id='adyen-cc-form']"),
+	HAMLEYS_GETTEXT_THANK_XPATH("//span[contains(text(),'Thank you for your order')]");
 	
 	private final String label;
 
 	HamleysCheckoutEnum(String label) {
 		this.label = label;
 	}
-
 	@Override
 	public String toString() {
 		return this.label;
