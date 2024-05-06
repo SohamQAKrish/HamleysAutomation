@@ -18,12 +18,6 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          server-id: github
-          server-username: ${{ github.actor }}
-          server-password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install Allure CLI
-        run: npm install -g allure-commandline
         
       - name: Generate Allure Report
         run: |
@@ -33,6 +27,15 @@ jobs:
           # Generate the Allure report
           mvn allure:report
 
-      - name: Display GitHub Pages URL
-        run: |
-          echo "Allure report available at https://github.com/${{ github.repository }}/allure-report/index.html"
+      - name: Deploy Allure report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: /allure-results
+
+      - name: Get GitHub Pages URL
+        id: pages_url
+        run: echo "::set-output name=url::https://github.io/${{ github.repository }}/allure-report/index.html"
+
+      - name: Display Allure report link
+        run: echo "Allure report available at ${{ steps.pages_url.outputs.url }}"
