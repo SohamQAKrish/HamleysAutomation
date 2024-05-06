@@ -30,9 +30,8 @@ jobs:
 
       - name: Generate Allure Report
         run: |
-          allure generate target/allure-results --clean
-          allure report generate --output target/allure-report
-          allure open target/allure-report
+          allure generate allure-results --clean
+          allure open
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v2
