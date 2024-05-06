@@ -25,7 +25,6 @@ jobs:
       - name: Install Allure CLI
         run: |
           choco install allure-commandline
-          refreshenv
         
       - name: Build and test with Maven
         run: mvn clean test
