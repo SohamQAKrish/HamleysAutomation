@@ -25,19 +25,17 @@ jobs:
       - name: Install Allure CLI
         run: npm install -g allure-commandline
         
-      - name: Build and test with Maven
-        run: mvn clean test
-
       - name: Generate Allure Report
         run: |
-          allure generate target/allure-results --clean
+          # Run your Maven build and tests
+          mvn clean test
 
-      - name: Upload Allure Report as Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: allure-report
-          path: target/allure-report
+          # Generate the Allure report
+          mvn allure:report
 
-      - name: Create GitHub Allure Report URL
-        run: |
-          echo "Allure report URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts"
+      - name: Get GitHub Pages URL
+        id: pages_url
+        run: echo "::set-output name=url::https://SohamQAKrish.github.io/Krish_Automation/allure-report/index.html"
+ 
+      - name: Display Allure report link
+        run: echo "Allure report available at ${{ steps.pages_url.outputs.url }}"
