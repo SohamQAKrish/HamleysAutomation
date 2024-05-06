@@ -35,4 +35,4 @@ jobs:
 
       - name: Display GitHub Pages URL
         run: |
-          echo "Allure report available at https://github.io/${{ github.repository }}/allure-report/index.html"
+          echo "Allure report available at https://github.com/${{ github.repository }}/allure-report/index.html"
