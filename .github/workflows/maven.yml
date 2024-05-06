@@ -1,4 +1,4 @@
-name: CI/CD
+name: Generate Allure Report
 
 on:
   push:
@@ -12,19 +12,25 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          ref: main  # Checkout the main branch
 
-      - name: Set up JDK 21
+      - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: '11'
 
       - name: Build and test with Maven
         run: mvn clean test
 
+      - name: Install Allure command-line tool
+        run: |
+          choco install allure-commandline
+          refreshenv
+
       - name: Generate Allure Report
         run: |
-          allure generate --clean
+          allure generate allure-results --clean
           allure open
+
+      - name: Create GitHub Allure Report URL
+        run: |
+          echo "Allure report URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts"
