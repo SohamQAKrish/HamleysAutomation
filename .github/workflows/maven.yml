@@ -23,8 +23,7 @@ jobs:
           server-password: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Install Allure CLI
-        run: |
-          choco install allure-commandline
+        run: choco install allure-commandline -y
         
       - name: Build and test with Maven
         run: mvn clean test
