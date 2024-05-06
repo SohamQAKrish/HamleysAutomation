@@ -6,9 +6,9 @@
 		<parameter name="browser" value="${browser}" />
 		<parameter name="defaultTimeout" value="${defaultTimeout}" />
 		<classes>
-			<class name="sanity.hamleys.SanityHamleysAddProductToWishlist">
+			<class name="sanity.hamleys.SanityHamleysLoginAndNavigationTest">
 				<methods>
-					<include name="testAddProductToWishlist" />
+					<include name="testHamleysLogin" />
 				</methods>
 			</class>
 		</classes>
