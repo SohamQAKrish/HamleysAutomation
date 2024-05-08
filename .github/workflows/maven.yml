@@ -33,8 +33,13 @@ jobs:
       - name: Generate Allure Report
         run: mvn allure:report
 
-      - name: Publish Allure Report
+      - name: Upload HTML Allure Report
         uses: actions/upload-artifact@v2
         with:
-          name: allure-report
-          path: target/site/allure-maven-plugin
+          name: allure-html-report
+          path: allure-report-html
+
+      - name: Set Allure HTML report link 
+        if: success()
+        run: |
+          echo "::set-output name=allure_html_report_link::https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
