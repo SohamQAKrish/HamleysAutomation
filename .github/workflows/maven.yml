@@ -36,8 +36,8 @@ jobs:
       - name: Upload HTML Allure Report
         uses: actions/upload-artifact@v2
         with:
-          name: allure-html-report
-          path: allure-report-html
+          name: allure-report
+          path: target/allure-results
 
       - name: Get GitHub Pages URL
         id: pages_url
