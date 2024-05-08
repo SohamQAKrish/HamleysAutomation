@@ -28,7 +28,7 @@ jobs:
           mvn clean test
           mvn allure:report
       - name: Get Allure history
-        uses: actions/checkout@v
+        uses: actions/checkout@v2
         if: always()
         continue-on-error: true
         with:
