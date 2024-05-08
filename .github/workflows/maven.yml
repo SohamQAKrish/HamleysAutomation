@@ -38,12 +38,12 @@ jobs:
       - name: Upload HTML Allure Report
         uses: actions/upload-artifact@v2
         with:
-          name: allure-results
-          path: allure-results
+          name: allure-report
+          path: ./target/site/allure-maven-plugin
 
       - name: Get GitHub Pages URL
         id: pages_url
-        run: echo "::set-output name=url::https://github.com/${{ github.repository }}/allure-report/index.html"
+        run: echo "::set-output name=url::https://${{ github.repository_owner }}.github.io/${{ github.repository }}/allure-maven-plugin/"
 
       - name: Display Allure report link
         run: echo "Allure report available at ${{ steps.pages_url.outputs.url }}"
