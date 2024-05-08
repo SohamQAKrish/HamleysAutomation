@@ -185,7 +185,7 @@
 				<version>2.12.0</version>
 				<configuration>
                     			<reportVersion>2.13.7</reportVersion>
-                   	 		<reportDirectory>${project.build.directory}/site/allure-report</reportDirectory>
+                   	 		<reportDirectory>${project.build.directory}/allure-report</reportDirectory>
                 		</configuration>
        		 		</plugin>
 				<plugin>
