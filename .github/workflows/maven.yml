@@ -39,7 +39,9 @@ jobs:
           name: allure-html-report
           path: allure-report-html
 
-      - name: Set Allure HTML report link 
-        if: success()
-        run: |
-          echo "::set-output name=allure_html_report_link::https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+      - name: Get GitHub Pages URL
+        id: pages_url
+        run: echo "::set-output name=url::https://github.com/${{ github.repository }}/allure-report/index.html"
+
+      - name: Display Allure report link
+        run: echo "Allure report available at ${{ steps.pages_url.outputs.url }}"
