@@ -185,7 +185,7 @@
 				<version>2.12.0</version>
 				<configuration>
 					<resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
-					<outputDirectory>${project.build.directory}/allure-html-report</outputDirectory>
+					<outputDirectory>${project.build.directory}/allure-results</outputDirectory>
 					<reportSets>
                 				<reportSet>
                    					<reports>
