@@ -1,4 +1,4 @@
-name: Soham CI | CD
+name: Soham_CI | CD
 'on':
   push:
     branches:
