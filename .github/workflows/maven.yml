@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '21'
-        distribution: 'temurin'
+        distribution: 'temurin'       
 
     - name: Add Maven to PATH
       uses: actions/setup-java@v2
@@ -27,6 +27,8 @@ jobs:
         java-version: '21'
         server-id: github
         settings-path: ${{ github.workspace }}
+        server-username: ${{ github.actor }}
+        server-password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Verify Java version
       run: java -version
