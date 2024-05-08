@@ -20,6 +20,7 @@ jobs:
           server-id: github
           server-username: ${{ github.actor }}
           server-password: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: /allure-results
         
       - name: Generate Allure Report
         run: |
@@ -31,7 +32,7 @@ jobs:
 
       - name: Get GitHub Pages URL
         id: pages_url
-        run: echo "::set-output name=url::https://github.io/${{ github.repository }}/allure-report/index.html"
+        run: echo "::set-output name=url::https://github.com/${{ github.repository }}/allure-report/index.html"
 
       - name: Display Allure report link
         run: echo "Allure report available at ${{ steps.pages_url.outputs.url }}"
