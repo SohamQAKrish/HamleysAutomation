@@ -25,7 +25,9 @@ jobs:
         run: mvn -B clean verify
       - name: Run Tests and Generate Allure Report
         run: |
+
           mvn clean test
+
           mvn allure:report
       - name: Get Allure history
         uses: actions/checkout@v2
