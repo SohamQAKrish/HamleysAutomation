@@ -37,8 +37,8 @@ jobs:
       - name: Deploy report to Github Pages
         run: |
           git clone --branch gh-pages --single-branch https://github.com/${{ github.repository }} allure-report
-          rm -rf allure-report/*
-          cp -r allure-report/* allure-history
+          Remove-Item -Recurse -Force allure-report\*
+          Copy-Item -Path allure-report\* -Destination allure-history -Recurse
           cd allure-history
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
