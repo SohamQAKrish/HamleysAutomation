@@ -33,18 +33,14 @@ jobs:
           mvn clean test
           mvn allure:report
         
-      - name: Allure Report action from marketplace
-        uses: simple-elf/allure-report-action@master
-        with:
-          allure_results: target/allure-results
-          gh_pages: gh-pages
-          allure_report: allure-report
-          allure_history: allure-history
-        
       - name: Deploy report to Github Pages
-        uses: peaceiris/actions-gh-pages@v2
-        if: always()
-        env:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
+        run: |
+          git clone --branch gh-pages --single-branch https://github.com/${{ github.repository }} allure-report
+          rm -rf allure-report/*
+          cp -r allure-report/* allure-history
+          cd allure-history
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git add .
+          git commit -m "Update Allure report"
+          git push --force https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages
