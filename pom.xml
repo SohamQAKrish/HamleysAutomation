@@ -174,6 +174,7 @@
 				<artifactId>allure-maven</artifactId>
 				<version>2.12.0</version>
 				<configuration>
+					<reportVersion>2.13.7</reportVersion>
 					<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
 					<!-- Specify the Git URL for Allure report linking -->
 					<properties>
