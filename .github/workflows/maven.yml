@@ -96,5 +96,5 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           git add .
           git commit -m "Update Allure report"
-          git push --force https://${{ secrets.allure }}@github.com/${{ github.repository }} gh-pages
+          git push --force https://${{ secrets.ALLURE }}@github.com/${{ github.repository }} gh-pages
         if: ${{ success() }}
