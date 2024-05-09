@@ -102,6 +102,6 @@ jobs:
         run: java -version
 
       - name: Build and generate Allure report
-        run: mvn allure:report -Dallure.git.token=${{ secrets.ALLURE }} -X
+        run: mvn allure:report -Dallure.git.token=${{ secrets.GH_PAT }} -X
         env:
-          ALLURE_TOKEN: ${{ secrets.ALLURE }}
+          ALLURE_TOKEN: ${{ secrets.GH_PAT }}
