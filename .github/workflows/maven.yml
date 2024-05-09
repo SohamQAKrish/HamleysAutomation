@@ -89,12 +89,10 @@ jobs:
       - name: Verify Java version
         run: java -version
         
-      - name: Deploy report to Github Pages
-        run: |
-          git clone --branch gh-pages --single-branch https://github.com/${{ github.repository }} allure-report || git checkout --orphan gh-pages && git reset --hard
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-          git add .
-          git commit -m "Update Allure report"
-          git push --force https://${{ secrets.ALLURE }}@github.com/${{ github.repository }} gh-pages
-        if: ${{ success() }}
+      - name: Set Git access token
+        run: echo "GIT_ACCESS_TOKEN=${{ secrets.ALLURE }}" >> $GITHUB_ENV
+
+      - name: Build and generate Allure report
+        run: mvn clean test allure:report -Dallure.git.token=$GIT_ACCESS_TOKEN
+        env:
+          GIT_ACCESS_TOKEN: ${{ secrets.ALLURE }}
