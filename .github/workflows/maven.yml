@@ -20,7 +20,7 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
-          java-version: 'adopt'
+          java-version: '21'
 
       - name: Verify Java version
         run: java -version
