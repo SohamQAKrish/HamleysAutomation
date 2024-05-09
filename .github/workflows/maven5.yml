@@ -105,3 +105,19 @@ jobs:
         run: mvn allure:report -Dallure.git.token=${{ secrets.GH_PAT }} -X
         env:
           ALLURE_TOKEN: ${{ secrets.GH_PAT }}
+
+  maven-commands:
+    runs-on: windows-latest
+    needs: publish-allure-report
+    steps:
+      - name: Run Maven Install
+        run: mvn install
+
+      - name: Run Maven Compiler:Compile
+        run: mvn compiler:compile
+
+      - name: Run Maven Compiler:Compile with Plugin Prefix
+        run: mvn org.apache.maven.plugins:maven-compiler-plugin:compile
+
+      - name: Run Maven Compiler:Compile with Version
+        run: mvn org.apache.maven.plugins:maven-compiler-plugin:2.0.2:compile
