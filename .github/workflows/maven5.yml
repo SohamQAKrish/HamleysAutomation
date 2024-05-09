@@ -82,33 +82,7 @@ jobs:
       - name: Verify Environment Properties File
         run: ls -l allure-results/environment.properties
 
-      - name: Read Environment Properties
-        id: read_properties
-        run: |
-          while IFS='=' read -r key value; do
-            case "$key" in
-              "OperatingSystem")
-                OS="$value"
-                ;;
-              "ApplicationURL")
-                URL="$value"
-                ;;
-              "Environment")
-                ENV="$value"
-                ;;
-              "Browser")
-                BROWSER="$value"
-                ;;
-            esac
-          done < allure-results/environment.properties
-
-      - name: Print Environment Variables
-        run: |
-          echo "Operating System: $OS"
-          echo "Application URL: $URL"
-          echo "Environment: $ENV"
-          echo "Browser: $BROWSER"
-
+      
   publish-allure-report:
     runs-on: windows-latest
     needs: allure-report
