@@ -186,6 +186,10 @@
 				<configuration>
                     			<reportVersion>2.13.7</reportVersion>
                    	 		<reportDirectory>${project.build.directory}/allure-report</reportDirectory>
+					<properties>
+                    				<allure.git.url>https://github.com/SohamQAKrish/HamleysAutomation</allure.git.url>
+                   				<!-- Other Git properties -->
+                			</properties>
                 		</configuration>
        		 		</plugin>
 				<plugin>
