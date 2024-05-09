@@ -70,6 +70,12 @@ jobs:
 
       - name: Generate Allure Report
         run: mvn allure:report
+        
+      - name: List Allure Results Directory
+        run: ls -l target/allure-results
+
+      - name: Print Workflow Environment Variables
+        run: env
 
   publish-allure-report:
     runs-on: windows-latest
@@ -93,6 +99,7 @@ jobs:
         run: echo "GIT_ACCESS_TOKEN=${{ secrets.ALLURE }}" >> $GITHUB_ENV
 
       - name: Build and generate Allure report
-        run: mvn allure:report -Dallure.git.token=${{ secrets.GIT_ACCESS_TOKEN }}
+        run: mvn allure:report -Dallure.git.token=${{ secrets.ALLURE }}
         env:
-          GIT_ACCESS_TOKEN: ${{ secrets.ALLURE }}
+            ALLURE: ${{ secrets.ALLURE }}
+
