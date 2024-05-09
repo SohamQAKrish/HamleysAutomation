@@ -103,5 +103,4 @@ jobs:
 
       - name: Build and generate Allure report
         run: mvn allure:report -Dallure.git.token=${{ secrets.ALLURE }}
-        env:
-          ALLURE: ${{ secrets.ALLURE }}
+    
