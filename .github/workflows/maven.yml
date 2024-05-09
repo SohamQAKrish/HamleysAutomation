@@ -72,7 +72,7 @@ jobs:
         run: mvn allure:report
         
       - name: List Allure Results Directory
-        run: ls -l target/allure-results
+        run: ls -l /allure-results
 
       - name: Print Workflow Environment Variables
         run: env
