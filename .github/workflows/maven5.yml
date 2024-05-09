@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -24,7 +24,15 @@ jobs:
 
       - name: Verify Java version
         run: java -version
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
+      - name: Build with Maven
+        run: mvn clean install
+        
       - name: Build with Maven
         run: mvn -B clean verify
 
