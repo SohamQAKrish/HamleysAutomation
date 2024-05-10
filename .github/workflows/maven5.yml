@@ -103,8 +103,8 @@ jobs:
 
       - name: Build and generate Allure report
         env:
-          ALLURE_TOKEN: ${{ secrets.GH_PAT }}
-        run: mvn allure:report
+         ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
+         run: mvn allure:report -Dallure.token=${{ secrets.ALLURE_TOKEN }}
 
   maven-commands:
     runs-on: windows-latest
