@@ -106,8 +106,8 @@ jobs:
 
       - name: Build and generate Allure report
         env:
-          ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
-        run: mvn allure:report -Dallure.token=${{ secrets.ALLURE_TOKEN }}
+          ALLURE_TOKEN: ${{ secrets.GH_PAT }}
+        run: mvn allure:report -Dallure.token=${{ secrets.GH_PAT }}
 
   deploy-allure-report:
     runs-on: ubuntu-latest
@@ -126,7 +126,7 @@ jobs:
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
           publish_dir: allure-results
 
   upload-allure-artifact:
