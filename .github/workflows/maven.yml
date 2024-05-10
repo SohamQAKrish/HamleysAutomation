@@ -107,8 +107,8 @@ jobs:
       - name: Publish Allure Report to GitHub Pages
         shell: cmd
         run: |
-          "C:\Program Files\Git\bin\git.exe" config --global user.name 'SohamQAKrish'
-          "C:\Program Files\Git\bin\git.exe" config --global user.email 'soham.pandit@krishtechnolabs.com'
+          "C:\Program Files\Git\bin\git.exe" config user.name 'SohamQAKrish'
+          "C:\Program Files\Git\bin\git.exe" config user.email 'soham.pandit@krishtechnolabs.com'
           "C:\Program Files\Git\bin\git.exe" checkout gh-pages
           "C:\Program Files\Git\bin\git.exe" add .
           "C:\Program Files\Git\bin\git.exe" commit -m "Publish Allure Report to GitHub Pages"
