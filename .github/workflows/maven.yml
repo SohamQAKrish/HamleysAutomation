@@ -80,9 +80,9 @@ jobs:
         run: java -version
       - name: Build and generate Allure report
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          ALLURE_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          mvn allure:report -DGITHUB_TOKEN=${{ secrets.GH_PAT }}
+          mvn allure:report -DALLURE_TOKEN=${{ secrets.GH_PAT }}
       - name: Publish Allure Report to GitHub Pages
         run: |
           git config user.name "krishshivam"
