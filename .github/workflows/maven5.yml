@@ -1,5 +1,4 @@
 name: Latest Changes with Github Actions
-
 on:
   push:
     branches:
