@@ -1,4 +1,4 @@
-name: Latest Changes with Github Actions
+name: Latest Changes with Github Actions CI | CD
 on:
   push:
     branches:
