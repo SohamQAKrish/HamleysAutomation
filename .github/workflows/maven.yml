@@ -90,6 +90,6 @@ jobs:
           git checkout gh-pages
           git add .
           git commit -m "Publish Allure Report to GitHub Pages"
-          git push https://github.com/SohamQAKrish/HamleysAutomation.git gh-pages --force --quiet
+          git push https://github.com/SohamQAKrish/HamleysAutomation/allure-results .git gh-pages --force --quiet
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
