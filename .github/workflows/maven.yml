@@ -83,15 +83,31 @@ jobs:
           ALLURE_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           mvn allure:report -DALLURE_TOKEN=${{ secrets.GH_PAT }}
-      - name: Publish Allure Report to GitHub Pages
-        run: |
-          "C:\Program Files\Git\bin\git.exe" config user.name "SohamQAKrish"
-          "C:\Program Files\Git\bin\git.exe" config user.email "soham.pandit@krishtechnolabs.com"
-          "C:\Program Files\Git\bin\git.exe" checkout gh-pages
-          "C:\Program Files\Git\bin\git.exe" add .
-          "C:\Program Files\Git\bin\git.exe" commit -m "Publish Allure Report to GitHub Pages"
-          "C:\Program Files\Git\bin\git.exe" push
-          https://github.com/SohamQAKrish/HamleysAutomation/allure-results
-          gh-pages --force --quiet
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+      publish-allure-report:
+  runs-on: windows-latest
+  needs: allure-report
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: main
+    - name: Set up JDK 21
+      uses: actions/setup-java@v2
+      with:
+        java-version: '21'
+        distribution: adopt
+    - name: Verify Java version
+      run: java -version
+    - name: Build and generate Allure report
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+      run: |
+        mvn allure:report -DALLURE_TOKEN=${{ secrets.GH_PAT }}
+    - name: Publish Allure Report to GitHub Pages
+      run: |
+        "C:\Program Files\Git\bin\git.exe" config user.name "SohamQAKrish"
+        "C:\Program Files\Git\bin\git.exe" config user.email "soham.pandit@krishtechnolabs.com"
+        "C:\Program Files\Git\bin\git.exe" checkout gh-pages
+        "C:\Program Files\Git\bin\git.exe" add .
+        "C:\Program Files\Git\bin\git.exe" commit -m "Publish Allure Report to GitHub Pages"
+        "C:\Program Files\Git\bin\git.exe" push https://github.com/SohamQAKrish/HamleysAutomation.git gh-pages --force --quiet
