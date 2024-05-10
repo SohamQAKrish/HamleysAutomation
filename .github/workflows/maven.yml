@@ -112,4 +112,4 @@ jobs:
           "C:\Program Files\Git\bin\git.exe" checkout gh-pages
           "C:\Program Files\Git\bin\git.exe" add .
           "C:\Program Files\Git\bin\git.exe" commit -m "Publish Allure Report to GitHub Pages"
-          "C:\Program Files\Git\bin\git.exe" push origin gh-pages --force --quiet
+          "C:\Program Files\Git\bin\git.exe" push https://github.com/SohamQAKrish/HamleysAutomation/allure-results gh-pages --force --quiet
