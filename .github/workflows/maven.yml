@@ -80,9 +80,9 @@ jobs:
         run: java -version
       - name: Build and generate Allure report
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ALLURE_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          mvn allure:report -Dallure.token=${{ secrets.GITHUB_TOKEN }}
+          mvn allure:report -Dallure.token=${{ secrets.GH_PAT }}
       - name: Publish Allure Report to GitHub Pages
         run: |
           git config user.name "krishshivam"
@@ -92,4 +92,4 @@ jobs:
           git commit -m "Publish Allure Report to GitHub Pages"
           git push https://github.com/SohamQAKrish/HamleysAutomation.git gh-pages --force --quiet
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
