@@ -70,7 +70,7 @@ jobs:
           name: allure-html-report
           path: allure-report-html
 
-publish-allure-report:
+  publish-allure-report:
     runs-on: windows-latest
     needs: allure-report
     steps:
@@ -91,7 +91,7 @@ publish-allure-report:
         run: |
           mvn allure:report -DALLURE_TOKEN=${{ secrets.GH_PAT }}
           
-      - name: publish-allure-report-gh-pages:
+  publish-allure-report-gh-pages:
     runs-on: windows-latest
     needs: allure-report
     steps:
