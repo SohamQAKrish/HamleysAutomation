@@ -83,7 +83,6 @@ jobs:
           ALLURE_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           mvn allure:report -DALLURE_TOKEN=${{ secrets.GH_PAT }}
-
   publish-allure-report-gh-pages:
     runs-on: windows-latest
     needs: allure-report
