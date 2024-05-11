@@ -110,4 +110,4 @@ jobs:
            git checkout gh-pages
            git add .
            git commit -m "Publish Allure Report to GitHub Pages"
-           git push origin gh-pages --force --quiet
+           git push origin https://sohamqakrish.github.io/HamleysAutomation/allure-results --force --quiet
