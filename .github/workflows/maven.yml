@@ -108,5 +108,5 @@ jobs:
           "C:\Program Files\Git\bin\git.exe" config user.email 'soham.pandit@krishtechnolabs.com'
           "C:\Program Files\Git\bin\git.exe" checkout gh-pages
           "C:\Program Files\Git\bin\git.exe" add .
-          "C:\Program Files\Git\bin\git.exe" commit -m "Publish Allure Report to GitHub Pages"
-          "C:\Program Files\Git\bin\git.exe" push https://sohamqakrish.github.io/HamleysAutomation/allure-results gh-pages --force --quiet
+          git commit -m "Publish Allure Report to GitHub Pages"
+          git push origin gh-pages --force --quiet
