@@ -175,7 +175,7 @@
 						<propertyName>${defaultTimeout}</propertyName>
 					</systemPropertyVariables>
 					<reportsDirectory>
-						${project.build.directory}/surefire-reports</reportsDirectory>
+						${https://sohamqakrish.github.io/HamleysAutomation/allure-report-html}/surefire-reports</reportsDirectory>
 				</configuration>
 			</plugin>
 			<!-- Add Allure plugin -->
