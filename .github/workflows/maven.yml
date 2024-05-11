@@ -104,8 +104,7 @@ jobs:
       - name: Publish Allure Report to GitHub Pages
         shell: cmd
         run: |
-           git init
-           git config --global user.rmail "soham.pandit@krishtechnolabs.com"
+           git config --global user.email "soham.pandit@krishtechnolabs.com"
            git config --global user.name "SohamQAKrish"
            git checkout gh-pages
            git add .
