@@ -18,7 +18,7 @@ public class LoginPage {
 	 */
 	public static void login(String usernameKey, String passwordKey) {
 		UtilitiesCommon.launchApplication();
-		UtilitiesCommon.click(LoginPageEnum.HOMEPAGE_ACCEPT_XPATH);
+		//UtilitiesCommon.click(LoginPageEnum.HOMEPAGE_ACCEPT_XPATH);
 		UtilitiesCommon.click(LoginPageEnum.LOGINPAGE_LOGIN_REGISTER_XPATH);
 		String username = UtilitiesCommon.getEnvironmentData(usernameKey);
 		String password = UtilitiesCommon.getEnvironmentData(passwordKey);
