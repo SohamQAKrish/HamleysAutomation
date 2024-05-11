@@ -97,11 +97,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          mvn allure:report -DALLURE_TOKEN=${{ secrets.GH_PAT }}
-          git config user.name 'SohamQAKrish'
-          git config user.email 'soham.pandit@krishtechnolabs.com'
-          git checkout gh-pages
-          git add .
-          git commit -m "Publish Allure Report to GitHub Pages"
+          mvn allure:report -DALLURE_TOKEN=${{ secrets.GH_PAT }} &&
+          git config user.name 'SohamQAKrish' &&
+          git config user.email 'soham.pandit@krishtechnolabs.com' &&
+          git checkout gh-pages &&
+          git add . &&
+          git commit -m "Publish Allure Report to GitHub Pages" &&
           git push origin gh-pages --force --quiet
 
