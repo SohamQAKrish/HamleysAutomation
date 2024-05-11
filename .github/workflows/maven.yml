@@ -106,9 +106,8 @@ jobs:
         run: |
            git config --global user.email "soham.pandit@krishtechnolabs.com"
            git config --global user.name "SohamQAKrish"
-           git remote add origin https://sohamqakrish.github.io/HamleysAutomation/allure-results
            git branch gh-pages origin/main
            git checkout gh-pages
            git add .
            git commit -m "Publish Allure Report to GitHub Pages"
-           git push origin https://sohamqakrish.github.io/HamleysAutomation/allure-results --force --quiet
+           git push origin gh-pages --force --quiet
