@@ -60,7 +60,9 @@ jobs:
         run: mvn allure:report
       - name: Verify Environment Properties File
         run: ls -l allure-results/environment.properties
-    
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline
+
       - name: Convert Allure Report to HTML
         run: |
           allure generate allure-results --clean -o allure-results
@@ -121,3 +123,5 @@ jobs:
            git add .
            git commit -m "Publish Allure Report to GitHub Pages"
            git push origin gh-pages --force --quiet
+
+      
