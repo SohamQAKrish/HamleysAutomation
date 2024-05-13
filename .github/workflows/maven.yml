@@ -70,7 +70,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: allure-html-report
-          path: allure-report-html.zip
+          path: allure-report-html
 
   publish-allure-report:
     runs-on: windows-latest
@@ -116,6 +116,7 @@ jobs:
       - name: Publish Allure Report to GitHub Pages
         shell: cmd
         run: |
+           cp -r D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/* .
            git config --global user.email "soham.pandit@krishtechnolabs.com"
            git config --global user.name "SohamQAKrish"
            git branch gh-pages origin/main
