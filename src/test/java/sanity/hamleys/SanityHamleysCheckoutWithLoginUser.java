@@ -24,6 +24,11 @@ public class SanityHamleysCheckoutWithLoginUser {
 		HamleysCheckoutPage.hamleysShopToyesCategorySelection();
 		HamleysCheckoutPage.hamleysCartBagSelect();
 		HamleysCheckoutPage.hamleysContinueCheckout();
-		HamleysCheckoutPage.hamleysEnterCreditCardDetals();
+		HamleysCheckoutPage.hamleysChoosePaymentAsCreditCard();
+		HamleysCheckoutPage.hamleysEnterCardNumber();
+		HamleysCheckoutPage.hamleysEnterExpiryDate();
+		HamleysCheckoutPage.hamleysEnterCVVNumber();
+		HamleysCheckoutPage.hamleysClickOnPlaceAnOrder();
+		HamleysCheckoutPage.hamleysOrderPageGetText();
 	}
 }
