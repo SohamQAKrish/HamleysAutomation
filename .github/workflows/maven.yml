@@ -70,7 +70,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: allure-html-report
-          path: allure-report-html
+          path: allure-report-html.zip
 
   publish-allure-report:
     runs-on: windows-latest
