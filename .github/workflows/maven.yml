@@ -7,17 +7,6 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      environment:
-      description: 'Environment to run tests in (e.g., QA, UAT)'
-      required: true
-      default: 'QA'
-    browser:
-      description: 'Browser to use for tests (e.g., chrome, firefox)'
-      required: true
-      default: 'chrome'
-
 jobs:
   build:
     runs-on: windows-latest
