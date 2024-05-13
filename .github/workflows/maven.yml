@@ -116,6 +116,7 @@ jobs:
       - name: Publish Allure Report to GitHub Pages
         shell: cmd
         run: |
+           rm -rf index.html
            cp -r D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/* .
            git config --global user.email "soham.pandit@krishtechnolabs.com"
            git config --global user.name "SohamQAKrish"
