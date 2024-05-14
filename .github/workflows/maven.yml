@@ -39,10 +39,11 @@ jobs:
       - name: Verify Java version
         run: java -version
       - name: Build with Maven
+        shell: cmd
         run: mvn clean install -DskipTests  # Skip tests during build
       - name: Run Local Test Suite
-        run: mvn test -Dtestng.suite.xml=LocalTestSuite.xml
         shell: cmd
+        run: mvn test -Dtestng.suite.xml=LocalTestSuite.xml
         env:
          JAVA_HOME: C:\hostedtoolcache\windows\Java_Adopt_jdk\21.0.3-9.0.LTS\x64
         
@@ -66,6 +67,7 @@ jobs:
         run: rm -rf D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/*
 
       - name: Generate Allure Report
+        shell: cmd
         run: mvn allure:report
       - name: Verify Environment Properties File
         run: ls -l allure-results/environment.properties
