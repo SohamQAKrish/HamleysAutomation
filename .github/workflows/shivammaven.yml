@@ -55,11 +55,6 @@ jobs:
         java-version: '21'
         distribution: adopt
 
-    - name: Download Allure Report Artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: allure-report
-        path: allure-results
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
