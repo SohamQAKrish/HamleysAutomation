@@ -55,9 +55,9 @@ jobs:
           java-version: '21'
           distribution: adopt
       - name: Verify Java version
-        run: java -versiondel 
+        run: java -version 
       - name: Deleting Local Allure files
-        run: /Q D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin\*.*
+        run: del /Q D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin\*.*
     
       - name: Generate Allure Report
         run: mvn allure:report
