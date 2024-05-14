@@ -11,6 +11,10 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+      - name: Clean up Allure Report Artifacts
+        uses: actions/delete-artifact@v2
+        with:
+         name: allure-report
       - name: Checkout code
         uses: actions/checkout@v2
         with:
