@@ -86,10 +86,14 @@ jobs:
           distribution: adopt
       - name: Verify Java version
         run: java -version
-      - name: Clean and Generate Allure Report
+      - env:
+          ALLURE_TOKEN: '${{ secrets.GH_PAT }}'
+        name: Build and generate Allure report
         run: |
           rm -rf allure-results
-          mvn allure:report
+
+          mvn allure:report -DALLURE_TOKEN=${{ secrets.GH_PAT }}
+          
       - name: Publish Allure Report to GitHub Pages
         shell: cmd
         run: |
