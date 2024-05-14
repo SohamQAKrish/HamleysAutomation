@@ -58,7 +58,7 @@ jobs:
         run: java -version 
       - name: Delete allure-results directory
         shell: cmd
-        run: forfiles /P "D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/" /S /M * /C "cmd /c if @isdir==FALSE del @file"
+        run: rm -rf D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/*
 
       - name: Generate Allure Report
         run: mvn allure:report
@@ -95,12 +95,12 @@ jobs:
       - name: Publish Allure Report to GitHub Pages
         shell: cmd
         run: |
-           rm -rf index.html widgets plugin history export data styles.css favicon.ico app.js
-           cp -r D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/* .
            git config --global user.email "soham.pandit@krishtechnolabs.com"
            git config --global user.name "SohamQAKrish"
            git branch gh-pages origin/main
            git checkout gh-pages
+           rm -rf index.html widgets plugin history export data styles.css favicon.ico app.js
+           cp -r D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/* .
            git add .
            git commit -m "Publish Allure Report to GitHub Pages"
            git push origin gh-pages --force --quiet
