@@ -71,7 +71,26 @@ jobs:
         with:
           name: allure-html-report
           path: allure-report-html
-          
+  publish-allure-report:
+    runs-on: windows-latest
+    needs: allure-report
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: adopt
+      - name: Verify Java version
+        run: java -version
+      - name: Build and generate Allure report
+        env:
+          ALLURE_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          mvn allure:report -DALLURE_TOKEN=${{ secrets.GH_PAT }}        
   publish-allure-report-gh-pages:
     runs-on: windows-latest
     needs: allure-report
