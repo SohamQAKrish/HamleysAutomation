@@ -42,6 +42,9 @@ jobs:
         run: mvn clean install -DskipTests  # Skip tests during build
       - name: Run Local Test Suite
         run: mvn test -Dtestng.suite.xml=LocalTestSuite.xml
+        shell: cmd
+        env:
+         JAVA_HOME: C:\hostedtoolcache\windows\Java_Adopt_jdk\21.0.3-9.0.LTS\x64
         
   allure-report:
     runs-on: windows-latest
