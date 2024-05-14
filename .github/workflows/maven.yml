@@ -38,8 +38,10 @@ jobs:
           distribution: adopt
       - name: Verify Java version
         run: java -version
-      - name: Run Tests
-        run: mvn clean test
+      - name: Build with Maven
+        run: mvn clean install -DskipTests  # Skip tests during build
+      - name: Run Local Test Suite
+        run: mvn test -Dtestng.suite.xml=LocalTestSuite.xml
         
   allure-report:
     runs-on: windows-latest
