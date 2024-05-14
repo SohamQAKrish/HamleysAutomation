@@ -57,6 +57,7 @@ jobs:
       - name: Verify Java version
         run: java -version 
       - name: Deleting Local Allure files
+        shell: cmd
         run: del /Q D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin\*.*
     
       - name: Generate Allure Report
