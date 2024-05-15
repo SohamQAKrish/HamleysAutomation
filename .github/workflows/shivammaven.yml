@@ -53,7 +53,10 @@ jobs:
           java-version: '21'
           distribution: adopt
       - name: Serve Allure Report
+        shell: cmd
         run: mvn io.qameta.allure:allure-maven:serve -Dallure.results_pattern=allure-results
+        env:
+          JAVA_HOME: C:\hostedtoolcache\windows\Java_Adopt_jdk\21.0.3-9.0.LTS\x64
 
   deploy:
     runs-on: windows-latest
