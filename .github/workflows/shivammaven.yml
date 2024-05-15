@@ -6,7 +6,7 @@ on:
   pull_request:
     branches:
       - main
-      
+
 jobs:
   build:
     runs-on: windows-latest
@@ -14,8 +14,8 @@ jobs:
       - name: Clean up Allure Report Artifacts
         shell: cmd
         run: |
-         rm -rf allure-results
-         mkdir allure-results
+          rm -rf allure-results
+          mkdir allure-results
       - name: Checkout code
         uses: actions/checkout@v2
         with:
@@ -38,28 +38,39 @@ jobs:
       - name: Upload Allure Report
         uses: actions/upload-artifact@v2
         with:
-         name: allure-report-${{ github.run_number }}-${{ github.run_id }}
-         path: allure-results
+          name: allure-report-${{ github.run_number }}-${{ github.run_id }}
+          path: allure-results
+
+  serve-allure:
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: adopt
+      - name: Serve Allure Report
+        run: mvn io.qameta.allure:allure-maven:serve -Dallure.results_pattern=allure-results
 
   deploy:
     runs-on: windows-latest
     needs: build
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up JDK 21
-      uses: actions/setup-java@v2
-      with:
-        java-version: '21'
-        distribution: adopt
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: adopt
 
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GH_PAT}}
-        publish_dir: ./allure-results
-
-  
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_PAT }}
+          publish_dir: ./allure-results
