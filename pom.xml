@@ -165,6 +165,15 @@
 					<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
 				</configuration>
 			</plugin>
+			<!-- Add Allure plugin -->
+           		 <plugin>
+                		<groupId>io.qameta.allure</groupId>
+                		<artifactId>allure-maven</artifactId>
+                		<version>2.12.0</version>
+                		<configuration>
+                   		<resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
+                	</configuration>
+            		</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
