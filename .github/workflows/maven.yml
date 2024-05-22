@@ -11,13 +11,7 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    steps:
-      - name: Clean up Allure Report Artifacts
-        shell: cmd
-        run: |
-          rm -rf allure-results
-          mkdir allure-results
-          
+    steps:          
       - name: Checkout code
         uses: actions/checkout@v2
         with:
