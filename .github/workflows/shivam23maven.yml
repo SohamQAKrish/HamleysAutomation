@@ -34,17 +34,15 @@ jobs:
         with:
           ref: gh-pages
           path: gh-pages
+      - name: Install Allure CLI
+        run: |
+          curl -o allure.zip -Ls https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.15.0/allure-commandline-2.15.0.zip
+          7z x allure.zip -oallure
       - name: Generate Allure Report
-        uses: simple-elf/allure-report-action@v1
-        with:
-          allure-results: allure-results
-          gh-pages: gh-pages
-          allure-report: allure-report
-          allure-history: allure-history
-          keep-reports: 20
+        run: allure\bin\allure generate allure-results -o allure-report
       - name: Deploy report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: allure-report
