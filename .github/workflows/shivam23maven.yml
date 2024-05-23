@@ -1,4 +1,4 @@
-name: Allure Report CI | 250524
+name: Allure Report CI
 on:
   push:
     branches: [ "main" ]
@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: cmd
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 21
@@ -21,7 +24,7 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Clean and Test with Maven
         run: mvn -B clean test
-        if: always()
+	if: always()
         continue-on-error: true
       - name: Archive Allure results
         uses: actions/upload-artifact@v2
@@ -29,17 +32,12 @@ jobs:
           name: allure-results
           path: allure-results
           retention-days: 20
-      - name: Get Allure history
-        uses: actions/checkout@v2
-        with:
-          ref: gh-pages
-          path: gh-pages
       - name: Install Allure CLI
         run: |
           curl -o allure.zip -Ls https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.15.0/allure-commandline-2.15.0.zip
           7z x allure.zip -oallure
       - name: Generate Allure Report
-        run: allure\bin\allure generate allure-results -o allure-report
+        run: allure\bin\allure.bat generate allure-results -o allure-report
       - name: Deploy report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
