@@ -46,6 +46,11 @@ jobs:
           7z x allure.zip -oallure
           echo "::add-path::$(Agent.TempDirectory)/allure/bin"
 
+      - name: Check Allure CLI Installation
+        run: |
+           dir allure\bin\allure.bat
+           allure\bin\allure.bat --version
+
       - name: Generate Allure Report
         run: allure\bin\allure.bat generate allure-results -o allure-report
 
