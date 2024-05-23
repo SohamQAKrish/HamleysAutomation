@@ -37,6 +37,7 @@ jobs:
         run: mvn allure:report
 
       - name: Copy Allure Report to gh-pages
+        shell: cmd
         run: |
          git config --global user.name 'SohamQAKrish'
          git config --global user.email 'soham.pandit@krishtechnolabs.com'
