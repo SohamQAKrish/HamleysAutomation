@@ -32,10 +32,14 @@ jobs:
         run: mvn -B clean test
         if: always()
         continue-on-error: true
+        
       - name: Generate Allure Report
+        shell: cmd
         run: |
             mvn allure:report
+            ls target/allure-results
             mvn allure:serve
+            
       - name: Deploy report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
