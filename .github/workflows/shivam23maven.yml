@@ -32,28 +32,10 @@ jobs:
         run: mvn -B clean test
         if: always()
         continue-on-error: true
-
-      - name: Archive Allure results
-        uses: actions/upload-artifact@v2
-        with:
-          name: allure-results
-          path: allure-results
-          retention-days: 20
-
-      - name: Install Allure CLI
-        run: |
-          curl -o allure.zip -Ls https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.15.0/allure-commandline-2.15.0.zip
-          7z x allure.zip -oallure
-          echo "::add-path::$(Agent.TempDirectory)/allure/bin"
-
-      - name: Check Allure CLI Installation
-        run: |
-           dir allure\bin\allure.bat
-           allure\bin\allure.bat --version
-
       - name: Generate Allure Report
-        run: allure\bin\allure.bat generate allure-results -o allure-report
-
+        run: |
+            mvn allure:report
+            mvn allure:serve
       - name: Deploy report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
