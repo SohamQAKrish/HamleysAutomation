@@ -34,15 +34,18 @@ jobs:
         continue-on-error: true
         
       - name: Generate Allure Report
-        shell: cmd
+        run: mvn allure:report
+
+      - name: Copy Allure Report to gh-pages
         run: |
-            mvn allure:report
-            ls target/allure-results
-            mvn allure:serve
-            
-      - name: Deploy report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          personal_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-report
+         git config --global user.name 'SohamQAKrish'
+         git config --global user.email 'soham.pandit@krishtechnolabs.com'
+         git fetch origin gh-pages
+         git checkout -b gh-pages origin/gh-pages || git checkout --orphan gh-pages
+         del * /Q /F /S  # Clean old files
+         xcopy target\site\allure-maven-plugin\* . /s /e /y
+         git add --all
+         git commit -m "Update Allure report"
+         git push --force origin gh-pages
+        env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
