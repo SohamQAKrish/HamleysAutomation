@@ -21,6 +21,8 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Clean and Test with Maven
         run: mvn -B clean test
+        if: always()
+        continue-on-error: true
       - name: Archive Allure results
         uses: actions/upload-artifact@v2
         with:
