@@ -1,4 +1,4 @@
-name: Allure Report CI
+name: Allure Report CI | 250524
 on:
   push:
     branches: [ "main" ]
@@ -14,13 +14,8 @@ jobs:
         with:
           java-version: '21'
           architecture: 'x64'
-      - name: Install Chrome
-        uses: nanasi/gh-action-chrome@v1
-        with:
-          version: latest
-      - name: Check Chrome version
-        run: |
-          "C:\Program Files\Google\Chrome\Application\chrome.exe" --version
+      - name: Check Java version
+        run: java -version
       - name: Build with Maven
         run: mvn -B package --file pom.xml
       - name: Clean and Test with Maven
