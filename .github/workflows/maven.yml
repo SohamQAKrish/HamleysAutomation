@@ -58,7 +58,7 @@ jobs:
           distribution: adopt
       - name: Verify Java version
         run: java -version 
-      - name: Delete allure-results directory
+      - name: Delete allure-results
         shell: cmd
         run: rm -rf D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/*
 
