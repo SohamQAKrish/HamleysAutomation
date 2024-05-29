@@ -34,18 +34,28 @@ jobs:
       - name: Generate Allure Report
         run: mvn allure:report
 
+      - name: Commit Changes
+        if: always()
+        run: |
+          git add allure-results/environment.properties
+          git commit -m "Committing environment.properties changes"
+          
+      - name: Pull Latest Changes from gh-pages
+        shell: cmd
+        run: |
+          git fetch origin gh-pages
+          git checkout gh-pages || git checkout -b gh-pages
+          git pull origin gh-pages --rebase
+
       - name: Copy Allure Report to gh-pages
         shell: cmd
         run: |
-         git config --global user.name 'SohamQAKrish'
-         git config --global user.email 'soham.pandit@krishtechnolabs.com'
-         git fetch origin gh-pages
-         git checkout gh-pages || git checkout -b gh-pages
-         git pull origin gh-pages --rebase
-         git rm -r *  # Clean old files
-         xcopy D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin\* . /s /e /y
-         git add --all
-         git commit -m "Update Allure report"
-         git push origin gh-pages
+          git config --global user.name 'SohamQAKrish'
+          git config --global user.email 'soham.pandit@krishtechnolabs.com'
+          git rm -r *  # Clean old files
+          xcopy D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin\* . /s /e /y
+          git add --all
+          git commit -m "Update Allure report"
+          git push origin gh-pages
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
