@@ -43,7 +43,7 @@ jobs:
          git fetch origin gh-pages
          git checkout gh-pages || git checkout -b gh-pages
          git rm -r *  # Clean old files
-         xcopy target\site\allure-maven-plugin\* . /s /e /y
+         xcopy D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin\* . /s /e /y
          git add --all
          git commit -m "Update Allure report"
          git push origin gh-pages
