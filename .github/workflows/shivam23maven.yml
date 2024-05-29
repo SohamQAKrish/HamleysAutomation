@@ -10,7 +10,6 @@ jobs:
     defaults:
       run:
         shell: cmd
-
     steps:
       - uses: actions/checkout@v2
 
