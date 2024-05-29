@@ -12,6 +12,10 @@ jobs:
         shell: cmd
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Git user identity
+        run: |
+          git config --global user.email "soham.pandit@krishtechnolabs.com"
+          git config --global user.name "SohamQAKrish"
 
       - name: Set up JDK 21
         uses: actions/setup-java@v2
