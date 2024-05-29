@@ -162,7 +162,8 @@
 						<!--suppress UnresolvedMavenProperty -->
 						<propertyName>${defaultTimeout}</propertyName>
 					</systemPropertyVariables>
-					<allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+					<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+                    			<reportDirectory>${project.build.directory}/allure-report</reportDirectory>
 				</configuration>
 			</plugin>
 			<!-- Add Allure plugin -->
