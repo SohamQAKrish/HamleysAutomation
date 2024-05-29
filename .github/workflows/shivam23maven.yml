@@ -41,11 +41,11 @@ jobs:
          git config --global user.name 'SohamQAKrish'
          git config --global user.email 'soham.pandit@krishtechnolabs.com'
          git fetch origin gh-pages
-         git checkout -b gh-pages origin/gh-pages || git checkout --orphan gh-pages
-         del * /Q /F /S  # Clean old files
+         git checkout gh-pages || git checkout -b gh-pages
+         git rm -r *  # Clean old files
          xcopy target\site\allure-maven-plugin\* . /s /e /y
          git add --all
          git commit -m "Update Allure report"
-         git push --force origin gh-pages
+         git push origin gh-pages
         env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
