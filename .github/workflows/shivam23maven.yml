@@ -38,11 +38,17 @@ jobs:
       - name: Generate Allure Report
         run: mvn allure:report
 
+
       - name: Commit Changes
         if: always()
         run: |
           git add allure-results/environment.properties
           git commit -m "Committing environment.properties changes"
+
+      - name: Commit Untracked Files
+        run: |
+          git add .
+          git commit -m "Committing untracked files"
           
       - name: Pull Latest Changes from gh-pages
         shell: cmd
