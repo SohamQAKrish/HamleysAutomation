@@ -39,12 +39,13 @@ jobs:
           mvn allure:report
           dir target\allure-results
 
-      - name: Debug Info
-        run: |
-          echo "Current directory contents:"
-          dir
-          echo "Java version:"
-          java -version
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: target/allure-results
 
       - name: Commit Changes
         if: always()
