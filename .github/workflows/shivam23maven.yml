@@ -35,7 +35,7 @@ jobs:
         
       - name: Generate Allure Report
         run: |
-          
+          mkdir \target\allure-results
           mvn allure:report
         
 
@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: allure-report
-          path: target/allure-report
+          path: target/allure-results
 
       - name: Commit Changes
         if: always()
