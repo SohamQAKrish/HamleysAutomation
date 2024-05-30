@@ -35,8 +35,9 @@ jobs:
         
       - name: Generate Allure Report
         run: |
-          mkdir \target\allure-results
+          mkdir target/allure-results
           mvn allure:report
+          ls -l target/allure-results
         
 
       - name: Archive Allure Report
