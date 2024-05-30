@@ -35,9 +35,9 @@ jobs:
         
       - name: Generate Allure Report
         run: |
-          mkdir target/allure-results
+          
           mvn allure:report
-          dir target/allure-results
+        
 
       - name: Archive Allure Report
         uses: actions/upload-artifact@v2
