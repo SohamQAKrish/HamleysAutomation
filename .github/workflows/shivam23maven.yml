@@ -32,8 +32,6 @@ jobs:
 
       - name: Clean and Test with Maven
         run: mvn -B clean test
-        if: always()
-        continue-on-error: true
         
       - name: Generate Allure Report
         run: |
