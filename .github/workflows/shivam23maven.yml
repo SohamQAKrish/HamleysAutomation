@@ -35,15 +35,15 @@ jobs:
         
       - name: Generate Allure Report
         run: |
-          mkdir target\allure-results
+          mkdir target/allure-results
           mvn allure:report
-          dir target\allure-results
+          dir target/allure-results
 
       - name: Archive Allure Report
         uses: actions/upload-artifact@v2
         with:
           name: allure-report
-          path: target\site\allure-report
+          path: target/allure-results
 
       - name: Commit Changes
         if: always()
