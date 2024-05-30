@@ -37,8 +37,8 @@ jobs:
       - name: Install Allure CLI
         run: |
           curl -Lo allure-commandline.zip https://github.com/allure-framework/allure2/releases/download/2.18.1/allure-2.18.1.zip
-          unzip allure-commandline.zip -d allure
-          export PATH=$PATH:$PWD/allure/allure-2.18.1/bin
+          unzip -q allure-commandline.zip -d allure
+          echo "allure/allure-2.18.1/bin" >> $GITHUB_PATH
 
       - name: Generate Allure Report
         run: |
