@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: allure-report
-          path: target/allure-results
+          path: target/allure-report
 
       - name: Commit Changes
         if: always()
@@ -69,7 +69,7 @@ jobs:
           git config --global user.name 'SohamQAKrish'
           git config --global user.email 'soham.pandit@krishtechnolabs.com'
           git rm -r *  # Clean old files
-          xcopy D:\a\HamleysAutomation\HamleysAutomation\target\site/allure-maven-plugin* . /s /e /y
+          xcopy \target\site/allure-maven-plugin* . /s /e /y
           git add --all
           git commit -m "Update Allure report"
           git push origin gh-pages
