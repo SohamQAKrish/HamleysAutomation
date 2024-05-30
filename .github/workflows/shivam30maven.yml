@@ -1,6 +1,4 @@
-
-
-name: Shivam | Latest Allure
+name: Allure Report CI | Shivam Latest
 
 on:
   push:
@@ -13,7 +11,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: cmd
+        shell: bash
     steps:
       - uses: actions/checkout@v2
 
@@ -32,33 +30,32 @@ jobs:
       - name: Check Java version
         run: java -version
 
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
-
-      - name: Clean and Test with Maven
-        run: mvn -B clean test
+      - name: Build and Test with Maven
+        run: |
+          mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=SanityTestSuite.xml
 
       - name: Install Allure CLI
         run: |
-          curl -o allure-commandline.zip -L "https://github.com/allure-framework/allure2/releases/download/2.18.1/allure-2.18.1.zip"
-          tar -zxvf allure-commandline.zip
-          set PATH=%cd%/allure-2.18.1/bin;%PATH%
+          curl -Lo allure-commandline.zip https://github.com/allure-framework/allure2/releases/download/2.18.1/allure-2.18.1.zip
+          unzip allure-commandline.zip -d allure
+          export PATH=$PATH:$PWD/allure/allure-2.18.1/bin
 
       - name: Generate Allure Report
         run: |
-          mkdir target/allure-results
-          mvn allure:report
+          allure generate target/allure-results -o allure-report
+          ls -la allure-report
 
       - name: Archive Allure Report
         uses: actions/upload-artifact@v2
         with:
           name: allure-report
-          path: target/site/allure-maven-plugin
+          path: allure-report
 
       - name: Upload Allure Report to GitHub Pages
         uses: actions/upload-pages-artifact@v1
         with:
-          path: target/site/allure-maven-plugin
+          name: github-pages
+          path: allure-report
 
   deploy:
     needs: build
