@@ -57,18 +57,8 @@ jobs:
           name: github-pages
           path: allure-report
 
-  deploy:
-    needs: build
-    runs-on: windows-latest
-    permissions:
-      pages: write
-      id-token: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+      - name: Publish Allure Reports to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+           github_token: ${{ secrets.GITHUB_TOKEN }}
+           publish_dir: target/site/allure-maven-plugin
