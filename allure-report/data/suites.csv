@@ -1,0 +1,2 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"broken","Wed May 22 12:09:03 IST 2024","Wed May 22 12:12:41 IST 2024","217284","Local Test Suite","Local Tests","sanity.hamleys.SanityHamleysAccountAddNewAddress","sanity.hamleys.SanityHamleysAccountAddNewAddress","testAddNewAddressFromAccount","Hamleys verify the Add New Address/Delete Recently Added Address From Account with Login User","This Test is used to Verify Add New Address & Delete Address with Login Users"
