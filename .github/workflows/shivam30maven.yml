@@ -42,7 +42,8 @@ jobs:
 
       - name: Generate Allure Report
         run: |
-          mvn clean test allure:report
+          allure generate target/allure-results -o allure-report
+          ls -la allure-report
           
       - name: Archive Allure Report
         uses: actions/upload-artifact@v2
