@@ -14,8 +14,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set up Git user identity
         run: |
-          git config --global user.email "shivam.rai@krishtechnolabs.com"
-          git config --global user.name "krishshivam"
+          git config --global user.email "soham.pandit@krishtechnolabs.com"
+          git config --global user.name "SohamQAKrish"
 
       - name: Set up JDK 21
         uses: actions/setup-java@v2
@@ -63,7 +63,7 @@ jobs:
           git config --global user.name 'SohamQAKrish'
           git config --global user.email 'soham.pandit@krishtechnolabs.com'
           git rm -r *  # Clean old files
-          xcopy D:\a\HamleysAutomation\HamleysAutomation\target\site/allure-maven-plugin* . /s /e /y
+          xcopy D:\a\HamleysAutomation\HamleysAutomation\target\allure-results* . /s /e /y
           git add --all
           git commit -m "Update Allure report"
           git push origin gh-pages
