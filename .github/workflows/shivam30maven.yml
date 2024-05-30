@@ -30,6 +30,9 @@ jobs:
       - name: Check Java version
         run: java -version
 
+      - name: Create Allure Results Directory
+        run: mkdir -p target/allure-results
+
       - name: Build and Test with Maven
         run: |
           mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
