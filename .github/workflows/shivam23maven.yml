@@ -36,8 +36,17 @@ jobs:
         continue-on-error: true
         
       - name: Generate Allure Report
-        run: mvn allure:report
+        run: |
+          mkdir target\allure-results
+          mvn allure:report
+          dir target\allure-results
 
+      - name: Debug Info
+        run: |
+          echo "Current directory contents:"
+          dir
+          echo "Java version:"
+          java -version
 
       - name: Commit Changes
         if: always()
@@ -63,9 +72,15 @@ jobs:
           git config --global user.name 'SohamQAKrish'
           git config --global user.email 'soham.pandit@krishtechnolabs.com'
           git rm -r *  # Clean old files
-          xcopy D:\a\HamleysAutomation\HamleysAutomation\target\allure-results* . /s /e /y
+          xcopy D:\a\HamleysAutomation\HamleysAutomation\target\site/allure-maven-plugin* . /s /e /y
           git add --all
           git commit -m "Update Allure report"
           git push origin gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy Allure Report to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./target/site/allure-maven-plugin
