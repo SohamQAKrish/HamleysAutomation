@@ -31,7 +31,9 @@ jobs:
         run: java -version
 
       - name: Create Allure Results Directory
-        run: mkdir -p target/allure-results
+          mkdir target/allure-results
+          mvn allure:report
+          ls -l target/allure-results
 
       - name: Build and Test with Maven
         run: |
