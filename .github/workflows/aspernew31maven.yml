@@ -24,6 +24,9 @@ jobs:
       - name: Clean Allure results directory
         run: rm -rf target/allure-results/*
 
+      - name: Create target directory if not exists
+        run: mkdir -p target/allure-results
+
       - name: Set permissions for target directory
         run: chmod -R 777 target
       
