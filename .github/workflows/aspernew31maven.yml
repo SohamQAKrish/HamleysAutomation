@@ -22,19 +22,15 @@ jobs:
           cache: 'maven'
           distribution: 'zulu'
 
-      - name: Check if Allure Results Directory exists
-        run: |
-          if [ ! -d "target/allure-results" ]; then
-            mkdir -p target/allure-results
-          fi
-
       - name: Run Test
         run: mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
         continue-on-error: true
 
+      - name: Check Test Results Directory
+        run: ls -ld target/allure-results || echo "Directory not found"
+
       - name: Generate Allure Report
-        run: |
-          mvn allure:report
+        run: mvn allure:report -Dallure.results.directory=target/allure-results
           
       - name: Setup Allure History
         uses: actions/checkout@v4.1.1
