@@ -18,6 +18,9 @@ jobs:
       - name: Create Allure Results Directory
         run: mkdir -p target/allure-results
 
+      - name: List Allure Results
+        run: ls -la target/allure-results
+
       - name: Create Environment Properties
         run: |
           echo "Allure.Executor.Name=GitHub Actions" >> target/allure-results/environment.properties
