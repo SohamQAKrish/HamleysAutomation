@@ -21,8 +21,7 @@ jobs:
           java-version: 21
           cache: 'maven'
           distribution: 'zulu'
-      - name: Grant execute permission for the Maven build script
-        run: chmod +x mvnw
+      
         
       - name: Setup Allure Environment
         run: echo "ALLURE_RESULTS_DIRECTORY=target/allure-results" >> $GITHUB_ENV
