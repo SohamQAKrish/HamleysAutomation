@@ -15,6 +15,20 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4.1.1
         
+      - name: Create Allure Results Directory
+        run: mkdir -p target/allure-results
+
+      - name: Create Environment Properties
+        run: |
+          echo "Allure.Executor.Name=GitHub Actions" >> target/allure-results/environment.properties
+          echo "Allure.Executor.Type=GitHub" >> target/allure-results/environment.properties
+          echo "Allure.Executor.URL=https://github.com/${GITHUB_REPOSITORY}/actions" >> target/allure-results/environment.properties
+          echo "Allure.Executor.BuildURL=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> target/allure-results/environment.properties
+          echo "Allure.Executor.ReportName=Allure Report for GitHub Actions" >> target/allure-results/environment.properties
+
+      - name: Check Directory Permissions
+        run: ls -ld target/allure-results
+      
       - name: Set up Java 21
         uses: actions/setup-java@v4.1.0
         with:
