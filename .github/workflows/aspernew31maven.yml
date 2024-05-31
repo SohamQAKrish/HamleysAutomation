@@ -54,7 +54,7 @@ jobs:
 
       - name: Run Selenium Tests
         run: |
-          mvn clean test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
+          mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
         env:
           HUB_HOST: localhost
           GRID_BROWSER_TIMEOUT: 3400
