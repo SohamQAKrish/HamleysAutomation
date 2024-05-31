@@ -40,7 +40,7 @@ jobs:
           distribution: 'zulu'
 
       - name: Run Test
-        run: mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
+        run: mvn clean test
         continue-on-error: true
 
       - name: Check Test Results Directory
