@@ -42,11 +42,11 @@ jobs:
           path: gh-pages
 
       - name: Generate Allure Report
-        uses: simple-elf/allure-report-action@v1.8
         if: always()
-        with:
-          allure_results: target/allure-results
-          allure_history: allure-history
+        run: |
+          mvn io.qameta.allure:allure-maven:2.10.0:report -Dallure.results=target/allure-results -Dallure.history=allure-history
+        shell: bash
+
           
       - name: Publish Allure Report
         if: always()
