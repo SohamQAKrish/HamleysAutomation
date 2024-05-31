@@ -35,7 +35,12 @@ jobs:
           path: gh-pages
 
       - name: Generate Allure Report
-        run: mvn allure:report
+        uses: simple-elf/allure-report-action@v1.8
+        if: always()
+        with:
+          allure_results: target/allure-results
+          allure_history: allure-history
+          
       - name: Publish Allure Report
         if: always()
         uses: peaceiris/actions-gh-pages@v3.9.3
