@@ -23,7 +23,7 @@ jobs:
   
       
     - name: Build & Test Run
-      run: mvn clean test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
+      run: mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
       
     - name: Generate Allure Report
       run: |
