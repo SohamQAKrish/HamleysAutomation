@@ -1,4 +1,4 @@
-name: Allure Report CI
+name: Allure Report CI | Shivam @Latest
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: bash
+        shell: cmd
     steps:
       - uses: actions/checkout@v2
 
@@ -42,6 +42,7 @@ jobs:
 
       - name: Generate Allure Report
         run: |
+          mkdir target/allure-results
           allure generate target/allure-results -o allure-report
           ls -la allure-report
 
