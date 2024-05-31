@@ -1,76 +1,79 @@
-name: Allure Report CI | @31
+name: Test and Deploy
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+      - "refs/tags/*"
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: windows-latest
-    defaults:
-      run:
-        shell: cmd
-    steps:
-      - uses: actions/checkout@v2
 
-      - name: Set up Git user identity
-        run: |
-          git config --global user.email "soham.pandit@krishtechnolabs.com"
-          git config --global user.name "SohamQAKrish"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
+          distribution: 'zulu'
           java-version: '21'
-          architecture: 'x64'
-          distribution: 'temurin'
 
-      - name: Check Java version
-        run: java -version
+      - name: Set up Maven repository cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2-
 
-      - name: Build and Test with Maven
+      - name: Build with Maven
+        run: mvn clean install
+
+      - name: Download Selenium Server
         run: |
-          mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
-          pwd
-          rm -rf D:\a\HamleysAutomation\HamleysAutomation\target\site/allure-maven-plugin
-          cp -rf D:\a\HamleysAutomation\HamleysAutomation\target\site/allure-maven-plugin D:/a/HamleysAutomation/HamleysAutomation/
+          Invoke-WebRequest -Uri https://github.com/SeleniumHQ/selenium/releases/download/selenium-3.141.59/selenium-server-standalone-3.141.59.jar -OutFile selenium-server-standalone-3.141.59.jar
 
-      - name: Install Allure CLI
+      - name: Start Selenium Server
         run: |
-          curl -Lo allure-commandline.zip https://github.com/allure-framework/allure2/releases/download/2.18.1/allure-2.18.1.zip
-          tar -zxvf allure-commandline.zip
-          set PATH=%cd%/allure-2.18.1/bin;%PATH%
+          Start-Process "java" -ArgumentList "-jar selenium-server-standalone-3.141.59.jar" -NoNewWindow -PassThru
+
+      - name: Download ChromeDriver
+        run: |
+          Invoke-WebRequest -Uri https://chromedriver.storage.googleapis.com/91.0.4472.101/chromedriver_win32.zip -OutFile chromedriver_win32.zip
+          Expand-Archive chromedriver_win32.zip -DestinationPath $Env:GITHUB_WORKSPACE
+
+      - name: Add ChromeDriver to PATH
+        run: |
+          $env:PATH += ";$Env:GITHUB_WORKSPACE"
+        shell: pwsh
+
+      - name: Run Selenium Tests
+        run: |
+          mvn clean test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
+        env:
+          HUB_HOST: localhost
+          GRID_BROWSER_TIMEOUT: 3400
+          GRID_TIMEOUT: 3600
+
+      - name: Stop Selenium Server
+        run: Get-Process java | Stop-Process
 
       - name: Generate Allure Report
         run: |
-          allure generate D:\a\HamleysAutomation\HamleysAutomation\target\site/allure-maven-plugin -o D:\a\HamleysAutomation\HamleysAutomation\target\allure-report
-          ls -la D:/a/HamleysAutomation/HamleysAutomation/codefresh/volume/allure-report
+          mvn allure:report
+          mvn allure:aggregate
+        env:
+          HUB_HOST: localhost
+          GRID_BROWSER_TIMEOUT: 3400
+          GRID_TIMEOUT: 3600
 
-      - name: Archive Allure Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: allure-report
-          path: D:\a\HamleysAutomation\HamleysAutomation\target\allure-report
       - name: Upload Allure Report to GitHub Pages
-        uses: actions/upload-pages-artifact@v1
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: github-pages
-          path: D:\a\HamleysAutomation\HamleysAutomation\
-
-  deploy:
-    needs: build
-    runs-on: windows-latest
-    permissions:
-      pages: write
-      id-token: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./target/site/allure-maven-plugin
