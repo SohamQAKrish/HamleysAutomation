@@ -20,7 +20,7 @@ jobs:
         with:
           java-version: 21
           cache: 'maven'
-          distribution: 'zulu'
+          distribution: 'adopt'
       
       - name: Run Test
         run: mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
