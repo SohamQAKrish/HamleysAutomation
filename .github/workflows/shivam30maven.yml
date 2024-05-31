@@ -34,42 +34,25 @@ jobs:
         run: |
           mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
 
-      - name: Install Allure CLI
-        run: |
-          curl -Lo allure-commandline.zip https://github.com/allure-framework/allure2/releases/download/2.18.1/allure-2.18.1.zip
-          unzip -q allure-commandline.zip -d allure
-          echo "allure/allure-2.18.1/bin" >> $GITHUB_PATH
+      - name: Setup Allure History
+        uses: actions/checkout@v4.1.1
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
 
       - name: Generate Allure Report
-        run: |
-          mkdir target/allure-results
-          allure generate target/allure-results -o allure-report
-          ls -la allure-report
-
-      - name: Archive Allure Report
-        uses: actions/upload-artifact@v2
+        uses: simple-elf/allure-report-action@v1.8
+        if: always()
         with:
-          name: allure-report
-          path: allure-report
-
-      - name: Upload Allure Report to GitHub Pages
-        uses: actions/upload-pages-artifact@v1
+          allure_results: target/allure-results
+          allure_history: allure-history
+          
+      - name: Publish Allure Report
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3.9.3
         with:
-          name: github-pages
-          path: allure-report
-
-  deploy:
-    needs: build
-    runs-on: windows-latest
-    permissions:
-      pages: write
-      id-token: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
