@@ -16,7 +16,7 @@
                 <suiteXmlFile>LocalTestSuite.xml</suiteXmlFile>
 		<environment>QA</environment>
 		<browser>chrome</browser>
-		<defaultTimeout>60</defaultTimeout>
+		<defaultTimeout>30</defaultTimeout>
 	</properties>
 	<name>Hamleys QA Automation</name>
 	<url>http://www.example.com</url>
@@ -147,13 +147,13 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.2.5</version>
 				<configuration>
-					<argLine>
-                        			-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    			</argLine>
 					<suiteXmlFiles>
 						<!--suppress UnresolvedMavenProperty -->
 						<suiteXmlFile>${xmlPath}/${suiteXmlFile}</suiteXmlFile>
 					</suiteXmlFiles>
+					<argLine>
+                        			-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    			</argLine>
 					<systemPropertyVariables>
 						<!--suppress UnresolvedMavenProperty -->
 						<propertyName>${environment}</propertyName>
@@ -171,17 +171,8 @@
                 		<artifactId>allure-maven</artifactId>
                			<version>2.12.0</version>
 				<configuration>
-                    			<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+                    			<resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
                 		</configuration>
-				<executions>
-                			<execution>
-                    				<id>allure-report</id>
-                    				<phase>site</phase>
-                    				<goals>
-	                        			<goal>report</goal>
-                   				 </goals>
-                	</execution>
-		        </executions>
             		</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
