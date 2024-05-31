@@ -1,0 +1,76 @@
+name: Allure Report CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: cmd
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Git user identity
+        run: |
+          git config --global user.email "soham.pandit@krishtechnolabs.com"
+          git config --global user.name "SohamQAKrish"
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          architecture: 'x64'
+          distribution: 'temurin'
+
+      - name: Check Java version
+        run: java -version
+
+      - name: Build and Test with Maven
+        run: |
+          mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
+          pwd
+          rm -rf D:\a\HamleysAutomation\HamleysAutomation\target\site/allure-maven-plugin
+          cp -rf D:\a\HamleysAutomation\HamleysAutomation\target\site/allure-maven-plugin D:/a/HamleysAutomation/HamleysAutomation/
+
+      - name: Install Allure CLI
+        run: |
+          curl -Lo allure-commandline.zip https://github.com/allure-framework/allure2/releases/download/2.18.1/allure-2.18.1.zip
+          tar -zxvf allure-commandline.zip
+          set PATH=%cd%/allure-2.18.1/bin;%PATH%
+
+      - name: Generate Allure Report
+        run: |
+          allure generate D:\a\HamleysAutomation\HamleysAutomation\target\site/allure-maven-plugin -o D:\a\HamleysAutomation\HamleysAutomation\target\allure-report
+          ls -la D:/a/HamleysAutomation/HamleysAutomation/codefresh/volume/allure-report
+
+      - name: Archive Allure Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: D:\a\HamleysAutomation\HamleysAutomation\target\allure-report
+      - name: Upload Allure Report to GitHub Pages
+        uses: actions/upload-pages-artifact@v1
+        with:
+          name: github-pages
+          path: D:\a\HamleysAutomation\HamleysAutomation\
+
+  deploy:
+    needs: build
+    runs-on: windows-latest
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
