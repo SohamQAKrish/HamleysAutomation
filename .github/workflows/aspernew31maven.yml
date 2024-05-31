@@ -15,8 +15,9 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '21'
-        distribution: 'adopt'
-        cache: maven
+        architecture: 'x64'
+        distribution: 'temurin'
+  
         
     - name: Build and Test with Maven
       run: |
