@@ -1,79 +1,61 @@
-name: Test and Deploy
-
+name: Shivam @Latest
 on:
   push:
-    branches:
-      - main
-      - "refs/tags/*"
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Set up JDK 21
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: '21'
+    - name: Set up JDK 21
+      uses: actions/setup-java@v2
+      with:
+        java-version: '21'
+        distribution: 'adopt'
+        cache: maven
 
-      - name: Set up Maven repository cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-m2-
+    - uses: browser-actions/setup-chrome@latest
+    - run: chrome --version
+    
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+      
+    - name: Build with Maven
+      run: mvn -B clean test
+      
+    - uses: actions/upload-artifact@v2
+      with:
+        name: allure-results
+        path: allure-results
+        retention-days: 20
+        
+    - name: Get Allure history
+      uses: actions/checkout@v2
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
+    
+    - name: Test marketplace action
+      uses: simple-elf/allure-report-action@master
+      if: always()
+      id: allure-report
+      with:
+        allure_results: allure-results
+        gh_pages: gh-pages
+        allure_report: allure-report
+        allure_history: allure-history
+        keep_reports: 20
 
-      - name: Build with Maven
-        run: mvn clean install
-
-      - name: Download Selenium Server
-        run: |
-          Invoke-WebRequest -Uri https://github.com/SeleniumHQ/selenium/releases/download/selenium-3.141.59/selenium-server-standalone-3.141.59.jar -OutFile selenium-server-standalone-3.141.59.jar
-
-      - name: Start Selenium Server
-        run: |
-          Start-Process "java" -ArgumentList "-jar selenium-server-standalone-3.141.59.jar" -NoNewWindow -PassThru
-
-      - name: Download ChromeDriver
-        run: |
-          Invoke-WebRequest -Uri https://chromedriver.storage.googleapis.com/91.0.4472.101/chromedriver_win32.zip -OutFile chromedriver_win32.zip
-          Expand-Archive chromedriver_win32.zip -DestinationPath $Env:GITHUB_WORKSPACE
-
-      - name: Add ChromeDriver to PATH
-        run: |
-          $env:PATH += ";$Env:GITHUB_WORKSPACE"
-        shell: pwsh
-
-      - name: Run Selenium Tests
-        run: |
-          mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
-        env:
-          HUB_HOST: localhost
-          GRID_BROWSER_TIMEOUT: 3400
-          GRID_TIMEOUT: 3600
-
-      - name: Stop Selenium Server
-        run: Get-Process java | Stop-Process
-
-      - name: Generate Allure Report
-        run: |
-          mvn allure:report
-          mvn allure:aggregate
-        env:
-          HUB_HOST: localhost
-          GRID_BROWSER_TIMEOUT: 3400
-          GRID_TIMEOUT: 3600
-
-      - name: Upload Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/site/allure-maven-plugin
+    - name: Deploy report to Github Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: allure-history
