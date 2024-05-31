@@ -27,7 +27,7 @@ jobs:
 
     - name: Create Allure Results Directory
       run: |
-          mkdir target/allure-results
+          mkdir allure-results
     
     - name: Build with Maven
       run: mvn -B package --file pom.xml
