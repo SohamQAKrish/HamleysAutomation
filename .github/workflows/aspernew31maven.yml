@@ -11,6 +11,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Set up Git user identity
+      run: |
+          git config --global user.email "soham.pandit@krishtechnolabs.com"
+          git config --global user.name "SohamQAKrish"
+
     - name: Set up JDK 21
       uses: actions/setup-java@v2
       with:
@@ -20,6 +25,7 @@ jobs:
   
         
     - name: Build and Test with Maven
+      shell: cmd
       run: |
           mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
           
