@@ -15,39 +15,29 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4.1.1
         
-      - name: Create Allure Results Directory
-        run: mkdir -p target/allure-results
-
-      - name: List Allure Results
-        run: ls -la target/allure-results
-
-      - name: Create Environment Properties
-        run: |
-          echo "Allure.Executor.Name=GitHub Actions" >> target/allure-results/environment.properties
-          echo "Allure.Executor.Type=GitHub" >> target/allure-results/environment.properties
-          echo "Allure.Executor.URL=https://github.com/${GITHUB_REPOSITORY}/actions" >> target/allure-results/environment.properties
-          echo "Allure.Executor.BuildURL=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> target/allure-results/environment.properties
-          echo "Allure.Executor.ReportName=Allure Report for GitHub Actions" >> target/allure-results/environment.properties
-
-      - name: Check Directory Permissions
-        run: ls -ld target/allure-results
-      
       - name: Set up Java 21
         uses: actions/setup-java@v4.1.0
         with:
           java-version: 21
           cache: 'maven'
           distribution: 'zulu'
-
-      - name: Run Test
-        run: mvn clean test
+      - name: Grant execute permission for the Maven build script
+        run: chmod +x mvnw
+        
+      - name: Setup Allure Environment
+        run: echo "ALLURE_RESULTS_DIRECTORY=target/allure-results" >> $GITHUB_ENV
+        
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+        
+      - name: Run tests
+        run: mvn test
         continue-on-error: true
-
-      - name: Check Test Results Directory
-        run: ls -ld target/allure-results || echo "Directory not found"
-
+        
       - name: Generate Allure Report
-        run: mvn allure:report -Dallure.results.directory=target/allure-results
+        run: |
+         mkdir -p allure-results
+         mvn allure:report
           
       - name: Setup Allure History
         uses: actions/checkout@v4.1.1
