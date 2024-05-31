@@ -20,6 +20,10 @@ jobs:
           java-version: 21
           cache: 'maven'
           distribution: 'adopt'
+
+      - name: Clean and Build
+        run: |
+          mvn clean install
       
       - name: Run Test
         run: mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
