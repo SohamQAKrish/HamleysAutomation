@@ -42,11 +42,7 @@ jobs:
           path: gh-pages
 
       - name: Generate Allure Report
-        uses: example-org/allure-report-action-windows@v1.0
-        if: always()
-        with:
-          allure_results: target/allure-results
-          allure_history: allure-history
+        run: mvn allure:report
 
           
       - name: Publish Allure Report
