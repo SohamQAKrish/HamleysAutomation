@@ -17,14 +17,11 @@ jobs:
         java-version: '21'
         distribution: 'adopt'
         cache: maven
-
-    - uses: browser-actions/setup-chrome@latest
-    - run: chrome --version
-  
-      
-    - name: Build & Test Run
-      run: mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
-      
+        
+    - name: Build and Test with Maven
+      run: |
+          mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
+          
     - name: Generate Allure Report
       run: |
         mvn allure:report
