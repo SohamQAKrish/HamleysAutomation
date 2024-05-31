@@ -43,9 +43,8 @@ jobs:
 
       - name: Generate Allure Report
         if: always()
-        run: |
-          mvn io.qameta.allure:allure-maven:2.10.0:report Dallure.results=target/site/allure-maven-plugin -Dallure.history=allure-history
-        shell: bash
+        run: mvn io.qameta.allure:allure-maven:2.10.0:report -Dallure.results=target/site/allure-maven-plugin -Dallure.history=allure-history
+        shell: cmd
 
           
       - name: Publish Allure Report
