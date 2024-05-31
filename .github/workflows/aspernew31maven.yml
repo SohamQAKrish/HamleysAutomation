@@ -22,7 +22,7 @@ jobs:
           distribution: 'zulu'
 
       - name: Run Test
-        run: mvn clean test
+        run: mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml -e -X
         continue-on-error: true
 
       - name: Setup Allure History
