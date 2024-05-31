@@ -31,6 +31,9 @@ jobs:
         run: mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml -e -X
         continue-on-error: true
 
+      - name: Generate Allure Report
+        run: mvn allure:report -Dallure.results.directory=target/allure-result
+
       - name: Setup Allure History
         uses: actions/checkout@v4.1.1
         if: always()
