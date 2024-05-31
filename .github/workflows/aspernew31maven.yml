@@ -20,6 +20,9 @@ jobs:
           java-version: 21
           cache: 'maven'
           distribution: 'adopt'
+
+      - name: Clean Allure results directory
+        run: rm -rf target/allure-results/*
       
       - name: Run Test
         run: mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
