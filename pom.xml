@@ -148,8 +148,9 @@
 				<version>3.2.5</version>
 				<configuration>
 					<argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    </argLine>
+						-Dfile.encoding=${project.build.sourceEncoding}
+                        			-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    			</argLine>
 					<suiteXmlFiles>
 						<!--suppress UnresolvedMavenProperty -->
 						<suiteXmlFile>${xmlPath}/${suiteXmlFile}</suiteXmlFile>
@@ -162,8 +163,6 @@
 						<!--suppress UnresolvedMavenProperty -->
 						<propertyName>${defaultTimeout}</propertyName>
 					</systemPropertyVariables>
-					<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
-                    			<reportDirectory>${project.build.directory}/allure-report</reportDirectory>
 				</configuration>
 			</plugin>
 			<!-- Add Allure plugin -->
@@ -171,16 +170,10 @@
                 		<groupId>io.qameta.allure</groupId>
                 		<artifactId>allure-maven</artifactId>
                			<version>2.12.0</version>
-				<executions>
-					<execution>
-						<goals>
-					           <goal>report</goal>
-						</goals>
-				</execution>
-				</executions>
 				<configuration>
-					<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
-				</configuration>
+                    			<reportVersion>${allure.version}</reportVersion>
+                    			<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+                		</configuration>
             		</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
