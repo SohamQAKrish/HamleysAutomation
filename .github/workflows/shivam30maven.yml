@@ -50,9 +50,9 @@ jobs:
         run: mvn clean test
         continue-on-error: true
 
-      - name: Download Allure
+      - name: Install Allure CLI
         run: |
-          choco install allure
+          npm install -g allure-commandline
           
       - name: Generate Allure Report
         run: |
