@@ -44,11 +44,6 @@ jobs:
         run: mvn clean test
         continue-on-error: true
 
-      - name: Verify Allure Results Directory
-        run: |
-          echo "Contents of target/allure-results:"
-          dir target\allure-results
-        shell: cmd
 
       - name: Install Allure CLI
         run: |
