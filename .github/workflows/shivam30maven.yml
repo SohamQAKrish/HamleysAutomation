@@ -74,7 +74,7 @@ jobs:
 
       - name: Move Allure Report to History
         run: |
-          Copy-Item -Path allure-report\* -Destination gh-pages\ -Recurse -Force
+          Copy-Item -Path allure-report-html\* -Destination gh-pages\ -Recurse -Force
         shell: pwsh
 
       - name: Publish Allure Report
