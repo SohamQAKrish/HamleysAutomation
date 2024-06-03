@@ -24,7 +24,7 @@ jobs:
 
       - name: Clean Allure results directory
         run: |
-          del /S /Q target\allure-results
+          Remove-Item -Path target\allure-results\* -Recurse -Force
 
       - name: Create target directory if not exists
         run: |
