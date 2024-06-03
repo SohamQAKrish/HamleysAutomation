@@ -24,12 +24,16 @@ jobs:
 
       - name: Clean Allure results directory
         run: |
-          run: |
-              if (Test-Path -Path "target\allure-results") {
-              Remove-Item -Path "target\allure-results\*" -Recurse -Force
-              } else {
-              Write-Output "Allure results directory does not exist."
-              }
+          if (Test-Path -Path "target\allure-results") {
+          Remove-Item -Path "target\allure-results\*" -Recurse -Force
+          } else {
+          Write-Output "Allure results directory does not exist."
+          }
+        shell: pwsh
+        env:
+          JAVA_HOME: C:\hostedtoolcache\windows\Java_Adopt_jdk\21.0.3-9.0.LTS\x64
+          JAVA_HOME_21_X64: C:\hostedtoolcache\windows\Java_Adopt_jdk\21.0.3-9.0.LTS\x64
+          
       - name: Create target directory if not exists
         run: |
           mkdir target\allure-results
