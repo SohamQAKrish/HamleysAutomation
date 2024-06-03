@@ -5,6 +5,7 @@ on:
   push:
     branches-ignore:
       - '!main'
+      
 jobs:
   autotests:
     name: Run tests and generate Allure Report
