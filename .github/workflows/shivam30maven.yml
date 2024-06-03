@@ -27,10 +27,17 @@ jobs:
       - name: Create target directory if not exists
         run: if (-Not (Test-Path -Path target/allure-results)) { New-Item -ItemType Directory -Path target/allure-results }
 
+      - name: Set permissions for target directory
+        run: icacls target /grant Everyone:`(OI`)`(CI`)F /T
+
       - name: Run Test
         run: mvn clean test -Dmaven.test.failure.ignore=true -e -X
         continue-on-error: true
-          
+
+      - name: Generate Allure Report
+        run: mvn allure:report
+        continue-on-error: true
+
       - name: Setup Allure History
         uses: actions/checkout@v4.1.1
         if: always()
@@ -39,17 +46,16 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Generate Allure Report
-        uses: simple-elf/allure-report-action@v1.8
+      - name: Move Allure Report
         if: always()
-        with:
-          allure_results: target/allure-results
-          allure_history: allure-history
-          
+        run: |
+          if (-Not (Test-Path -Path gh-pages/allure-history)) { New-Item -ItemType Directory -Path gh-pages/allure-history }
+          Copy-Item -Path .\target\site\allure-maven-plugin\* -Destination gh-pages\allure-history\ -Recurse
+
       - name: Publish Allure Report
         if: always()
         uses: peaceiris/actions-gh-pages@v3.9.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: gh-pages/allure-history
