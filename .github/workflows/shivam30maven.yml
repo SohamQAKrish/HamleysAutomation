@@ -23,13 +23,16 @@ jobs:
           distribution: 'adopt'
 
       - name: Clean Allure results directory
-        run: rm -rf target/allure-results/*
+        run: |
+          del /S /Q target\allure-results
 
       - name: Create target directory if not exists
-        run: mkdir -p target/allure-results
+        run: |
+          mkdir target\allure-results
 
       - name: Set permissions for target directory
-        run: chmod -R 777 target
+        run: |
+          icacls target\allure-results /grant Users:(OI)(CI)F /T
       
       - name: Run Test
         run: mvn clean test -Dmaven.test.failure.ignore=true -e -X
