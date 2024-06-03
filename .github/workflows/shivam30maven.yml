@@ -24,8 +24,12 @@ jobs:
 
       - name: Clean Allure results directory
         run: |
-          Remove-Item -Path target\allure-results\* -Recurse -Force
-
+          run: |
+              if (Test-Path -Path "target\allure-results") {
+              Remove-Item -Path "target\allure-results\*" -Recurse -Force
+              } else {
+              Write-Output "Allure results directory does not exist."
+              }
       - name: Create target directory if not exists
         run: |
           mkdir target\allure-results
