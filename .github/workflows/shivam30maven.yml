@@ -52,15 +52,11 @@ jobs:
 
       - name: Install Allure CLI
         run: |
-          npm install -g allure-commandline
-
-      - name: Clean Allure Artifacts
-        run: |
-         rm -rf target/allure-results allure-report-html      
+          npm install -g allure-commandline    
           
       - name: Generate Allure Report
         run: |
-          allure generate target/allure-results -o allure-report-html
+          allure generate target/allure-results -o allure-report-html --clean
 
       - name: Upload HTML Allure Report
         uses: actions/upload-artifact@v2
