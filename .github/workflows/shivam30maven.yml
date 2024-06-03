@@ -25,9 +25,9 @@ jobs:
       - name: Clean Allure results directory
         run: |
           if (Test-Path -Path "target\allure-results") {
-          Remove-Item -Path "target\allure-results\*" -Recurse -Force
+            Remove-Item -Path "target\allure-results\*" -Recurse -Force
           } else {
-          Write-Output "Allure results directory does not exist."
+            Write-Output "Allure results directory does not exist."
           }
         shell: pwsh
         env:
@@ -49,6 +49,14 @@ jobs:
       - name: Run Test
         run: mvn clean test
         continue-on-error: true
+
+      - name: Download Allure
+        run: |
+          choco install allure
+          
+      - name: Generate Allure Report
+        run: |
+          allure generate target/allure-results -o allure-report
           
       - name: Setup Allure History
         uses: actions/checkout@v4.1.1
@@ -58,18 +66,15 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Generate Allure Report
-        uses: simple-elf/allure-report-action@v1.8
-        if: always()
-        with:
-          allure_results: target/allure-results
-          allure_history: allure-history
+      - name: Move Allure Report to History
+        run: |
+          Copy-Item -Path allure-report\* -Destination gh-pages\ -Recurse -Force
+        shell: pwsh
 
-          
       - name: Publish Allure Report
         if: always()
         uses: peaceiris/actions-gh-pages@v3.9.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: gh-pages
