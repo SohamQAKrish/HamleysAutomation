@@ -47,7 +47,7 @@ jobs:
           JAVA_HOME_21_X64: C:\hostedtoolcache\windows\Java_Adopt_jdk\21.0.3-9.0.LTS\x64
       
       - name: Run Test
-        run: mvn clean test -Dmaven.test.failure.ignore=true -e -X
+        run: mvn clean test -Dtest.failure.ignore=true -e -X
         continue-on-error: true
           
       - name: Setup Allure History
