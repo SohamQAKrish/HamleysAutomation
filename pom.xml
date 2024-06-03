@@ -173,15 +173,6 @@
 				<configuration>
                     			<resultsDirectory>${project.basedir}/target/allure-results</resultsDirectory>
                 		</configuration>
-				 executions>
-			                <execution>
-                    				<id>generate-report</id>
-                    				<phase>verify</phase>
-                    				<goals>
-                        				<goal>report</goal>
-                    				</goals>
-               			 </execution>
-            		</executions>
             		</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
