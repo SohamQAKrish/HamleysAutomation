@@ -1,24 +1,19 @@
-name: Windows - Allure Report CI | Shivam @Latest
+name: Windows | Allure Report | @shivam
 run-name: ${{ github.actor }} is creating Allure report 🚀
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
+    branches-ignore:
+      - '!main'
 jobs:
-  build:
+  autotests:
     name: Run tests and generate Allure Report
-    runs-on: windows-latest 
-    defaults:
-      run:
-        shell: cmd
-        
+    runs-on: windows-latest
+    
     steps:
       - name: Clone repository
         uses: actions/checkout@v4.1.1
-
+        
       - name: Set up Java 21
         uses: actions/setup-java@v4.1.0
         with:
@@ -26,13 +21,19 @@ jobs:
           cache: 'maven'
           distribution: 'adopt'
 
-      - name: Check Java version
-        run: java -version
+      - name: Clean Allure results directory
+        run: if (Test-Path -Path target/allure-results) { Remove-Item -Recurse -Force target/allure-results/* }
 
-      - name: Build and Test with Maven
-        run: |
-          mvn clean test -Dmaven.test.failure.ignore=true -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
+      - name: Create target directory if not exists
+        run: if (-Not (Test-Path -Path target/allure-results)) { New-Item -ItemType Directory -Path target/allure-results }
 
+      - name: Set permissions for target directory
+        run: icacls target /grant Everyone:(OI)(CI)F /T
+
+      - name: Run Test
+        run: mvn clean test -Dmaven.test.failure.ignore=true -e -X
+        continue-on-error: true
+          
       - name: Setup Allure History
         uses: actions/checkout@v4.1.1
         if: always()
@@ -42,8 +43,11 @@ jobs:
           path: gh-pages
 
       - name: Generate Allure Report
-        run: mvn allure:report
-
+        uses: simple-elf/allure-report-action@v1.8
+        if: always()
+        with:
+          allure_results: target/allure-results
+          allure_history: allure-history
           
       - name: Publish Allure Report
         if: always()
