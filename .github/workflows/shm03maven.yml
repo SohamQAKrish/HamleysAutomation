@@ -20,10 +20,11 @@ jobs:
           java-version: 21
           distribution: 'adopt'
       
-      - name: Run Tests and Generate Allure Report
-        run: |
-          mvn clean test
-           mvn allure:report
+      - name: Clean Build
+        run: mvn clean
+
+      - name: Generate Allure Report
+        run: mvn io.qameta.allure:allure-maven-plugin:2.27.0:report -X
 
       - name: Publish Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
