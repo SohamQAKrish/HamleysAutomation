@@ -41,9 +41,6 @@ jobs:
 
       - name: set Persmission
         run: chmod +x mvnw
-
-      - name: Install mvnw
-        run: ./mvnw clean install
       
       
       - name: Build with Maven Wrapper
