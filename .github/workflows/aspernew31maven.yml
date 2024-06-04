@@ -33,6 +33,9 @@ jobs:
 
       - name: set Persmission
         run: chmod +x mvnw
+
+      - name: Install mvnw
+        run: ./mvnw clean install
       
       - name: Run Test
         run: ./mvnw verify
