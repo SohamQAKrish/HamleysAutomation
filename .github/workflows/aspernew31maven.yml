@@ -22,6 +22,14 @@ jobs:
           cache: 'maven'
           distribution: 'adopt'
 
+      - name: Cache Maven dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
       - name: Clean Allure results directory
         run: rm -rf target/allure-results/*
 
@@ -37,8 +45,10 @@ jobs:
       - name: Install mvnw
         run: ./mvnw clean install
       
-      - name: Run Test
-        run: ./mvnw verify
+      
+      - name: Build with Maven Wrapper
+        run: |
+             ./mvnw verify
         continue-on-error: true
           
       - name: Setup Allure History
