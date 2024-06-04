@@ -47,8 +47,7 @@ jobs:
       
       
       - name: Build with Maven Wrapper
-        run: |
-             ./mvnw verify
+        run: ./mvnw verify
         continue-on-error: true
           
       - name: Setup Allure History
