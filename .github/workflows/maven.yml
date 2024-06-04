@@ -8,16 +8,11 @@ on:
     branches:
       - main
       
+      
 jobs:
   build:
     runs-on: windows-latest
-    steps:
-      - name: Clean up Allure Report Artifacts
-        shell: cmd
-        run: |
-          rm -rf allure-results
-          mkdir allure-results
-          
+    steps:          
       - name: Checkout code
         uses: actions/checkout@v2
         with:
@@ -64,7 +59,7 @@ jobs:
           distribution: adopt
       - name: Verify Java version
         run: java -version 
-      - name: Delete allure-results directory
+      - name: Delete allure-results
         shell: cmd
         run: rm -rf D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/*
 

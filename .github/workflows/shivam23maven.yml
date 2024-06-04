@@ -1,0 +1,78 @@
+name: Allure Report CI
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: cmd
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Git user identity
+        run: |
+          git config --global user.email "soham.pandit@krishtechnolabs.com"
+          git config --global user.name "SohamQAKrish"
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          architecture: 'x64'
+          distribution: 'temurin'
+
+      - name: Check Java version
+        run: java -version
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      - name: Clean and Test with Maven
+        run: mvn -B clean test
+        
+      - name: Generate Allure Report
+        run: |
+          mkdir target/allure-results
+          mvn allure:report
+          ls -l target/allure-results
+        
+
+      - name: Archive Allure Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: target/allure-results
+
+      - name: Commit Changes
+        if: always()
+        run: |
+          git add allure-results/environment.properties
+          git commit -m "Committing environment.properties changes"
+
+      - name: Commit Untracked Files
+        run: |
+          git add .
+          git commit -m "Committing untracked files"
+          
+      - name: Pull Latest Changes from gh-pages
+        shell: cmd
+        run: |
+          git fetch origin gh-pages
+          git checkout gh-pages || git checkout -b gh-pages
+          git pull origin gh-pages --rebase
+
+      - name: Copy Allure Report to gh-pages
+        shell: cmd
+        run: |
+          git config --global user.name 'SohamQAKrish'
+          git config --global user.email 'soham.pandit@krishtechnolabs.com'
+          git rm -r *  # Clean old files
+          xcopy D:\a\HamleysAutomation\HamleysAutomation\target\site/allure-maven-plugin* . /s /e /y
+          git add --all
+          git commit -m "Update Allure report"
+          git push origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

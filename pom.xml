@@ -13,7 +13,10 @@
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
 		<xmlPath>src/test/resources</xmlPath>
-        <suiteXmlFile>LocalTestSuite.xml</suiteXmlFile>
+                <suiteXmlFile>LocalTestSuite.xml</suiteXmlFile>
+		<environment>QA</environment>
+		<browser>chrome</browser>
+		<defaultTimeout>30</defaultTimeout>
 	</properties>
 	<name>Hamleys QA Automation</name>
 	<url>http://www.example.com</url>
@@ -34,7 +37,7 @@
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
-			<version>5.5.3</version>
+			<version>5.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -46,6 +49,11 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
 			<version>2.17.0</version>
+		</dependency>
+		<dependency>
+    			<groupId>org.slf4j</groupId>
+    			<artifactId>slf4j-simple</artifactId>
+    			<version>1.7.36</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
 		<dependency>
@@ -139,13 +147,13 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.2.5</version>
 				<configuration>
-					<argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    </argLine>
 					<suiteXmlFiles>
 						<!--suppress UnresolvedMavenProperty -->
 						<suiteXmlFile>${xmlPath}/${suiteXmlFile}</suiteXmlFile>
 					</suiteXmlFiles>
+					<argLine>
+                        			-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    			</argLine>
 					<systemPropertyVariables>
 						<!--suppress UnresolvedMavenProperty -->
 						<propertyName>${environment}</propertyName>
@@ -154,8 +162,18 @@
 						<!--suppress UnresolvedMavenProperty -->
 						<propertyName>${defaultTimeout}</propertyName>
 					</systemPropertyVariables>
+					<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>	
 				</configuration>
 			</plugin>
+			<!-- Add Allure plugin -->
+           		 <plugin>
+                		<groupId>io.qameta.allure</groupId>
+                		<artifactId>allure-maven</artifactId>
+               			<version>2.27.0</version>
+				<configuration>
+                    			<resultsDirectory>${project.basedir}/target/allure-results</resultsDirectory>
+                		</configuration>
+            		</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -198,6 +216,11 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+            			<groupId>io.qameta.allure</groupId>
+            			<artifactId>allure-maven-plugin</artifactId>
+           			<version>2.27.0</version>
+       			 </plugin>
 		</plugins>
 	</build>
 </project>
