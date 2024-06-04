@@ -41,9 +41,11 @@ jobs:
 
       - name: set Persmission
         run: chmod +x mvnw
+
+      - name: Set up Maven Wrapper
+        run: mvn -N io.takari:maven:wrapper
       
-      
-      - name: Build with Maven Wrapper
+      - name: Build with Test
         run: ./mvnw verify
         continue-on-error: true
           
