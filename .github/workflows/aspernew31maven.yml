@@ -30,6 +30,9 @@ jobs:
 
       - name: Set permissions for target directory
         run: chmod -R 777 target
+
+      - name: set Persmission
+        run: chmod +x mvnw
       
       - name: Run Test
         run: ./mvnw verify
