@@ -169,9 +169,9 @@
            		 <plugin>
                 		<groupId>io.qameta.allure</groupId>
                 		<artifactId>allure-maven</artifactId>
-               			<version>2.27.0</version>
+               			<version>2.12.0</version>
 				<configuration>
-                    			<resultsDirectory>${project.basedir}/target/allure-results</resultsDirectory>
+                    			<resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
                 		</configuration>
             		</plugin>
 			<plugin>
@@ -216,11 +216,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-            			<groupId>io.qameta.allure</groupId>
-            			<artifactId>allure-maven-plugin</artifactId>
-           			<version>2.27.0</version>
-       			 </plugin>
 		</plugins>
 	</build>
 </project>
