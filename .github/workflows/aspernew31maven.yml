@@ -46,8 +46,11 @@ jobs:
         run: mvn -N io.takari:maven:wrapper
       
       - name: Build with Test
-        run: ./mvnw verify
+        run: ./mvnw clean test
         continue-on-error: true
+
+      - name: Generate Allure Report
+        run: ./mvnw allure:report
           
       - name: Setup Allure History
         uses: actions/checkout@v4.1.1
