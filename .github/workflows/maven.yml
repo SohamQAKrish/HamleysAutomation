@@ -1,4 +1,4 @@
-name: Latest Github Actions CI | CD
+name: Lareb Latest Github Actions CI | CD
 
 on:
   push:
