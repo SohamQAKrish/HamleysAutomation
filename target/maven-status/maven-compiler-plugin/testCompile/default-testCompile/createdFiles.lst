@@ -1,0 +1,7 @@
+sanity\hamleys\SanityHamleysSearchProductToCart.class
+sanity\hamleys\SanityHamleysCheckoutAsGuestUser.class
+sanity\hamleys\SanityHamleysLoginLogout.class
+sanity\hamleys\SanityHamleysAccountAddNewAddress.class
+sanity\hamleys\SanityHamleysCheckoutWithLoginUser.class
+sanity\hamleys\SanityHamleysLoginAndNavigationTest.class
+sanity\hamleys\SanityHamleysAddProductToWishlist.class

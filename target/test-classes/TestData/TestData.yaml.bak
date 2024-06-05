@@ -1,0 +1,38 @@
+SanityHamleysLoginAndNavigationTest:
+ - testHamleysPageHeaderTitle:
+    HamleysHeader: "Home Page"
+SanityHamleysCheckoutWithLoginUser:
+ - testHanleysCheckoutLoginUser:
+    CardNumber: "4111111111111111"
+    ExpDate: "03/30"
+    CVV: "737"
+SanityHamleysAddProductToWishlist:
+ - testAddProductToWishlist:
+SanityHamleysSearchProductToCart:
+ - testSearchProductToCart:
+    SearchText: "Hamleys® Bear Dinosaur Hat"
+    ProductTitle: "Hamleys Bear Dinosaur Hat"
+SanityHamleysAccountAddNewAddress:
+ - testAddNewAddressFromAccount:
+    FirstName: "SHM Automation"
+    LastName: "Test"
+    PhoneNumber: "520000000"
+    StreetAddress: "Britain Street"
+    City: "Giddaluru"
+    ZipCode: "523357"
+SanityHamleysCheckoutAsGuestUser:
+ - testCheckoutAsGuestUser:
+    GuestUserEmailAddress: "tempshivam@getnada.com"
+    FirstName: "GuestU"
+    LastName: "Shivam"
+    PhoneNumber: "520000000"
+    StreetRoad: "Britain Street"
+    City: "Giddaluru"
+    ZipCode: "523357"
+    CardNumber: "4111 1111 1111 1111"
+    ExpDate: "0330"
+    CVV: "737"
+SanityHamleysMainMenuNavigation:
+ - testMainMenuNavigation:
+SanityHamleysLoginLogout:
+ - testLoginLogout: 
