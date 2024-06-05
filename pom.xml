@@ -177,7 +177,7 @@
       					<outputDirectory>${basedir}/target/allure-reports/</outputDirectory>
                     			<allureResultsDirectory>${basedir}/target/allure-results</allureResultsDirectory>
                 		</configuration>
-				 executions>
+				 <executions>
                 			<execution>
                     				<id>allure-report</id>
                     				<phase>site</phase>
