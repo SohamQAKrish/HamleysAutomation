@@ -1,4 +1,4 @@
-name: Lareb | Latest Github Actions CI | CD
+name: Lareb  Latest Github Actions CI | CD
 
 on:
   push:
@@ -64,7 +64,7 @@ jobs:
       - name: Verify Environment Properties File
         run: ls -l allure-results/environment.properties
 
-  publish-allure-report:
+  generate-allure-report:
     runs-on: windows-latest
     needs: allure-report
     steps:
@@ -84,11 +84,12 @@ jobs:
           ALLURE_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           mvn allure:report -DALLURE_TOKEN=${{ secrets.GH_PAT }}
-          
-publish-allure-report:
-  runs-on: windows-latest
-  needs: allure-report
-  steps:
+
+
+  publish-allure-githubpage:
+    runs-on: windows-latest
+    needs: allure-report
+    steps:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
