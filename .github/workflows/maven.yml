@@ -65,7 +65,7 @@ jobs:
         run: rm -rf D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/*
 
       - name: Generate Allure Report
-        run: mvn io.qameta.allure:allure-maven:2.12.0:report
+        run: mvn allure:report
       - name: Verify Environment Properties File
         run: ls -l allure-results/environment.properties
       - name: Install Allure CLI
