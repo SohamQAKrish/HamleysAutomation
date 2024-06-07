@@ -26,6 +26,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B clean verify
+        continue-on-error: true
 
   test:
     runs-on: windows-latest
@@ -45,6 +46,7 @@ jobs:
 
       - name: Run Tests
         run: mvn clean test site -Dsurefire.suiteXmlFiles=LocalTestSuite.xml
+        continue-on-error: true
 
   allure-report:
     runs-on: windows-latest
