@@ -100,10 +100,11 @@ jobs:
       - name: Ensure Allure Report Directory Exists
         shell: pwsh
         run: |
-         $sourcePath = 'D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin'
-         if (-Not (Test-Path $sourcePath)) {
-            New-Item -ItemType Directory -Force -Path $sourcePath
-         }
+          $sourcePath = 'D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin'
+          if (-Not (Test-Path $sourcePath)) {
+            Write-Host "Allure report directory not found: $sourcePath"
+            exit 1
+          }
 
       - name: List Target Directory
         run: dir D:\a\HamleysAutomation\HamleysAutomation\target\site
@@ -111,14 +112,13 @@ jobs:
       - name: Copy Allure Report
         shell: pwsh
         run: |
-         $sourcePath = 'D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin'
-         if (Test-Path $sourcePath) {
-            cp -r "$sourcePath\*" .
-         } else {
-            Write-Host "Source path does not exist: $sourcePath"
-            exit 1
+          $sourcePath = 'D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin'
+          $destinationPath = '.'
+          cp -r "$sourcePath\*" $destinationPath
 
-         }
+      - name: Verify Copied Files
+        run: dir
+
       - name: Configure Git
         run: |
           git config --global user.email "soham.pandit@krishtechnolabs.com"
