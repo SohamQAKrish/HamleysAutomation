@@ -60,9 +60,9 @@ jobs:
         run: java -version
       - name: Clear Previous Allure Results and Report
         run: |
-          if exist allure-results rmdir /s /q allure-results
-          if exist allure-report rmdir /s /q allure-report
-          if exist target/site/allure-maven-plugin rmdir /s /q target/site/allure-maven-plugin
+          if (Test-Path -Path allure-results) { Remove-Item -Recurse -Force allure-results }
+          if (Test-Path -Path allure-report) { Remove-Item -Recurse -Force allure-report }
+          if (Test-Path -Path target\site\allure-maven-plugin) { Remove-Item -Recurse -Force target\site\allure-maven-plugin }
       - name: Generate Allure Report
         run: mvn allure:report
       - name: Verify Environment Properties File
