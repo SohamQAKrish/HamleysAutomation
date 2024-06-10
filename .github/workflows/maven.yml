@@ -97,6 +97,17 @@ jobs:
       - name: Verify Java version
         run: java -version
    
+      - name: Ensure Allure Report Directory Exists
+        shell: pwsh
+        run: |
+         $sourcePath = 'D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin'
+         if (-Not (Test-Path $sourcePath)) {
+            New-Item -ItemType Directory -Force -Path $sourcePath
+         }
+
+      - name: List Target Directory
+        run: dir D:\a\HamleysAutomation\HamleysAutomation\target\site
+
       - name: Copy Allure Report
         shell: pwsh
         run: |
@@ -106,7 +117,7 @@ jobs:
          } else {
             Write-Host "Source path does not exist: $sourcePath"
             exit 1
-         }
+
 
       - name: Configure Git
         run: |
