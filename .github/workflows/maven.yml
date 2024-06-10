@@ -97,18 +97,34 @@ jobs:
       - name: Verify Java version
         run: java -version
 
-      - name: Clean up old artifacts
+      - name: Check if artifacts exist
         run: |
-         Remove-Item -Path index.html -Force
-         Remove-Item -Path widgets -Recurse -Force
-         Remove-Item -Path plugin -Recurse -Force
-         Remove-Item -Path history -Recurse -Force
-         Remove-Item -Path export -Recurse -Force
-         Remove-Item -Path data -Recurse -Force
-         Remove-Item -Path styles.css -Force
-         Remove-Item -Path favicon.ico -Force
-         Remove-Item -Path app.js -Force
-
+          if (Test-Path index.html -or
+              Test-Path widgets -or
+              Test-Path plugin -or
+              Test-Path history -or
+              Test-Path export -or
+              Test-Path data -or
+              Test-Path styles.css -or
+              Test-Path favicon.ico -or
+              Test-Path app.js)
+          then
+            echo "Artifacts exist. Removing them."
+            # Add the commands to remove the artifacts here
+            Remove-Item -Path index.html -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path widgets -Recurse -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path plugin -Recurse -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path history -Recurse -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path export -Recurse -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path data -Recurse -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path styles.css -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path favicon.ico -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path app.js -Force -ErrorAction SilentlyContinue
+          else
+            echo "No artifacts to remove. Skipping."
+          fi
+        shell: pwsh
+  
       - name: Copy Allure report to root directory
         run: cp -r D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/* .
 
