@@ -108,7 +108,7 @@ jobs:
               Test-Path styles.css -or
               Test-Path favicon.ico -or
               Test-Path app.js)
-          then
+          {
             echo "Artifacts exist. Removing them."
             # Add the commands to remove the artifacts here
             Remove-Item -Path index.html -Force -ErrorAction SilentlyContinue
@@ -120,9 +120,11 @@ jobs:
             Remove-Item -Path styles.css -Force -ErrorAction SilentlyContinue
             Remove-Item -Path favicon.ico -Force -ErrorAction SilentlyContinue
             Remove-Item -Path app.js -Force -ErrorAction SilentlyContinue
+          }
           else
+          {
             echo "No artifacts to remove. Skipping."
-          fi
+          }
         shell: pwsh
   
       - name: Copy Allure report to root directory
