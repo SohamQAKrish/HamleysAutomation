@@ -106,18 +106,12 @@ jobs:
             exit 1
           }
 
-      - name: List Target Directory
-        run: dir D:\a\HamleysAutomation\HamleysAutomation\target\site
-
       - name: Copy Allure Report
         shell: pwsh
         run: |
           $sourcePath = 'D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin'
           $destinationPath = '.'
           cp -r "$sourcePath\*" $destinationPath
-
-      - name: Verify Copied Files
-        run: dir
 
       - name: Configure Git
         run: |
@@ -129,5 +123,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           git add .
-          git commit -m "Publish Allure Report to GitHub Pages"
-          git push origin gh-pages --force --quiet
+          git commit -m "Update Allure Report"
+          git push origin main --force --quiet
