@@ -24,13 +24,13 @@
     <!--Mentioned name and url-->
 
     <name>Hamleys QA Automation</name>
-    <url>http://www.example.com</url>
+    <url>https://github.com/SohamQAKrish/HamleysAutomation/</url>
 
     <developers>
         <developer>
-            <id>Kashyap</id>
-            <name>Kashyap Dave</name>
-            <email>kashyap.dave@krishtechnolabs.com</email>
+            <id>Shivam</id>
+            <name>Shivam Rai</name>
+            <email>shivam.rai@krishtechnolabs.com</email>
         </developer>
         
     </developers>
