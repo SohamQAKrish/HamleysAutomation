@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-	xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>com.krish</groupId>
 	<artifactId>Hamleys</artifactId>
 	<version>1.0-SNAPSHOT</version>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<aspectj.version>1.9.21.1</aspectj.version>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
 		<xmlPath>src/test/resources</xmlPath>
-                <suiteXmlFile>LocalTestSuite.xml</suiteXmlFile>
+		<suiteXmlFile>LocalTestSuite.xml</suiteXmlFile>
 		<environment>QA</environment>
 		<browser>chrome</browser>
 		<defaultTimeout>30</defaultTimeout>
 	</properties>
+	<!--Mentioned name and url-->
+
 	<name>Hamleys QA Automation</name>
 	<url>http://www.example.com</url>
+
 	<!--QA Automation developers. 23-54-->
 	<developers>
 		<developer>
@@ -27,41 +31,45 @@
 			<name>Shivam Rai</name>
 			<email>shivam.rai@krishtechnolabs.com</email>
 		</developer>
+
 	</developers>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>7.4.0</version>
 		</dependency>
+
+
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
-			<version>5.8.0</version>
+			<version>5.5.3</version>
 		</dependency>
+
+
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
 			<version>3.141.59</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+		<!--
+		https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
 			<version>2.17.0</version>
 		</dependency>
-		<dependency>
-    			<groupId>org.slf4j</groupId>
-    			<artifactId>slf4j-simple</artifactId>
-    			<version>1.7.36</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+		<!--
+		https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 			<version>2.17.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-1.2-api -->
+		<!--
+		https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-1.2-api -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-1.2-api</artifactId>
@@ -73,7 +81,8 @@
 			<artifactId>assertj-core</artifactId>
 			<version>3.21.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<!--
+		https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
@@ -97,7 +106,8 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.github.stephenc.monte/monte-screen-recorder -->
+		<!--
+		https://mvnrepository.com/artifact/com.github.stephenc.monte/monte-screen-recorder -->
 		<dependency>
 			<groupId>com.github.stephenc.monte</groupId>
 			<artifactId>monte-screen-recorder</artifactId>
@@ -140,6 +150,7 @@
 			<version>3.4</version>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -147,15 +158,14 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.2.5</version>
 				<configuration>
-					<testFailureIgnore>false</testFailureIgnore>
+					<!-- Use properties for suiteXmlFile -->
 					<suiteXmlFiles>
-						<!--suppress UnresolvedMavenProperty -->
 						<suiteXmlFile>${xmlPath}/${suiteXmlFile}</suiteXmlFile>
 					</suiteXmlFiles>
+					<!-- Add other configurations as needed -->
 					<argLine>
-						-Dfile.encoding=${project.build.sourceEncoding}
-                        			-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    			</argLine>
+						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+					</argLine>
 					<systemPropertyVariables>
 						<!--suppress UnresolvedMavenProperty -->
 						<propertyName>${environment}</propertyName>
@@ -164,28 +174,19 @@
 						<!--suppress UnresolvedMavenProperty -->
 						<propertyName>${defaultTimeout}</propertyName>
 					</systemPropertyVariables>
-					<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>	
+					<reportsDirectory>
+						${project.build.directory}/surefire-reports</reportsDirectory>
 				</configuration>
 			</plugin>
 			<!-- Add Allure plugin -->
-           		 <plugin>
-                		<groupId>io.qameta.allure</groupId>
-                		<artifactId>allure-maven</artifactId>
-               			<version>2.12.0</version>
+			<plugin>
+				<groupId>io.qameta.allure</groupId>
+				<artifactId>allure-maven</artifactId>
+				<version>2.12.0</version>
 				<configuration>
-                    	<reportVersion>${allure.version}</reportVersion>
-      					<outputDirectory>${basedir}/target/allure-reports/</outputDirectory>
-                    	<resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
-                		</configuration>
-				 <executions>
-        				<execution>
-           				 <id>allure-report</id>
-            				<goals>
-                				<goal>report</goal>
-           				</goals>
-       					</execution>
-    				</executions>
-            		</plugin>
+					<resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -210,8 +211,8 @@
 						</goals>
 						<configuration>
 							<outputDirectory>
-                                ${project.build.directory}/libs
-                            </outputDirectory>
+								${project.build.directory}/libs
+							</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
