@@ -97,8 +97,16 @@ jobs:
       - name: Verify Java version
         run: java -version
    
-      - name: Copy Allure report to root directory
-        run: cp -r D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/* .
+      - name: Copy Allure Report
+        shell: pwsh
+        run: |
+         $sourcePath = 'D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin'
+         if (Test-Path $sourcePath) {
+            cp -r "$sourcePath\*" .
+         } else {
+            Write-Host "Source path does not exist: $sourcePath"
+            exit 1
+         }
 
       - name: Configure Git
         run: |
