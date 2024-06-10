@@ -178,14 +178,13 @@
                     	<resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
                 		</configuration>
 				 <executions>
-                			<execution>
-                    				<id>allure-report</id>
-                    				<phase>site</phase>
-                    				<goals>
-                       				  <goal>report</goal>
-                    				</goals>
-                			</execution>
-		        </executions>
+        				<execution>
+           				 <id>allure-report</id>
+            				<goals>
+                				<goal>report</goal>
+           				</goals>
+       					</execution>
+    				</executions>
             		</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
