@@ -1,4 +1,4 @@
-name: Lareb Latest Github Actions CI | CD
+name: Latest Github Actions CI | CD
 
 on:
   push:
@@ -7,26 +7,21 @@ on:
   pull_request:
     branches:
       - main
-        
 jobs:
   build:
     runs-on: windows-latest
-    steps:          
+    steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+        with:
+          ref: main
       - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
           java-version: '21'
           distribution: adopt
-
       - name: Verify Java version
         run: java -version
-
-      - name: Build with Maven
-        run: mvn -B clean verify
-        continue-on-error: true
 
   test:
     runs-on: windows-latest
@@ -34,19 +29,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+        with:
+          ref: main
       - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
           java-version: '21'
           distribution: adopt
-
       - name: Verify Java version
         run: java -version
-
       - name: Run Tests
-        run: mvn clean test site -Dsurefire.suiteXmlFiles=LocalTestSuite.xml
-        continue-on-error: true
+        run: mvn clean test
 
   allure-report:
     runs-on: windows-latest
@@ -54,32 +47,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+        with:
+          ref: main
       - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
           java-version: '21'
           distribution: adopt
-
       - name: Verify Java version
-        run: java -version 
-
+        run: java -version
       - name: Generate Allure Report
-        run: mvn io.qameta.allure:allure-maven:report
-
-      - name: Install Allure CLI
-        run: |
-          choco install allure
-
-      - name: Convert Allure Report to HTML
-        run: |
-          allure generate target/site/allure-maven-plugin -o target/allure-report-html
-
-      - name: Upload HTML Allure Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: allure-html-report
-          path: target/allure-report-html
+        run: mvn allure:report
+      - name: Verify Environment Properties File
+        run: ls -l allure-results/environment.properties
 
   publish-allure-report:
     runs-on: windows-latest
@@ -87,24 +67,47 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+        with:
+          ref: main
       - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
           java-version: '21'
           distribution: adopt
-
       - name: Verify Java version
         run: java -version
-
-      - name: Publish Allure Report
+      - name: Build and generate Allure report
+        env:
+          ALLURE_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          git config --global user.email "soham.pandit@krishtechnolabs.com"
-          git config --global user.name "SohamQAKrish"
-          git checkout --orphan gh-pages
-          git reset
-          cp -r target/allure-report-html/* .
-          git add .
-          git commit -m "Publish Allure Report to GitHub Pages"
-          git push --force --set-upstream origin gh-pages
-
+          mvn allure:report -DALLURE_TOKEN=${{ secrets.GH_PAT }}
+  publish-allure-report-gh-pages:
+    runs-on: windows-latest
+    needs: allure-report
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: adopt
+      - name: Verify Java version
+        run: java -version
+      - name: Build and generate Allure report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          mvn allure:report -DALLURE_TOKEN=${{ secrets.GH_PAT }}
+      - name: Publish Allure Report to GitHub Pages
+        shell: cmd
+        run: |
+           git config --global user.email "soham.pandit@krishtechnolabs.com"
+           git config --global user.name "SohamQAKrish"
+           git branch gh-pages origin/main
+           git checkout gh-pages
+           git add .
+           git commit -m "Publish Allure Report to GitHub Pages"
+           git push origin gh-pages --force --quiet
