@@ -16,15 +16,15 @@ public class HamleysLoginLogoutPage {
 	 */
 	public static void login(String usernameKey, String passwordKey) {
 		UtilitiesCommon.launchApplication();
-		UtilitiesCommon.click(HamleysLoginLogoutEnum.HOMEPAGE_ACCEPT_XPATH);
-		UtilitiesCommon.click(HamleysLoginLogoutEnum.LOGINPAGE_LOGIN_REGISTER_XPATH);
-		String username = UtilitiesCommon.getEnvironmentData(usernameKey);
-		String password = UtilitiesCommon.getEnvironmentData(passwordKey);
-		UtilitiesCommon.log("Logging in with User name : " + username);
-		UtilitiesCommon.enterValue(HamleysLoginLogoutEnum.LOGINPAGE_USERNAME_TEXT_BOX_CSS, username);
-		UtilitiesCommon.enterValue(HamleysLoginLogoutEnum.LOGINPAGE_PASSWORD_TEXT_BOX_CSS,
-		UtilitiesCommon.getDecryptedPassword(password));
-		UtilitiesCommon.click(HamleysLoginLogoutEnum.LOGINPAGE_LOGIN_BUTTON_XPATH);
+		//UtilitiesCommon.click(HamleysLoginLogoutEnum.HOMEPAGE_ACCEPT_XPATH);
+		//UtilitiesCommon.click(HamleysLoginLogoutEnum.LOGINPAGE_LOGIN_REGISTER_XPATH);
+		//String username = UtilitiesCommon.getEnvironmentData(usernameKey);
+		//String password = UtilitiesCommon.getEnvironmentData(passwordKey);
+		//UtilitiesCommon.log("Logging in with User name : " + username);
+		//UtilitiesCommon.enterValue(HamleysLoginLogoutEnum.LOGINPAGE_USERNAME_TEXT_BOX_CSS, username);
+		//UtilitiesCommon.enterValue(HamleysLoginLogoutEnum.LOGINPAGE_PASSWORD_TEXT_BOX_CSS,
+		//UtilitiesCommon.getDecryptedPassword(password));
+		//UtilitiesCommon.click(HamleysLoginLogoutEnum.LOGINPAGE_LOGIN_BUTTON_XPATH);
 	}
 	/**
 	 * This method is used to navigate to account section and click on sign out link text.
