@@ -98,7 +98,16 @@ jobs:
         run: java -version
 
       - name: Clean up old artifacts
-        run: rm -rf index.html widgets plugin history export data styles.css favicon.ico app.js
+        run: |
+         Remove-Item -Path index.html -Force
+         Remove-Item -Path widgets -Recurse -Force
+         Remove-Item -Path plugin -Recurse -Force
+         Remove-Item -Path history -Recurse -Force
+         Remove-Item -Path export -Recurse -Force
+         Remove-Item -Path data -Recurse -Force
+         Remove-Item -Path styles.css -Force
+         Remove-Item -Path favicon.ico -Force
+         Remove-Item -Path app.js -Force
 
       - name: Copy Allure report to root directory
         run: cp -r D:\a\HamleysAutomation\HamleysAutomation\target\site\allure-maven-plugin/* .
