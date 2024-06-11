@@ -93,7 +93,7 @@ jobs:
       - name: Publish Allure Report to GitHub Pages
         shell: cmd
         run: |
-          cp -r allure-report-html/* .
+          cp -r D:\a\HamleysAutomation\HamleysAutomation\allure-results/* .
           git config --global user.email "soham.pandit@krishtechnolabs.com"
           git config --global user.name "SohamQAKrish"
           git checkout gh-pages
