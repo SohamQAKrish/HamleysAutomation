@@ -54,11 +54,14 @@ jobs:
       - name: Generate Allure Report
         run: mvn allure:report
       - name: Verify Environment Properties File
-        run: ls -l allure-results/environment.properties
+        run: ls -l D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-maven-plugin/environment.properties
       - name: Install Allure CLI
         run: npm install -g allure-commandline
-      - name: Convert Allure Report to HTML
-        run: allure generate allure-results --clean -o allure-results
+      - name: Copy Allure report files to root directory
+        run: |
+          cp -r D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-maven-plugin/* gh-pages/
+      - name: List files in gh-pages directory
+        run: ls -l gh-pages
 
   publish-allure-report:
     runs-on: ubuntu-latest
@@ -74,10 +77,6 @@ jobs:
         with:
           java-version: '11'
           distribution: adopt
-      - name: Copy Allure report files to root directory
-        run: |
-          mkdir -p gh-pages
-          cp -r allure-results/* gh-pages/
       - name: Publish Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
