@@ -88,7 +88,7 @@ jobs:
           java-version: '11'
           distribution: adopt
       - name: Copy Allure report files to current directory
-        run: cp -r D:\a\HamleysAutomation\HamleysAutomation\gh-pages\* .
+        run: cp -r D:/a/HamleysAutomation/HamleysAutomation/gh-pages/* .
       - name: List files to be committed
         run: ls -l
       - name: Configure Git
