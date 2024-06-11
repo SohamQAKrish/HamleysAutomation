@@ -93,7 +93,6 @@ jobs:
         run: |
           git config --global user.email "soham.pandit@krishtechnolabs.com"
           git config --global user.name "SohamQAKrish"
-          git branch gh-pages origin/main
           git checkout gh-pages
       - name: Commit and push Allure report to gh-pages branch
         run: |
