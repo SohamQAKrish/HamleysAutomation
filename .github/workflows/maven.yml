@@ -57,7 +57,7 @@ jobs:
         run: java -version
         
       - name: Copy categories.json to allure-results
-        run: cp allure-result/categories.json D:\a\HamleysAutomation\HamleysAutomation\allure-results
+        run: cp allure-results/categories.json D:\a\HamleysAutomation\HamleysAutomation\allure-results
         
       - name: Generate Allure Report
         run: mvn allure:report
