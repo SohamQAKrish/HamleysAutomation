@@ -57,6 +57,8 @@ jobs:
         run: ls -l allure-results/environment.properties
       - name: Install Allure CLI
         run: npm install -g allure-commandline
+      - name: Clear existing files in gh-pages directory
+        run: rm -rf gh-pages/*
       - name: Copy Allure report files to root directory
         run: |
           cp -r D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-maven-plugin/* gh-pages/
