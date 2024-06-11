@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: adopt
 
   test:
     runs-on: windows-latest
@@ -33,6 +34,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: adopt
       - name: Run Tests
         run: mvn clean test
 
@@ -48,6 +50,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: adopt
       - name: Generate Allure Report
         run: mvn allure:report
       - name: Verify Environment Properties File
@@ -74,6 +77,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: adopt
       - name: Build and generate Allure report
         run: mvn allure:report
 
@@ -89,6 +93,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: adopt
       - name: Publish Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
