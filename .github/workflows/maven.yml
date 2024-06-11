@@ -70,6 +70,8 @@ jobs:
         run: Remove-Item -Path "gh-pages\*" -Recurse -Force
       - name: Copy Allure report files to gh-pages directory
         run: cp -r D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-report-html/* gh-pages/
+      - name: Copy Allure report files to root directory
+        run: cp -r  D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-report-html/* .
       - name: List files in gh-pages directory
         run: ls -l gh-pages
 
@@ -87,8 +89,7 @@ jobs:
       with:
         java-version: '11'
         distribution: adopt
-    - name: Copy Allure report files to root directory
-      run: cp -r $GITHUB_WORKSPACE/HamleysAutomation/HamleysAutomation/gh-pages/* $GITHUB_WORKSPACE/
+
     - name: Configure Git
       run: |
         git config --global user.email "soham.pandit@krishtechnolabs.com"
