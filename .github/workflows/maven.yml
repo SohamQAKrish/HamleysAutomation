@@ -80,19 +80,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: gh-pages
           fetch-depth: 0
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: '11'
           distribution: adopt
+      - name: Copy Allure report files to current directory
+        run: cp -r ../../gh-pages/* .
+      - name: List files to be committed
+        run: ls -l
       - name: Configure Git
         run: |
           git config --global user.email "soham.pandit@krishtechnolabs.com"
           git config --global user.name "SohamQAKrish"
-      - name: Publish Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./gh-pages
+      - name: Commit and push Allure report to gh-pages branch
+        run: |
+          git add .
+          git commit -m "Update Allure report"
+          git push origin gh-pages
