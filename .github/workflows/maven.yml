@@ -88,13 +88,14 @@ jobs:
           java-version: '11'
           distribution: adopt
       - name: Copy Allure report files to current directory
-        run: cp -r ../../gh-pages/* .
+        run: cp -r D:/a/HamleysAutomation/HamleysAutomation/gh-pages/* .
       - name: List files to be committed
         run: ls -l
       - name: Configure Git
         run: |
           git config --global user.email "soham.pandit@krishtechnolabs.com"
           git config --global user.name "SohamQAKrish"
+          
       - name: Commit and push Allure report to gh-pages branch
         run: |
           git add .
