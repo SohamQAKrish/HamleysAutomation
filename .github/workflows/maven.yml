@@ -71,7 +71,6 @@ jobs:
       - name: Copy Allure report files to gh-pages directory
         run: |
           cp -r allure-report-html/* gh-pages/
-      - name: Copy Allure report files to root directory
     
   publish-allure-report:
     runs-on: ubuntu-latest
