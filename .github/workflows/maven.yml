@@ -80,6 +80,9 @@ jobs:
         
       - name: Copy Allure report files to gh-pages directory
         run: |
+          if (!(Test-Path -Path "gh-pages")) {
+            New-Item -ItemType Directory -Path "gh-pages"
+          }
           Copy-Item -Path allure-report-html\* -Destination gh-pages\ -Recurse -Force
     
   publish-allure-report:
@@ -94,7 +97,10 @@ jobs:
           
       - name: Copy Allure report files to working directory
         run: |
-          Copy-Item -Path gh-pages\* -Destination . -Recurse -Force
+          if (!(Test-Path -Path "gh-pages")) {
+            New-Item -ItemType Directory -Path "gh-pages"
+          }
+          Copy-Item -Path allure-report-html\* -Destination gh-pages\ -Recurse -Force
 
       - name: Configure Git
         run: |
