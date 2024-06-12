@@ -22,6 +22,9 @@ jobs:
           java-version: '11'
           distribution: adopt
 
+      - name: Build with Maven
+        run: mvn clean install
+
   test:
     runs-on: windows-latest
     needs: build
@@ -35,8 +38,6 @@ jobs:
         with:
           java-version: '11'
           distribution: adopt
-      - name: Run Tests
-        run: mvn clean install
         
       - name: Run Tests
         run: mvn clean test
