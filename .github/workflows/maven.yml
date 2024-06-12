@@ -73,7 +73,7 @@ jobs:
           cp -r allure-report-html/* gh-pages/
     
   publish-allure-report:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: allure-report
     steps:
       - name: Checkout code
@@ -81,18 +81,18 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: adopt
+          
+      - name: Copy Allure report files to working directory
+        run: |
+          cp -r gh-pages/* .
+          
       - name: Configure Git
         run: |
           git config --global user.email "soham.pandit@krishtechnolabs.com"
           git config --global user.name "SohamQAKrish"
-          git checkout gh-pages
+          
       - name: Commit and push Allure report to gh-pages branch
         run: |
           git add .
-          git commit -m "Update Allure report"
+          git commit -m "Update Allure report" || echo "Nothing to commit"
           git push origin gh-pages --force --quiet
