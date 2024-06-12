@@ -80,7 +80,7 @@ jobs:
       - name: Clear existing content
         run: rm -rf ./*
       - name: Copy Allure report to root directory
-        run: cp -r D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-report-html/* .
+        run: cp -r allure-report-html/* .
       - name: List files in gh-pages directory
         run: ls -l
       - name: Commit and push changes
