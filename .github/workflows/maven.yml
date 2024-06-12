@@ -22,9 +22,6 @@ jobs:
           java-version: '11'
           distribution: adopt
 
-      - name: Build with Maven
-        run: mvn clean install -DskipTests
-
   test:
     runs-on: windows-latest
     needs: build
@@ -38,10 +35,9 @@ jobs:
         with:
           java-version: '11'
           distribution: adopt
-
       - name: Run Tests
-        run: mvn clean test -DskipTests
-    
+        run: mvn clean install -DskipTests
+
   allure-report:
     runs-on: windows-latest
     needs: test
@@ -62,42 +58,30 @@ jobs:
       - name: Install Allure CLI
         run: npm install -g allure-commandline
       - name: Convert Allure Report to HTML
-        run: allure generate D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-maven-plugin --clean -o D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-report-html
-      - name: List generated Allure report files
-        run: ls -l D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-report-html
-      - name: Ensure gh-pages directory
-        run: |
-          if (-not (Test-Path -Path "gh-pages")) {
-            New-Item -ItemType Directory -Path "gh-pages"
-          }
-      - name: Clear gh-pages directory
-        run: Remove-Item -Path "gh-pages\*" -Recurse -Force
-     
-      - name: Copy Allure report files to gh-pages directory
-        run: cp -r D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-report-html/* gh-pages/
-      - name: List files in gh-pages directory
-        run: ls -l gh-pages
+        run: allure generate D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-maven-plugin --clean -o allure-report-html
+      - name: List Allure report files
+        run: ls -l allure-report-html
 
   publish-allure-report:
     runs-on: ubuntu-latest
     needs: allure-report
     steps:
-      - name: Checkout code
+      - name: Checkout gh-pages branch
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: gh-pages
+          persist-credentials: false
           fetch-depth: 0
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: adopt
-      - name: Configure Git
+      - name: Clear existing content
+        run: rm -rf ./*
+      - name: Copy Allure report to root directory
+        run: cp -r D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-report-html/* .
+      - name: List files in gh-pages directory
+        run: ls -l
+      - name: Commit and push changes
         run: |
-          git config --global user.email "soham.pandit@krishtechnolabs.com"
-          git config --global user.name "SohamQAKrish"
-      - name: Publish Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./gh-pages
+          git config --global user.name 'SohamQAKrish'
+          git config --global user.email 'soham.pandit@krishtechnolabs.com'
+          git add .
+          git commit -m "Update Allure report"
+          git push origin gh-pages
