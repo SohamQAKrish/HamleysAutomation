@@ -54,7 +54,6 @@ jobs:
       - name: Generate Allure Report
         run: |
           mvn allure:report
-          rm -rf allure-report-html
           cp -r ${{ github.workspace }}/target/site/allure-maven-plugin allure-report-html
       - name: Verify Environment Properties File
         run: ls -l allure-results/environment.properties
@@ -81,7 +80,7 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
       - name: Remove existing Allure report directory
-        run: rm -rf allure-report-html
+        run: Remove-Item -Path allure-report-html -Recurse -Force
       - name: Copy Allure report from artifact
         run: cp -r ${{ github.workspace }}/allure-report-html/* .
       - name: List files in gh-pages directory
