@@ -61,6 +61,11 @@ jobs:
         run: allure generate D:/a/HamleysAutomation/HamleysAutomation/target/site/allure-maven-plugin --clean -o allure-report-html
       - name: List Allure report files
         run: ls -l allure-report-html
+      - name: Upload Allure report artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: allure-report-html
 
   publish-allure-report:
     runs-on: ubuntu-latest
