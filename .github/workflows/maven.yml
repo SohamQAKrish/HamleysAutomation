@@ -40,7 +40,7 @@ jobs:
           distribution: adopt
 
       - name: Run Tests
-        run: mvn test -Dsurefire.suiteXmlFiles=src/test/resources/LocalTestSuite.xml
+        run: mvn clean test site -Dsurefire.suiteXmlFiles=LocalTestSuite.xml
     
   allure-report:
     runs-on: windows-latest
