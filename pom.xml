@@ -18,7 +18,7 @@
         <environment>QA</environment>
         <browser>chrome</browser>
         <defaultTimeout>30</defaultTimeout>
-        <resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
+        <resultsDirectory>${project.basedir}/surefire-reports</resultsDirectory>
     </properties>
 
     <name>Hamleys QA Automation</name>
@@ -54,7 +54,7 @@
                         <browser>${browser}</browser>
                         <defaultTimeout>${defaultTimeout}</defaultTimeout>
                     </systemPropertyVariables>
-                    <reportsDirectory>${project.basedir}/surefire-reports</reportsDirectory>
+                    <reportsDirectory>${resultsDirectory}</reportsDirectory>
                     <forkCount>1</forkCount>
                     <reuseForks>true</reuseForks>
                 </configuration>
