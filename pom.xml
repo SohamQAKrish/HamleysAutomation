@@ -18,7 +18,20 @@
         <environment>QA</environment>
         <browser>chrome</browser>
         <defaultTimeout>30</defaultTimeout>
-        <resultsDirectory>${project.basedir}/surefire-reports</resultsDirectory>
+        <resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
+        <!-- Define versions for dependencies -->
+        <selenium.version>3.141.59</selenium.version>
+        <allure.version>2.19.0</allure.version>
+        <testng.version>7.4.0</testng.version>
+        <log4j.version>2.17.0</log4j.version>
+        <assertj.version>3.21.0</assertj.version>
+        <json-simple.version>1.1.1</json-simple.version>
+        <snakeyaml.version>1.26</snakeyaml.version>
+        <aspectjweaver.version>1.9.21.1</aspectjweaver.version>
+        <rest-assured.version>3.3.0</rest-assured.version>
+        <poi.version>4.1.2</poi.version>
+        <junit.version>4.13.1</junit.version>
+        <opencsv.version>3.4</opencsv.version>
     </properties>
 
     <name>Hamleys QA Automation</name>
@@ -33,11 +46,35 @@
     </developers>
 
     <dependencies>
-        <!-- Add your dependencies here -->
+        <!-- Selenium WebDriver -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+        
+        <!-- Other dependencies -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <!-- Add other dependencies here -->
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Surefire Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -54,16 +91,17 @@
                         <browser>${browser}</browser>
                         <defaultTimeout>${defaultTimeout}</defaultTimeout>
                     </systemPropertyVariables>
-                    <reportsDirectory>${resultsDirectory}</reportsDirectory>
+                    <reportsDirectory>${project.basedir}/surefire-reports</reportsDirectory>
                     <forkCount>1</forkCount>
                     <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
 
+            <!-- Allure Maven Plugin -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
-                <version>2.10.0</version>
+                <version>${allure.version}</version>
                 <configuration>
                     <resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
                 </configuration>
@@ -76,48 +114,3 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <compilerVersion>11</compilerVersion>
-                    <source>11</source>
-                    <target>11</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/libs</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-</project>
