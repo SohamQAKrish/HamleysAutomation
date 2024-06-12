@@ -36,12 +36,7 @@ jobs:
           java-version: '11'
           distribution: adopt
       - name: Run Tests
-        run: mvn -X clean test
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v2
-        with:
-          name: surefire-reports
-          path: surefire-reports/
+        run: mvn clean test
 
   allure-report:
     runs-on: windows-latest
@@ -76,10 +71,7 @@ jobs:
       - name: Copy Allure report files to gh-pages directory
         run: |
           cp -r allure-report-html/* gh-pages/
-      - name: Copy Allure report files to root directory
-        run: |
-          cp -r allure-report-html/* .
-
+    
   publish-allure-report:
     runs-on: ubuntu-latest
     needs: allure-report
