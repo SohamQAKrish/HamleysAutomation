@@ -54,7 +54,7 @@ jobs:
       - name: Generate Allure Report
         run: |
           mvn allure:report
-          cp -r ${{ github.workspace }}/target/site/allure-maven-plugin/* .
+          cp -r ${{ github.workspace }}/target/site/allure-maven-plugin/* ${{ github.workspace }}/allure-report-html/
       - name: Verify Environment Properties File
         run: ls -l allure-results/environment.properties
       - name: Install Allure CLI
@@ -79,6 +79,8 @@ jobs:
           ref: gh-pages
           persist-credentials: false
           fetch-depth: 0
+      - name: Ensure Allure report directory exists
+        run: mkdir -p allure-report-html
       - name: Copy Allure report from artifact
         run: cp -r ${{ github.workspace }}/allure-report-html/* .
       - name: List files in gh-pages directory
