@@ -83,9 +83,6 @@ jobs:
     runs-on: windows-latest
     needs: allure-report
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Deploy to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
