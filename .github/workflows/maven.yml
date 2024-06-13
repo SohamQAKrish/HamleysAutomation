@@ -1,4 +1,4 @@
-name: Latest Github Actions CI/CD
+name: Latest Github Actions CI | CD
 
 on:
   push:
@@ -40,7 +40,7 @@ jobs:
       - name: Verify Java version
         run: java -version
       - name: Run Tests
-        run: mvn clean test -DskipTests
+        run: mvn clean test
 
   allure-report:
     runs-on: windows-latest
@@ -76,30 +76,27 @@ jobs:
     runs-on: windows-latest
     needs: allure-report
     steps:
-      - name: Checkout gh-pages branch
+      - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ref: gh-pages
-          fetch-depth: 0 # Ensure full history is checked out
-          persist-credentials: false
-      - name: Remove old Allure report files
-        shell: powershell
-        run: |
-          $paths = @('index.html', 'widgets', 'plugin', 'history', 'export', 'data', 'styles.css', 'favicon.ico', 'app.js')
-          foreach ($path in $paths) {
-            if (Test-Path $path) {
-              Remove-Item -Recurse -Force $path
-            }
-          }
-      - name: Copy Allure report from artifact
-        run: |
-          cp -r allure-report-html/* .
-      - name: Configure Git
+          ref: main
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: adopt
+      - name: Verify Java version
+        run: java -version
+      - name: Publish Allure Report to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.email "soham.pandit@krishtechnolabs.com"
           git config --global user.name "SohamQAKrish"
-      - name: Commit and push changes
-        run: |
+          git clone --single-branch --branch gh-pages https://github.com/SohamQAKrish/HamleysAutomation.git gh-pages
+          cd gh-pages
+          Remove-Item -Recurse -Force *
+          Copy-Item -Recurse ../target/site/allure-maven-plugin/* .
           git add .
           git commit -m "Publish Allure Report to GitHub Pages"
           git push origin gh-pages --force --quiet
