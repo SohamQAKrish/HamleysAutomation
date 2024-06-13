@@ -96,12 +96,6 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Prepare Allure Report Artifact
-        run: |
-          cp -r ${{ github.workspace }}/allure-results/* ${{ github.workspace }}/allure-report-html/
-          cp ${{ github.workspace }}/allure-results/environment.properties ${{ github.workspace }}/allure-report-html/
-          cp ${{ github.workspace }}/allure-results/categories.json ${{ github.workspace }}/allure-report-html/
-
       - name: Deploy to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
