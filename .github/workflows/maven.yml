@@ -80,7 +80,7 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
       - name: Remove existing Allure report directory
-        run: Remove-Item -Path allure-report-html -Recurse -Force
+        run: rm -rf allure-report-html
       - name: Copy Allure report from artifact
         run: cp -r ${{ github.workspace }}/allure-report-html/* .
       - name: List files in gh-pages directory
