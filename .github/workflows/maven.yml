@@ -83,8 +83,9 @@ jobs:
           fetch-depth: 0 # Ensure full history is checked out
           persist-credentials: false
       - name: Remove old Allure report files
+        shell: powershell
         run: |
-          rm -rf index.html widgets plugin history export data styles.css favicon.ico app.js
+          Remove-Item -Recurse -Force index.html, widgets, plugin, history, export, data, styles.css, favicon.ico, app.js
       - name: Copy Allure report from artifact
         run: |
           cp -r allure-report-html/* .
