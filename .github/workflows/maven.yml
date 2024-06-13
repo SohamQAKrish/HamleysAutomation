@@ -65,26 +65,11 @@ jobs:
       - name: Verify Environment Properties File
         run: ls -l allure-results/environment.properties
 
-      - name: Install Allure CLI
-        run: npm install -g allure-commandline
-
-      - name: Generate HTML Allure Report
-        run: allure generate allure-results --clean -o allure-report-html
-
-      - name: Copy Environment Properties
-        run: cp allure-results/environment.properties allure-report-html/
-
       - name: Upload Allure Results
         uses: actions/upload-artifact@v2
         with:
           name: allure-results
           path: allure-results
-
-      - name: Upload HTML Allure Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: allure-html-report
-          path: allure-report-html
 
   publish-allure-report:
     runs-on: windows-latest
@@ -99,16 +84,20 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      - name: Prepare Allure Report Artifact
+        run: |
+          mkdir allure-report
+          cp -r ${{ github.workspace }}/allure-results ${{ github.workspace }}/allure-report
+
       - name: Deploy to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cd allure-report-html
+          cd allure-report         
           git init
           git config user.email "soham.pandit@krishtechnolabs.com"
           git config user.name "SohamQAKrish"
           git checkout -b gh-pages
           git add .
           git commit -m "Update Allure report"
-          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/SohamQAKrish/HamleysAutomation.git
           git push -f -u origin gh-pages
