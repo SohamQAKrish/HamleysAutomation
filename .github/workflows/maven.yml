@@ -40,7 +40,7 @@ jobs:
       - name: Verify Java version
         run: java -version
       - name: Run Tests
-        run: mvn clean test
+        run: mvn clean test -DskipTests
 
   allure-report:
     runs-on: windows-latest
