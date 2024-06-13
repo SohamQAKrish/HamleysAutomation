@@ -89,7 +89,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cd allure-results
+          cd allure-report
           git init
           git config user.email "soham.pandit@krishtechnolabs.com"
           git config user.name "SohamQAKrish"
