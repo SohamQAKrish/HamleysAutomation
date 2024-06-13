@@ -100,6 +100,7 @@ jobs:
         run: |
           cp -r ${{ github.workspace }}/allure-results/* ${{ github.workspace }}/allure-report-html/
           cp ${{ github.workspace }}/allure-results/environment.properties ${{ github.workspace }}/allure-report-html/
+          cp ${{ github.workspace }}/allure-results/categories.json ${{ github.workspace }}/allure-report-html/
 
       - name: Deploy to GitHub Pages
         env:
