@@ -85,7 +85,12 @@ jobs:
       - name: Remove old Allure report files
         shell: powershell
         run: |
-          Remove-Item -Recurse -Force index.html, widgets, plugin, history, export, data, styles.css, favicon.ico, app.js
+          $paths = @('index.html', 'widgets', 'plugin', 'history', 'export', 'data', 'styles.css', 'favicon.ico', 'app.js')
+          foreach ($path in $paths) {
+            if (Test-Path $path) {
+              Remove-Item -Recurse -Force $path
+            }
+          }
       - name: Copy Allure report from artifact
         run: |
           cp -r allure-report-html/* .
