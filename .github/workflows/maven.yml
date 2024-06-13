@@ -93,13 +93,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cd allure-report
-          
+          cd allure-report         
           git init
           git config user.email "soham.pandit@krishtechnolabs.com"
           git config user.name "SohamQAKrish"
-          git branch gh-pages origin/main
-          git checkout gh-pages
+          git checkout -b gh-pages
           git add .
           git commit -m "Update Allure report"
+          git remote add origin https://github.com/SohamQAKrish/HamleysAutomation.git
           git push -f -u origin gh-pages
