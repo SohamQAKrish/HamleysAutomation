@@ -6,9 +6,9 @@
 		<parameter name="browser" value="${browser}" />
 		<parameter name="defaultTimeout" value="${defaultTimeout}" />
 		<classes>
-			<class name="sanity.hamleys.SanityHamleyesAccountTestGithub">
+			<class name="sanity.hamleys.SanityHamleysCheckoutAsGuestUser">
 				<methods>
-					<include name="testgitHubActions" />
+					<include name="testCheckAllureTesting" />
 				</methods>
 			</class>
 		</classes>

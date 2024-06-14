@@ -37,4 +37,30 @@ public class SanityHamleysCheckoutAsGuestUser {
 		UtilitiesCommon.waitForMilliseconds(2000);
 		HamleysCheckoutAsGuestUserPage.hamleysPlaceOrder();
 	}
+	
+	/**
+	 * @author RShivam
+	 * @throws InterruptedException 
+	 * @lastmodifiedby RShivam
+	 */
+	@Test(testName = "Hamleys verify the checkout screen as Guest User")
+	@Description("This Test is used to Add product and checkout as Guest User")
+	public void testCheckAllureTesting(){
+		UtilitiesCommon.launchApplication();
+		HamleysCheckoutAsGuestUserPage.hamleysSelectProductFromHome();
+		UtilitiesCommon.waitForMilliseconds(5000);
+		HamleysCheckoutAsGuestUserPage.hamleysAddtoCartProduct();
+		UtilitiesCommon.waitForMilliseconds(5000);
+		HamleysCheckoutAsGuestUserPage.hamleysSelectMiniCart();
+		UtilitiesCommon.waitForMilliseconds(3000);
+		HamleysCheckoutAsGuestUserPage.hamleysContinueToCheckoutScreen();
+		UtilitiesCommon.waitForMilliseconds(2000);
+		HamleysCheckoutAsGuestUserPage.hamleysSelectCheckoutAsGuestUser();
+		UtilitiesCommon.waitForMilliseconds(2000);
+		HamleysCheckoutAsGuestUserPage.hamleysEnterShippingAddressDetails();
+		UtilitiesCommon.waitForMilliseconds(2000);
+		HamleysCheckoutAsGuestUserPage.hamleysEnterCardNumber();
+		UtilitiesCommon.waitForMilliseconds(2000);
+		HamleysCheckoutAsGuestUserPage.hamleysPlaceOrder();
+	}
 }
