@@ -32,6 +32,17 @@ SanityHamleysCheckoutAsGuestUser:
     CardNumber: "4111 1111 1111 1111"
     ExpDate: "0330"
     CVV: "737"
+ - testCheckAllureTesting:
+    GuestUserEmailAddress: "tempshivam@getnada.com"
+    FirstName: "GuestU"
+    LastName: "Shivam"
+    PhoneNumber: "520000000"
+    StreetRoad: "Britain Street"
+    City: "Giddaluru"
+    ZipCode: "523357"
+    CardNumber: "4111 1111 1111 1111"
+    ExpDate: "0330"
+    CVV: "737"
 SanityHamleysMainMenuNavigation:
  - testMainMenuNavigation:
 SanityHamleysLoginLogout:
