@@ -49,4 +49,6 @@ SanityHamleysLoginLogout:
  - testLoginLogout:
 SanityHamleyesAccountTestGithub:
  - testgitHubActions:
- 
+SanityHamleyesFootersectiontest:
+ - Footerlinks:
+    Pagetitle: "Footer"
