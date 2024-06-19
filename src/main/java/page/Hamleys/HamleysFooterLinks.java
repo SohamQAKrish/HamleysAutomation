@@ -114,7 +114,7 @@ public class HamleysFooterLinks {
 	public static void footerFBLinkCheck() throws InterruptedException {
 		UtilitiesCommon.waitForMilliseconds(3000);
 		//UtilitiesCommon.scrolltillpageend();
-		UtilitiesCommon.setupWebdriverWait();
+	//	UtilitiesCommon.setupWebdriverWait();
 		UtilitiesCommon.waitForMilliseconds(3000);
 		UtilitiesCommon.click(HamleysFooterEnum.HAMLEYS_FOOTER_FB_XPATH);
 		UtilitiesCommon.waitForMilliseconds(3000);

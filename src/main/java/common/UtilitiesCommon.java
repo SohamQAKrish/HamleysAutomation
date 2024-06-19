@@ -168,10 +168,10 @@ public class UtilitiesCommon {
 	 * This method is used to setup the webdriver wait instance.
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby kdave
 	 */
-	public static void setupWebdriverWait() {
-		wait = new WebDriverWait(driver, waitTime);
+	public static void setupWebdriverWait(int waitTimeInSeconds) {
+	    wait = new WebDriverWait(driver, waitTimeInSeconds);
 	}
 
 	/**
@@ -183,7 +183,9 @@ public class UtilitiesCommon {
 	public static void setupJavaScriptExecutor() {
 		jsExecutor = (JavascriptExecutor) driver;
 	}
-
+	 static {
+	        setupLogger();
+	    }
 	/**
 	 * This method will set up the log4j logger
 	 * 
@@ -191,10 +193,9 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static void setupLogger() {
-		logger = LogManager.getLogger(UtilitiesCommon.class);
+        logger = LogManager.getLogger(UtilitiesCommon.class);
 	}
-
-	/**
+		/**
 	 * This method is used to initialize the object for Actions class
 	 * 
 	 * @author spandit
@@ -203,8 +204,12 @@ public class UtilitiesCommon {
 	public static void setupActionsBuilder() {
 		builder = new Actions(driver);
 	}
-
-	/**
+	
+	 public static void clickWithMouseHover(WebElement element) {
+	        Actions actions = new Actions(driver);
+	        actions.moveToElement(element).click().perform();
+	    }
+	/**	
 	 * This method is used to initialize the object for SoftAssert class
 	 * 
 	 * @author spandit
@@ -213,7 +218,6 @@ public class UtilitiesCommon {
 	public static void setupSoftAssert() {
 		softAssert = new SoftAssert();
 	}
-
 	/**
 	 * This method will log the message in console as well as in allure report.
 	 * 
@@ -238,6 +242,7 @@ public class UtilitiesCommon {
 		return EncryptDecrypt.decryptPassword(encryptedPassword);
 	}
 
+	
 	/**
 	 * This method is used to read .yaml files
 	 * 
@@ -288,38 +293,9 @@ public class UtilitiesCommon {
 					"Invalid Environment detail is present in testng xml file or Environments.yaml file : "
 							+ environment);
 		}
-	}
-
+	}	
 	/**
-	 * This method is used to read Testrail details from Environments.yaml and store
-	 * it in map
-	 * 
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void readTestrailData() {
-		if (!isLocalSuite) {
-			log("Reading user credentials and URL for Testrail");
-			HashMap<String, Object> result = readYamlFile("Environments.yaml");
-			testrailAttributes = new HashMap<>();
-			HashMap<String, String> envDetails = (HashMap<String, String>) result.get(TESTRAIL_KEY);
-			try {
-				for (Entry<String, String> entry : envDetails.entrySet()) {
-					testrailAttributes.put(entry.getKey(), entry.getValue());
-				}
-			} catch (Exception e) {
-				throw new CustomExceptions("Expected Testrail key: " + TESTRAIL_KEY
-						+ " or values missing in Environments.yaml: " + e.getMessage());
-			}
-		} else {
-			log("Executing Local suite, Testrail data won't be read from Environments.yaml");
-		}
-	}
-
-	/**
-	 * This method is used to read Test Class Data from TestData.yaml and store it
-	 * in map
-	 * 
+	 * This method is used to read Test Class Data from TestData.yaml and store it in map
 	 * @param testClass Test Class
 	 * @author spandit
 	 * @lastmodifiedby spandit
@@ -341,11 +317,8 @@ public class UtilitiesCommon {
 			throw new CustomExceptions("Test Data is not present in TestData.yaml for Class : " + className);
 		}
 	}
-
 	/**
-	 * This method is used to read Test Case Data from TestData.yaml and store it in
-	 * map
-	 * 
+	 * This method is used to read Test Case Data from TestData.yaml and store it in map
 	 * @param result ITestResult
 	 * @author spandit
 	 * @lastmodifiedby spandit
@@ -370,7 +343,6 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method is used to set up the web driver using Bonigarcia.
-	 * 
 	 * @param context Context
 	 * @author spandit
 	 * @lastmodifiedby spandit
@@ -389,7 +361,6 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method is used to add arguments for chrome options
-	 * 
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
@@ -421,6 +392,9 @@ public class UtilitiesCommon {
 							+ File.separator + "resources" + File.separator + "TestData" + File.separator
 							+ "TestDataDownload");
 			chromeOptions.setExperimentalOption("prefs", preferences);
+		  //run test with headless mode for git actions
+			//chromeOptions.addArguments("--headless");
+
 			driver = new ChromeDriver(chromeOptions);
 		}
 
@@ -450,7 +424,6 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method is used to get the web driver
-	 * 
 	 * @return driver
 	 * @author spandit
 	 * @lastmodifiedby spandit
@@ -458,6 +431,7 @@ public class UtilitiesCommon {
 	public static WebDriver getDriver() {
 		return driver;
 	}
+
 
 	/**
 	 * This method is used to get the Javascript Executor
@@ -487,7 +461,7 @@ public class UtilitiesCommon {
 			driver.manage().window().maximize();
 		}
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		setupWebdriverWait();
+		setupWebdriverWait(30);
 		setupJavaScriptExecutor();
 		setupActionsBuilder();
 		applicationUrl = UtilitiesCommon.getEnvironmentData(ATTRIBUTE_APPLICATION);
