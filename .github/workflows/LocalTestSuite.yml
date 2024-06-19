@@ -1,4 +1,4 @@
-name: LocalTestYMLRun
+name: Local Test Suite
 
 on:
   push:
