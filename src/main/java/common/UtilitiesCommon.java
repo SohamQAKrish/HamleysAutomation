@@ -19,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -921,7 +922,7 @@ public class UtilitiesCommon {
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
-	private static void waitForElementIsVisible(By locator) {
+	public static void waitForElementIsVisible(By locator) {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
 
@@ -2349,4 +2350,29 @@ public class UtilitiesCommon {
 		WebElement element = driver.findElement(locator);
 		executeJS("arguments[0].scrollIntoView(true);", element);
 	}
+
+	public static void scrolltillpageend() {
+		JavascriptExecutor js1 = (JavascriptExecutor) driver;
+		js1.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+	}
+
+	public static void waitForPageLoad(WebDriver driver) {
+	    WebDriverWait wait = new WebDriverWait(driver, 30);
+
+	    // Wait for JavaScript to finish executing
+	    wait.until(webDriver -> ((JavascriptExecutor) webDriver)
+	            .executeScript("return document.readyState").equals("complete"));
+	}
+
+	public static String gettitle() {
+		// TODO Auto-generated method stub
+		return driver.getTitle();
+	}
+
+	public static void switchtoTab(int x) {
+		 ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+		    driver.switchTo().window(tabs.get(x));
+	}
+
+	
 }
