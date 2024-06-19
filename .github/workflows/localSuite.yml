@@ -1,4 +1,4 @@
-name: LocalTestYML
+name: LocalTestYMLRun
 
 on:
   push:
