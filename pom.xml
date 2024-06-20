@@ -11,10 +11,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <aspectj.version>1.9.21.1</aspectj.version>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <xmlPath>src/test/resources</xmlPath>
-        <suiteXmlFile>LocalTestSuite.xml</suiteXmlFile>
+    	<localSuiteXmlFile>LocalTestSuite.xml</localSuiteXmlFile>
+        <sanitySuiteXmlFile>SanityTestSuite.xml</sanitySuiteXmlFile>
         <environment>QA</environment>
         <browser>chrome</browser>
         <defaultTimeout>30</defaultTimeout>
@@ -125,7 +126,7 @@
         </dependency>
     </dependencies>
 
-    <build>
+   <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -146,7 +147,7 @@
                     <reportsDirectory>${project.basedir}/surefire-reports</reportsDirectory>
                 </configuration>
             </plugin>
-
+	
             <!-- Allure Maven Plugin Configuration -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
@@ -171,11 +172,11 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <compilerVersion>21</compilerVersion>
-                    <source>21</source>
-                    <target>21</target>
-                    <testSource>21</testSource>
-                    <testTarget>21</testTarget>
+                    <compilerVersion>17</compilerVersion>
+                    <source>17</source>
+                    <target>17</target>
+                    <testSource>17</testSource>
+                    <testTarget>17</testTarget>
                 </configuration>
             </plugin>
             <plugin>
