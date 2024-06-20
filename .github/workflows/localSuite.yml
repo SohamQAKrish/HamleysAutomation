@@ -42,7 +42,7 @@ jobs:
         run: java -version
   
       - name: Run Local Test
-        run: mvn clean test -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml -Denvironment=QA -Dbrowser=chrome -DdefaultTimeout=30
+        run: mvn clean test -DskipTests -Plocal-tests
 
   allure-report:
     runs-on: windows-latest
