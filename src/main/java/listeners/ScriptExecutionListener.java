@@ -13,7 +13,7 @@ public class ScriptExecutionListener implements ITestListener, IClassListener {
 	public void onStart(ITestContext context) {
 		UtilitiesCommon.init(context);
 		UtilitiesCommon.readEnvironmentData(context);
-		//UtilitiesCommon.readTestrailData();
+		UtilitiesCommon.readTestrailData();
 		UtilitiesCommon.createTestrailRun(context);
 		UtilitiesCommon.setAllureEnvironment(context);
 		UtilitiesCommon.deleteAllureReportsAndAttachments();

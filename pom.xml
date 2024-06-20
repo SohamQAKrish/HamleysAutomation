@@ -14,7 +14,8 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <xmlPath>src/test/resources</xmlPath>
-        <suiteXmlFile>LocalTestSuite.xml</suiteXmlFile>
+    	<localSuiteXmlFile>LocalTestSuite.xml</localSuiteXmlFile>
+        <sanitySuiteXmlFile>SanityTestSuite.xml</sanitySuiteXmlFile>
         <environment>QA</environment>
         <browser>chrome</browser>
         <defaultTimeout>30</defaultTimeout>
@@ -146,7 +147,7 @@
                     <reportsDirectory>${project.basedir}/surefire-reports</reportsDirectory>
                 </configuration>
             </plugin>
-
+	
             <!-- Allure Maven Plugin Configuration -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
