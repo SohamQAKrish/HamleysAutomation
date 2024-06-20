@@ -41,8 +41,8 @@ jobs:
       - name: Verify Java version
         run: java -version
   
-      - name: Run Tests
-        run: mvn clean test -DxmlPath=C:\Users\kashyap.dave\eclipse-workspace\HamleysAutomation\src\test\resources\LocalTestSuite.xml -DsuiteXmlFile=LocalTestSuite
+      - name: Run Local Test Suite
+        run: mvn clean test -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
 
   allure-report:
     runs-on: windows-latest
