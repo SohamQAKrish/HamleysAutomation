@@ -42,7 +42,7 @@ jobs:
         run: java -version
   
       - name: Run Tests
-        run: mvn clean test -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml
+        run: mvn clean test -DxmlPath=C:\Users\kashyap.dave\eclipse-workspace\HamleysAutomation\src\test\resources\LocalTestSuite.xml -DsuiteXmlFile=LocalTestSuite
 
   allure-report:
     runs-on: windows-latest
