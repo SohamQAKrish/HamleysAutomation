@@ -1,0 +1,12 @@
+launch_status failed=0 1719471608000000000
+launch_status broken=5 1719471608000000000
+launch_status passed=3 1719471608000000000
+launch_status skipped=0 1719471608000000000
+launch_status unknown=0 1719471608000000000
+launch_time duration=90877323 1719471608000000000
+launch_time min_duration=64247 1719471608000000000
+launch_time max_duration=163680 1719471608000000000
+launch_time sum_duration=979600 1719471608000000000
+launch_problems webelement_locator_failure=5 1719471608000000000
+launch_retries retries=0 1719471608000000000
+launch_retries run=8 1719471608000000000

@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"5c88273acd03f9cc4ffe14033ddb94f4","name":"Sanity Test Suite","statistic":{"failed":0,"broken":5,"skipped":0,"passed":2,"unknown":0,"total":7}},{"uid":"94b8f37436083008087d5e7a1148a372","name":"Local Test Suite","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}
