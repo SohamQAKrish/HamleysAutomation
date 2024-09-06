@@ -8,7 +8,7 @@
 		<classes>
 			<class name="sanity.hamleys.SanityHamleysCheckoutAsGuestUser">
 				<methods>
-					<include name="testCheckAllureTesting" />
+				 	<include name="testLoginLogout" />
 				</methods>
 			</class>
 		</classes>
