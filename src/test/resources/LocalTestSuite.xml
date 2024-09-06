@@ -6,9 +6,9 @@
 		<parameter name="browser" value="${browser}" />
 		<parameter name="defaultTimeout" value="${defaultTimeout}" />
 		<classes>
-			<class name="sanity.hamleys.SanityHamleysCheckoutAsGuestUser">
+			<class name="sanity.hamleys.SanityHamleysLoginLogout">
 				<methods>
-					<include name="testCheckAllureTesting" />
+					<include name="testLoginLogout" />
 				</methods>
 			</class>
 		</classes>

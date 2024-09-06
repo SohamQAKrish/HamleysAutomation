@@ -41,9 +41,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -2349,4 +2351,43 @@ public class UtilitiesCommon {
 		WebElement element = driver.findElement(locator);
 		executeJS("arguments[0].scrollIntoView(true);", element);
 	}
+	
+	public static void clickAcceptButton() {
+        try {
+            UtilitiesCommon.waitForMilliseconds(3000);
+            WebElement shadowHost = driver.findElement(By.id("usercentrics-root"));
+            Object shadowRoot = ((JavascriptExecutor) driver).executeScript("return arguments[0].shadowRoot", shadowHost);
+            if (shadowRoot == null) {
+                System.err.println("Failed to obtain shadow root.");
+                return;
+            }
+            WebElement acceptButton = (WebElement) ((JavascriptExecutor) driver).executeScript(
+                    "return arguments[0].querySelector(\"button[data-testid='uc-accept-all-button'][role='button']\")",
+                    shadowRoot);
+            if (acceptButton != null) {
+                acceptButton.click();
+                System.out.println("Accept button clicked successfully!");
+            } else {
+                System.err.println("Accept button not found.");
+            }
+        } catch (TimeoutException e) {
+            System.err.println("Timeout waiting for elements: " + e.getMessage());
+        } catch (NoSuchElementException e) {
+            System.err.println("Element not found: " + e.getMessage());
+        } catch (ClassCastException e) {
+            System.err.println("Class cast exception: " + e.getMessage());
+        } catch (WebDriverException e) {
+            System.err.println("WebDriver encountered an exception: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (driver != null) {
+                try {
+                    // driver.quit();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
