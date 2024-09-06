@@ -16,7 +16,7 @@ public class HamleysLoginLogoutPage {
 	 */
 	public static void login(String usernameKey, String passwordKey) {
 		UtilitiesCommon.launchApplication();
-		UtilitiesCommon.click(HamleysLoginLogoutEnum.HOMEPAGE_ACCEPT_XPATH);
+		//UtilitiesCommon.click(HamleysLoginLogoutEnum.HOMEPAGE_ACCEPT_XPATH);
 		UtilitiesCommon.click(HamleysLoginLogoutEnum.LOGINPAGE_LOGIN_REGISTER_XPATH);
 		String username = UtilitiesCommon.getEnvironmentData(usernameKey);
 		String password = UtilitiesCommon.getEnvironmentData(passwordKey);
@@ -34,7 +34,7 @@ public class HamleysLoginLogoutPage {
 	 * @lastmodifiedby RShivam
 	 */
 	public static void logout() {
-		UtilitiesCommon.waitForMilliseconds(6000);
+		UtilitiesCommon.waitForMilliseconds(3000);
 		UtilitiesCommon.applicationLogout();
 		UtilitiesCommon.waitForElementIsPresent(HamleysLoginLogoutEnum.LOGIN_SIGNOUT_CLICK_XPATH);
 		UtilitiesCommon.click(HamleysLoginLogoutEnum.LOGIN_SIGNOUT_CLICK_XPATH);

@@ -8,7 +8,7 @@
 		<classes>
 			<class name="sanity.hamleys.SanityHamleysLoginLogout">
 				<methods>
-					<include name="testLoginLogout" />
+				 	<include name="testLoginLogout" />
 				</methods>
 			</class>
 		</classes>
