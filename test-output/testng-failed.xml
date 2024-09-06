@@ -11,6 +11,7 @@
           <include name="testLoginLogout"/>
         </methods>
       </class> <!-- sanity.hamleys.SanityHamleysLoginLogout -->
+
     </classes>
   </test> <!-- Local Tests(failed) -->
 </suite> <!-- Failed suite [Local Test Suite] -->

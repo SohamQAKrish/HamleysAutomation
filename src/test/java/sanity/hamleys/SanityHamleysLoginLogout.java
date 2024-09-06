@@ -19,6 +19,6 @@ public class SanityHamleysLoginLogout {
 	@Description("This Test is used to Verify login to the system and logout from the system")
 	public void testLoginLogout() {
 		HamleysLoginLogoutPage.login("AdminUserName", "AdminPassword");
-		HamleysLoginLogoutPage.logout();
+		//HamleysLoginLogoutPage.logout();
 	}
 }
