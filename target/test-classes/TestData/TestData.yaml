@@ -49,4 +49,9 @@ SanityHamleysLoginLogout:
  - testLoginLogout:
 SanityHamleyesAccountTestGithub:
  - testgitHubActions:
+SanityHamleysShoppingCartValidation:
+ - testAddItemToCartValidation:
+    ProductName: "Laser Battle Hunters"
+    ProductQTY: "1000"
+    
  

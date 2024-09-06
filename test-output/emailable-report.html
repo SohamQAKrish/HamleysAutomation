@@ -9,10 +9,24 @@
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
 <tr><th colspan="8">Local Test Suite</th></tr>
-<tr><td><a href="#t0">Local Tests</a></td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">62,173</td><td></td><td></td></tr>
+<tr><td><a href="#t0">Local Tests</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">1</td><td class="num">137,176</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Local Test Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Local Tests &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">sanity.hamleys.SanityHamleysLoginLogout</td><td><a href="#m0">testLoginLogout</a></td><td rowspan="1">1725605398553</td><td rowspan="1">48475</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Local Test Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Local Tests &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">sanity.hamleys.SanityHamleysShoppingCartValidation</td><td><a href="#m0">testAddItemToCartValidation</a></td><td rowspan="1">1725620865099</td><td rowspan="1">117381</td></tr></tbody>
 </table>
-<h2>Local Tests</h2><h3 id="m0">sanity.hamleys.SanityHamleysLoginLogout#testLoginLogout</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>Local Tests</h2><h3 id="m0">sanity.hamleys.SanityHamleysShoppingCartValidation#testAddItemToCartValidation</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.cssSelector: a.action.viewcart.button[title=&apos;View Bag &amp; Checkout&apos;] (tried for 60 second(s) with 500 milliseconds interval)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;KRISH107&apos;, ip: &apos;172.20.10.12&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;21.0.2&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 128.0.6613.115, chrome: {chromedriverVersion: 128.0.6613.119 (6e439cfca4d..., userDataDir: C:\Users\SHIVAM~1.KRI\AppDa...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:56315}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: c135dda1d1de19cf3f23ee48f5dcd7c6
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:95)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:272)
+	at common.UtilitiesCommon.waitForElementIsVisible(UtilitiesCommon.java:927)
+	at common.UtilitiesCommon.getElement(UtilitiesCommon.java:709)
+	at common.UtilitiesCommon.click(UtilitiesCommon.java:822)
+	at page.Hamleys.HamleysShoppingCartValidation.testAccessMiniCart(HamleysShoppingCartValidation.java:30)
+	at sanity.hamleys.SanityHamleysShoppingCartValidation.testAddItemToCartValidation(SanityHamleysShoppingCartValidation.java:22)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+... Removed 25 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>
