@@ -57,9 +57,9 @@ function toggleAllBoxes() {
 <tr>
 <td>Tests passed/Failed/Skipped:</td><td>0/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Fri Sep 06 16:37:42 IST 2024</td>
+<td>Started on:</td><td>Fri Sep 13 16:30:31 IST 2024</td>
 </tr>
-<tr><td>Total time:</td><td>137 seconds (137176 ms)</td>
+<tr><td>Total time:</td><td>270 seconds (270218 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -76,34 +76,43 @@ function toggleAllBoxes() {
 </tr>
 <tr>
 <td title='sanity.hamleys.SanityHamleysShoppingCartValidation.testAddItemToCartValidation()'><b>testAddItemToCartValidation</b><br>Test class: sanity.hamleys.SanityHamleysShoppingCartValidation</td>
-<td><div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.cssSelector: a.action.viewcart.button[title=&apos;View Bag &amp; Checkout&apos;] (tried for 60 second(s) with 500 milliseconds interval)
-Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
-System info: host: &apos;KRISH107&apos;, ip: &apos;172.20.10.12&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;21.0.2&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 128.0.6613.115, chrome: {chromedriverVersion: 128.0.6613.119 (6e439cfca4d..., userDataDir: C:\Users\SHIVAM~1.KRI\AppDa...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:56315}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: c135dda1d1de19cf3f23ee48f5dcd7c6
+<td><div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for presence of element located by: By.cssSelector: div.message-error.error.message &gt; div (tried for 60 second(s) with 500 milliseconds interval)
 	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:95)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:272)
-	at common.UtilitiesCommon.waitForElementIsVisible(UtilitiesCommon.java:927)
-	at common.UtilitiesCommon.getElement(UtilitiesCommon.java:709)
-	at common.UtilitiesCommon.click(UtilitiesCommon.java:822)
-	at page.Hamleys.HamleysShoppingCartValidation.testAccessMiniCart(HamleysShoppingCartValidation.java:30)
-	at sanity.hamleys.SanityHamleysShoppingCartValidation.testAddItemToCartValidation(SanityHamleysShoppingCartValidation.java:22)
+	at common.UtilitiesCommon.waitForElementIsPresent(UtilitiesCommon.java:1216)
+	at page.Hamleys.HamleysShoppingCartValidation.testInValidCouponCode(HamleysShoppingCartValidation.java:68)
+	at sanity.hamleys.SanityHamleysShoppingCartValidation.testAddItemToCartValidation(SanityHamleysShoppingCartValidation.java:25)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-... Removed 25 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1893562871", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1893562871'><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.cssSelector: a.action.viewcart.button[title=&apos;View Bag &amp; Checkout&apos;] (tried for 60 second(s) with 500 milliseconds interval)
+Caused by: org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;div.message-error.error.message &gt; div&quot;}
+  (Session info: chrome=128.0.6613.137)
+For documentation on this error, please visit: https://www.seleniumhq.org/exceptions/no_such_element.html
 Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
 System info: host: &apos;KRISH107&apos;, ip: &apos;172.20.10.12&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;21.0.2&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 128.0.6613.115, chrome: {chromedriverVersion: 128.0.6613.119 (6e439cfca4d..., userDataDir: C:\Users\SHIVAM~1.KRI\AppDa...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:56315}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: c135dda1d1de19cf3f23ee48f5dcd7c6
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 128.0.6613.137, chrome: {chromedriverVersion: 128.0.6613.137 (fe621c5aa2d..., userDataDir: C:\Users\SHIVAM~1.KRI\AppDa...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:54378}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 5f76eef2f5c34cc93235127a0f3514a4
+*** Element info: {Using=css selector, value=div.message-error.error.message &gt; div}
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:323)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByCssSelector(RemoteWebDriver.java:420)
+	at org.openqa.selenium.By$ByCssSelector.findElement(By.java:431)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:315)
+	at org.openqa.selenium.support.ui.ExpectedConditions$6.apply(ExpectedConditions.java:182)
+	at org.openqa.selenium.support.ui.ExpectedConditions$6.apply(ExpectedConditions.java:179)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:249)
+	... 29 more
+... Removed 28 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1927966667", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1927966667'><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for presence of element located by: By.cssSelector: div.message-error.error.message &gt; div (tried for 60 second(s) with 500 milliseconds interval)
 	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:95)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:272)
-	at common.UtilitiesCommon.waitForElementIsVisible(UtilitiesCommon.java:927)
-	at common.UtilitiesCommon.getElement(UtilitiesCommon.java:709)
-	at common.UtilitiesCommon.click(UtilitiesCommon.java:822)
-	at page.Hamleys.HamleysShoppingCartValidation.testAccessMiniCart(HamleysShoppingCartValidation.java:30)
-	at sanity.hamleys.SanityHamleysShoppingCartValidation.testAddItemToCartValidation(SanityHamleysShoppingCartValidation.java:22)
+	at common.UtilitiesCommon.waitForElementIsPresent(UtilitiesCommon.java:1216)
+	at page.Hamleys.HamleysShoppingCartValidation.testInValidCouponCode(HamleysShoppingCartValidation.java:68)
+	at sanity.hamleys.SanityHamleysShoppingCartValidation.testAddItemToCartValidation(SanityHamleysShoppingCartValidation.java:25)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:133)
@@ -130,9 +139,35 @@ Session ID: c135dda1d1de19cf3f23ee48f5dcd7c6
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+Caused by: org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;div.message-error.error.message &gt; div&quot;}
+  (Session info: chrome=128.0.6613.137)
+For documentation on this error, please visit: https://www.seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;KRISH107&apos;, ip: &apos;172.20.10.12&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;21.0.2&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 128.0.6613.137, chrome: {chromedriverVersion: 128.0.6613.137 (fe621c5aa2d..., userDataDir: C:\Users\SHIVAM~1.KRI\AppDa...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:54378}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 5f76eef2f5c34cc93235127a0f3514a4
+*** Element info: {Using=css selector, value=div.message-error.error.message &gt; div}
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:323)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByCssSelector(RemoteWebDriver.java:420)
+	at org.openqa.selenium.By$ByCssSelector.findElement(By.java:431)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:315)
+	at org.openqa.selenium.support.ui.ExpectedConditions$6.apply(ExpectedConditions.java:182)
+	at org.openqa.selenium.support.ui.ExpectedConditions$6.apply(ExpectedConditions.java:179)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:249)
+	... 29 more
 </pre></div></td>
-<td>117</td>
-<td>sanity.hamleys.SanityHamleysShoppingCartValidation@a50ae65</td></tr>
+<td>259</td>
+<td>sanity.hamleys.SanityHamleysShoppingCartValidation@13a37e2a</td></tr>
 </table><p>
 </body>
 </html>

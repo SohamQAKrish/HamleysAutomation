@@ -52,6 +52,9 @@ SanityHamleyesAccountTestGithub:
 SanityHamleysShoppingCartValidation:
  - testAddItemToCartValidation:
     ProductName: "Laser Battle Hunters"
-    ProductQTY: "1000"
+    UpdateProductQTY: "2"
+    RemoveProductQTY: "1"
+    InvalidCouponCode: "Test123"
+    
     
  

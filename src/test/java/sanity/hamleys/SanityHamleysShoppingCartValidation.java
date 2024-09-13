@@ -20,8 +20,9 @@ public class SanityHamleysShoppingCartValidation {
 	public void testAddItemToCartValidation() {
 		HamleysShoppingCartValidation.testAddItemToCart();
 		HamleysShoppingCartValidation.testAccessMiniCart();
-		HamleysShoppingCartValidation.verifyItemInTheCart();
 		HamleysShoppingCartValidation.testUpdateProductQTYValidation();
+		HamleysShoppingCartValidation.testRemoveProductQTY();
+		HamleysShoppingCartValidation.testInValidCouponCode();
+		HamleysShoppingCartValidation.testEmptyCart();
 	}
 }
-
