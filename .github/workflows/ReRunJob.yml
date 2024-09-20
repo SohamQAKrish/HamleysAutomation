@@ -51,7 +51,7 @@ jobs:
 
       - name: Run Tests
         run: mvn clean test
-
+      
   allure-report:
     runs-on: windows-latest
     needs: test
@@ -68,19 +68,32 @@ jobs:
       - name: Verify Java version
         run: java -version
 
-      - name: Clear old Allure results
-        run: |
-          if (Test-Path allure-results) { Remove-Item -Recurse -Force allure-results\* }
-          if (Test-Path allure-report) { Remove-Item -Recurse -Force allure-report\* }
+      - name: Download Allure Results Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: allure-results
 
-      - name: Generate Allure Report
-        run: mvn allure:report
+      - name: List Allure Results
+        run: |
+          if (Test-Path allure-results) {
+            ls -l allure-results
+          } else {
+            Write-Host "The allure-results folder does not exist."
+          }
 
       - name: Verify Environment Properties File
-        run: ls -l allure-results/environment.properties
+        run: |
+          if (Test-Path allure-results/environment.properties) {
+            Get-ChildItem allure-results/environment.properties
+          } else {
+            Write-Host "The environment.properties file does not exist."
+          }
 
       - name: Install Allure CLI
         run: npm install -g allure-commandline
+
+      - name: Generate Allure Report
+        run: mvn allure:report
 
       - name: Upload Allure Results
         uses: actions/upload-artifact@v3
@@ -116,4 +129,4 @@ jobs:
           git add .
           git commit -m "Update Allure report"
           git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/SohamQAKrish/Bateel_Automation.git
-          git push -f -u origin gh-pages  # Force push to gh-pages branch
+          git push -f -u origin gh-pages
