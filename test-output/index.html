@@ -104,7 +104,7 @@
                     <div class="method-list-content failed suite-Local_Test_Suite">
                       <span>
                         <img src="failed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Local_Test_Suite" title="sanity.hamleys.SanityHamleysShoppingCartValidation" class="method navigator-link" hash-for-method="testAddItemToCartValidation">testAddItemToCartValidation</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Local_Test_Suite" title="sanity.hamleys.SanityHamleysCheckoutAsGuestUser" class="method navigator-link" hash-for-method="testCheckAllureTesting">testCheckAllureTesting</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content failed suite-Local_Test_Suite -->
@@ -122,32 +122,32 @@
           <div class="suite-Local_Test_Suite-class-failed">
             <div class="main-panel-header rounded-window-top">
               <img src="failed.png"/>
-              <span class="class-name">sanity.hamleys.SanityHamleysShoppingCartValidation</span>
+              <span class="class-name">sanity.hamleys.SanityHamleysCheckoutAsGuestUser</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="testAddItemToCartValidation">
-                  </a> <!-- testAddItemToCartValidation -->
-                  <span class="method-name">testAddItemToCartValidation</span>
-                  <div class="stack-trace">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.cssSelector: a.action.viewcart.button[title=&apos;View Bag &amp; Checkout&apos;] (tried for 60 second(s) with 500 milliseconds interval)
+                  <a name="testCheckAllureTesting">
+                  </a> <!-- testCheckAllureTesting -->
+                  <span class="method-name">testCheckAllureTesting</span>
+                  <div class="stack-trace">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.xpath: //button[contains(@class, &apos;amgdprcookie-button&apos;) and contains(text(), &apos;Accept&apos;)] (tried for 60 second(s) with 500 milliseconds interval)
 	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:95)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:272)
-	at common.UtilitiesCommon.waitForElementIsVisible(UtilitiesCommon.java:927)
-	at common.UtilitiesCommon.getElement(UtilitiesCommon.java:709)
-	at common.UtilitiesCommon.click(UtilitiesCommon.java:822)
-	at page.Hamleys.HamleysShoppingCartValidation.testAccessMiniCart(HamleysShoppingCartValidation.java:29)
-	at sanity.hamleys.SanityHamleysShoppingCartValidation.testAddItemToCartValidation(SanityHamleysShoppingCartValidation.java:22)
+	at common.UtilitiesCommon.waitForElementIsVisible(UtilitiesCommon.java:925)
+	at common.UtilitiesCommon.getElement(UtilitiesCommon.java:707)
+	at common.UtilitiesCommon.click(UtilitiesCommon.java:820)
+	at page.Hamleys.HamleysCheckoutAsGuestUserPage.hamleysSelectProductFromHome(HamleysCheckoutAsGuestUserPage.java:17)
+	at sanity.hamleys.SanityHamleysCheckoutAsGuestUser.testCheckAllureTesting(SanityHamleysCheckoutAsGuestUser.java:50)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-Caused by: org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;a.action.viewcart.button[title=&apos;View Bag &amp; Checkout&apos;]&quot;}
-  (Session info: chrome=128.0.6613.137)
+Caused by: org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//button[contains(@class, &apos;amgdprcookie-button&apos;) and contains(text(), &apos;Accept&apos;)]&quot;}
+  (Session info: chrome=126.0.6478.61)
 For documentation on this error, please visit: https://www.seleniumhq.org/exceptions/no_such_element.html
 Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
 System info: host: &apos;KRISH107&apos;, ip: &apos;172.20.10.12&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;21.0.2&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 128.0.6613.137, chrome: {chromedriverVersion: 128.0.6613.137 (fe621c5aa2d..., userDataDir: C:\Users\SHIVAM~1.KRI\AppDa...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:55947}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 5075fb171e688e38d37ed9b2e8ff1181
-*** Element info: {Using=css selector, value=a.action.viewcart.button[title=&apos;View Bag &amp; Checkout&apos;]}
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 126.0.6478.61, chrome: {chromedriverVersion: 126.0.6478.61 (8dc092df54ce..., userDataDir: C:\Users\SHIVAM~1.KRI\AppDa...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:53394}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 647b558515b66231d81d0886a202e069
+*** Element info: {Using=xpath, value=//button[contains(@class, &apos;amgdprcookie-button&apos;) and contains(text(), &apos;Accept&apos;)]}
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
@@ -155,8 +155,8 @@ Session ID: 5075fb171e688e38d37ed9b2e8ff1181
 	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
 	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:323)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElementByCssSelector(RemoteWebDriver.java:420)
-	at org.openqa.selenium.By$ByCssSelector.findElement(By.java:431)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:428)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:353)
 	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:315)
 	at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:205)
 	at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:201)
@@ -183,11 +183,11 @@ Session ID: 5075fb171e688e38d37ed9b2e8ff1181
     &lt;parameter name=&quot;defaultTimeout&quot; value=&quot;${defaultTimeout}&quot;/&gt;
     &lt;parameter name=&quot;browser&quot; value=&quot;${browser}&quot;/&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;sanity.hamleys.SanityHamleysShoppingCartValidation&quot;&gt;
+      &lt;class name=&quot;sanity.hamleys.SanityHamleysCheckoutAsGuestUser&quot;&gt;
         &lt;methods&gt;
-          &lt;include name=&quot;testAddItemToCartValidation&quot;/&gt;
+          &lt;include name=&quot;testCheckAllureTesting&quot;/&gt;
         &lt;/methods&gt;
-      &lt;/class&gt; &lt;!-- sanity.hamleys.SanityHamleysShoppingCartValidation --&gt;
+      &lt;/class&gt; &lt;!-- sanity.hamleys.SanityHamleysCheckoutAsGuestUser --&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- Local Tests --&gt;
 &lt;/suite&gt; &lt;!-- Local Test Suite --&gt;
@@ -229,9 +229,9 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'testAddItemToCartValidation')
-data.setCell(0, 2, 'sanity.hamleys.SanityHamleysShoppingCartValidation')
-data.setCell(0, 3, 119661);
+data.setCell(0, 1, 'testCheckAllureTesting')
+data.setCell(0, 2, 'sanity.hamleys.SanityHamleysCheckoutAsGuestUser')
+data.setCell(0, 3, 100631);
 window.suiteTableData['Local_Test_Suite']= { tableData: data, tableDiv: 'times-div-Local_Test_Suite'}
 return data;
 }
@@ -251,9 +251,16 @@ return data;
         </div> <!-- panel -->
         <div panel-name="ignored-methods-Local_Test_Suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">0 ignored methods</span>
+            <span class="header-content">1 ignored method</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
+            <div class="ignored-class-div">
+              <span class="ignored-class-name">sanity.hamleys.SanityHamleysCheckoutAsGuestUser</span>
+              <div class="ignored-methods-div">
+                <span class="ignored-method-name">testCheckoutAsGuestUser</span>
+                <br/>
+              </div> <!-- ignored-methods-div -->
+            </div> <!-- ignored-class-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
         <div panel-name="chronological-Local_Test_Suite" class="panel">
@@ -262,11 +269,11 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">sanity.hamleys.SanityHamleysShoppingCartValidation</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">sanity.hamleys.SanityHamleysCheckoutAsGuestUser</div> <!-- chronological-class-name -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
-                <span class="method-name">testAddItemToCartValidation</span>
+                <span class="method-name">testCheckAllureTesting</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
