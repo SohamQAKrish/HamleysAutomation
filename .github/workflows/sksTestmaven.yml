@@ -1,0 +1,127 @@
+name: Shiva New
+
+on:
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: 'Specify which test suite to run'
+        required: true
+        default: 'LocalTestSuite.xml'
+        type: choice
+        options:
+          - LocalTestSuite.xml
+          - SanityTestSuite.xml
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      # Clear previous build artifacts including Allure results
+      - name: Clear previous build and test artifacts
+        run: |
+          mvn clean  # Clean target folder
+          if (Test-Path "allure-results") { Remove-Item -Recurse -Force "allure-results" }  # Remove Allure results
+
+      - name: Verify Java version
+        run: java -version
+
+  test:
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      - name: Verify Java version
+        run: java -version
+
+      - name: Run Tests
+        run: mvn clean test
+
+  allure-report:
+    runs-on: windows-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      # Clear previous Allure results before generating a new report
+      - name: Clear Allure results (just in case)
+        run: |
+          if (Test-Path "allure-results") { Remove-Item -Recurse -Force "allure-results" }
+
+      - name: Generate Allure Report
+        run: mvn allure:report
+
+      - name: Verify Environment Properties File
+        run: |
+          if (Test-Path "allure-results/environment.properties") {
+            Get-Item "allure-results/environment.properties"
+          } else {
+            Write-Host "Environment properties file is missing."
+          }
+
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline
+
+      - name: Upload Allure Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-results
+          path: allure-results
+
+  publish-allure-report:
+    runs-on: windows-latest
+    needs: allure-report
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline
+
+      - name: Create timestamp for report
+        id: timestamp
+        run: echo "TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+
+      - name: Convert Allure Report to HTML
+        run: |
+          $REPORT_DIR = "allure-results-${{ env.TIMESTAMP }}"
+          New-Item -ItemType Directory -Force -Path $REPORT_DIR
+          allure generate allure-results --clean -o $REPORT_DIR
+          Get-ChildItem -Path $REPORT_DIR  # Optional: List files in $REPORT_DIR for verification
+
+      - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd allure-results-${{ env.TIMESTAMP }}
+          git init
+          git config user.email "soham.pandit@krishtechnolabs.com"
+          git config user.name "SohamQAKrish"
+          git checkout -b gh-pages  # Create or switch to gh-pages branch
+          git add .
+          git commit -m "Update Allure report"
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/SohamQAKrish/HamleysAutomation.git
+          git push -f -u origin gh-pages  # Force push to gh-pages branch
