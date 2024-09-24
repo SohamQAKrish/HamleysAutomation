@@ -1,1 +1,13 @@
-[ ]
+[ {
+  "values" : [ "Windows 10" ],
+  "name" : "OperatingSystem"
+}, {
+  "values" : [ "https://mcstaging.hamleys.com" ],
+  "name" : "ApplicationURL"
+}, {
+  "values" : [ "Qa" ],
+  "name" : "Environment"
+}, {
+  "values" : [ "Chrome" ],
+  "name" : "Browser"
+} ]
