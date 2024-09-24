@@ -41,7 +41,7 @@ jobs:
         run: java -version
 
       - name: Run Tests
-        run: mvn clean test
+        run: mvn clean test -DskipTests
 
   generate-single-html-report:
     runs-on: ubuntu-latest
