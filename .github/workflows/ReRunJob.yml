@@ -63,9 +63,9 @@ jobs:
         run: |
           # Create allure-results directory if it doesn't exist
           mkdir -p allure-results
-          # Remove all files in allure-results except for environment.properties and categories.json
-          find allure-results -type f ! -name 'environment.properties' ! -name 'categories.json' -delete
-
+          # Remove specified files and directories from allure-results
+          rm -rf allure-results/data allure-results/export allure-results/history allure-results/plugins allure-results/widgets allure-results/allure-maven.html allure-results/allure.properties allure-results/app.js allure-results/executor.json allure-results/favicon.ico allure-results/index.html allure-results/styles.css
+          
       - name: Generate Allure Report
         run: mvn allure:report
 
@@ -91,17 +91,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Clean Up Existing Allure Reports Except Specific Files
-        run: |
-          # Create allure-report directory if it doesn't exist
-          mkdir -p allure-report
-          # Move the specific files to a temporary location
-          mv allure-report/environment.properties allure-report/categories.json /tmp/ || true
-          # Remove all files and folders in allure-report except the specific ones
-          rm -rf allure-report/*
-          # Move back the specific files
-          mv /tmp/environment.properties /tmp/categories.json allure-report/ || true
 
       - name: Install Allure CLI
         run: npm install -g allure-commandline
