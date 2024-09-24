@@ -67,23 +67,21 @@ jobs:
           echo "Contents of allure-results-new before cleanup:"
           ls -la allure-results-new
           
-          # Remove all files except for categories.json and environment.properties
-          find allure-results-new -type f ! -name 'categories.json' ! -name 'environment.properties' -exec rm -f {} \;
+          # Remove all files and directories, keeping only specific files
+          rm -rf allure-results-new/*   # Remove everything
+          touch allure-results-new/categories.json allure-results-new/environment.properties  # Recreate the files
 
           # List contents after cleanup for debugging
           echo "Contents of allure-results-new after cleanup:"
           ls -la allure-results-new
-
-          # Optionally, you can remove empty directories as well
-          find allure-results-new -type d -empty -delete
 
       - name: Generate Allure Report
         run: mvn allure:report
 
       - name: Move Allure Results
         run: |
-          # Move the generated report files to the allure-results-new directory
-          mv /home/runner/work/HamleysAutomation/HamleysAutomation/target/site/allure-maven-plugin/* allure-results-new/ || true
+          # Use rsync to move all files and directories recursively
+          rsync -a --remove-source-files /home/runner/work/HamleysAutomation/HamleysAutomation/target/site/allure-maven-plugin/ allure-results-new/
 
       - name: Install Allure CLI
         run: npm install -g allure-commandline
