@@ -18,7 +18,7 @@
         <environment>QA</environment>
         <browser>chrome</browser>
         <defaultTimeout>30</defaultTimeout>
-        <resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
+        <resultsDirectory>${project.basedir}/allure-results-new</resultsDirectory>
     </properties>
 
     <name>Hamleys QA Automation</name>
