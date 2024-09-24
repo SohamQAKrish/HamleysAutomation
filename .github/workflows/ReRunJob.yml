@@ -61,11 +61,13 @@ jobs:
 
       - name: Clean Up Allure Results
         run: |
-          # Create allure-results directory if it doesn't exist
+          # Ensure the directory exists
           mkdir -p allure-results
-          # Remove specified files and directories from allure-results
-          rm -rf allure-results/data allure-results/export allure-results/history allure-results/plugins allure-results/widgets allure-results/allure-maven.html allure-results/allure.properties allure-results/app.js allure-results/executor.json allure-results/favicon.ico allure-results/index.html allure-results/styles.css
-          
+          # Remove all files except for categories.json and environment.properties
+          find allure-results -type f ! -name 'categories.json' ! -name 'environment.properties' -delete
+          # Optionally, you can remove empty directories as well
+          find allure-results -type d -empty -delete
+
       - name: Generate Allure Report
         run: mvn allure:report
 
