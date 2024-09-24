@@ -63,8 +63,17 @@ jobs:
         run: |
           # Ensure the directory exists
           mkdir -p allure-results
+          # List contents before cleanup for debugging
+          echo "Contents of allure-results before cleanup:"
+          ls -la allure-results
+          
           # Remove all files except for categories.json and environment.properties
-          find allure-results -type f ! -name 'categories.json' ! -name 'environment.properties' -delete
+          find allure-results -type f ! -name 'categories.json' ! -name 'environment.properties' -exec rm -f {} \;
+
+          # List contents after cleanup for debugging
+          echo "Contents of allure-results after cleanup:"
+          ls -la allure-results
+
           # Optionally, you can remove empty directories as well
           find allure-results -type d -empty -delete
 
