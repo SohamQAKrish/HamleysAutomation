@@ -26,6 +26,9 @@ WORKDIR /usr/share/HamleysAutomation
 COPY src/ ./src/
 COPY pom.xml ./
 
+# Check Chromium and Chromedriver versions
+RUN chromium-browser --version && chromedriver --version
+
 # Package the Project
 RUN mvn clean package -DskipTests
 
