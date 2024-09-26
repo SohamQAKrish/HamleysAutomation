@@ -3,6 +3,7 @@ package sanity.hamleys;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import common.UtilitiesCommon;
 import io.qameta.allure.Description;
 import page.Hamleys.HamleysLaunchBrowserTestGitHubActions;
 /**
@@ -21,6 +22,6 @@ public class SanityHamleyesAccountTestGithub {
 	@Description("This Test is used to Verify Launch the URL and Close the Browser")
 	public void testgitHubActions() {
 		HamleysLaunchBrowserTestGitHubActions.login();
-		
+		UtilitiesCommon.log("URL launch successfully");
 	}
 }

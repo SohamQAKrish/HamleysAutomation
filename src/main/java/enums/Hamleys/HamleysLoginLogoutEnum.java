@@ -9,6 +9,7 @@ package enums.Hamleys;
  * locator types: ID, XPATH, LINKTEXT, PARTIALLINKTEXT, CSS, NAME, TAGNAME, CLASSNAME
  */
 public enum HamleysLoginLogoutEnum {
+	
 	HOMEPAGE_ACCEPT_XPATH("//button[contains(@class, 'amgdprcookie-button') and contains(text(), 'Accept')]"),
 	LOGINPAGE_LOGIN_REGISTER_XPATH("//a[contains(text(),'Sign In / Register')]"),
 	LOGINPAGE_USERNAME_TEXT_BOX_CSS("#email"),

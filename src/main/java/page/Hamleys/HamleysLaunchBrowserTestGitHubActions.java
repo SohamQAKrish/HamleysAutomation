@@ -18,5 +18,6 @@ public class HamleysLaunchBrowserTestGitHubActions {
 	 */
 	public static void login() {
 		UtilitiesCommon.launchApplication();
+		System.out.println("Application launch successfully");
 	}
 }
