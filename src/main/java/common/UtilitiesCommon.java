@@ -400,31 +400,28 @@ public class UtilitiesCommon {
 			chromeOptions.addArguments("start-maximized");
 		}
 		try {
-			HttpURLConnection con = (HttpURLConnection) new URL(HUB_URL + "/status").openConnection();
-			try {
-				con.setRequestMethod("GET");
-				remoteWebDriver = con.getResponseCode() == HttpURLConnection.HTTP_OK;
-				UtilitiesCommon.log("Connection status of HUB: " + remoteWebDriver);
-			} finally {
-				con.disconnect();
-			}
-		} catch (IOException ignore) {
+		    HttpURLConnection con = (HttpURLConnection) new URL(HUB_URL + "/status").openConnection();
+		    con.setRequestMethod("GET");
+		    remoteWebDriver = (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+		    UtilitiesCommon.log("Connection status of HUB: " + remoteWebDriver);
+		} catch (IOException e) {
+		    UtilitiesCommon.log("Failed to connect to HUB: " + e.getMessage());
 		}
 
 		if (!remoteWebDriver) {
-			UtilitiesCommon.log("Initializing Web Driver for Local Execution .....");
-			WebDriverManager.chromedriver().setup();
-			Map<String, Object> preferences = new HashMap<String, Object>();
-			preferences.put("download.default_directory",
-					System.getProperty(USER_DIR_CONSTANT) + File.separator + "src" + File.separator + "test"
-							+ File.separator + "resources" + File.separator + "TestData" + File.separator
-							+ "TestDataDownload");
-			chromeOptions.setExperimentalOption("prefs", preferences);
-			driver = new ChromeDriver(chromeOptions);
+		    UtilitiesCommon.log("Initializing Web Driver for Local Execution .....");
+
+		    try {
+		        WebDriverManager.chromedriver().setup();
+		        driver = new ChromeDriver(chromeOptions);
+		        UtilitiesCommon.log("Local WebDriver initialized successfully.");
+		    } catch (Exception e) {
+		        UtilitiesCommon.log("Error initializing local WebDriver: " + e.getMessage());
+		    }
 		}
 
 		if (remoteWebDriver) {
-			UtilitiesCommon.log("Initializing Test case in docker container .....");
+		    UtilitiesCommon.log("Initializing Test case in Docker container .....");
 			chromeOptions.addArguments("--disable-gpu");
 			chromeOptions.addArguments("--headless");
 			chromeOptions.addArguments("--no-sandbox");
@@ -439,13 +436,14 @@ public class UtilitiesCommon {
 			chromeOptions.addArguments("disable-infobars");
 
 			try {
-				driver = new RemoteWebDriver(new URL(HUB_URL), chromeOptions);
-			} catch (MalformedURLException e) {
-				throw new CustomExceptions("URL is bad: " + e.getStackTrace());
-			}
+		        driver = new RemoteWebDriver(new URL(HUB_URL), chromeOptions);
+		        UtilitiesCommon.log("Remote WebDriver initialized successfully.");
+		    } catch (MalformedURLException e) {
+		        UtilitiesCommon.log("Malformed URL for RemoteWebDriver: " + e.getMessage());
+		        throw new CustomExceptions("URL is bad: " + e.getMessage());
+		    }
 		}
-		chromeOptions.addArguments("incognito");
-	}
+		}
 
 	/**
 	 * This method is used to get the web driver
