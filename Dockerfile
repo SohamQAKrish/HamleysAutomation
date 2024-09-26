@@ -1,13 +1,15 @@
-FROM alpine:3.14
+FROM openjdk:17-alpine
 
-RUN  apk update \
+# Install required packages
+RUN apk update \
   && apk upgrade \
-  && apk add ca-certificates \
-  && update-ca-certificates \
-  && apk add --update coreutils && rm -rf /var/cache/apk/*   \ 
-  && apk add --update openjdk17 tzdata curl unzip bash maven \
-  && apk add --no-cache nss \
-  && rm -rf /var/cache/apk/*
+  && apk add --no-cache \
+      ca-certificates \
+      curl \
+      unzip \
+      bash \
+      maven \
+      tzdata
 
 # Workspace Directory
 WORKDIR /usr/share/HamleysAutomation
@@ -22,5 +24,5 @@ RUN mvn clean package -DskipTests
 # Add allure reporting folder
 ADD allure-results/ /usr/share/HamleysAutomation/allure-results/
 
-## debug
-#CMD [ "tail", "-f", "/dev/null" ]
+# Uncomment this line for debugging
+# CMD [ "tail", "-f", "/dev/null" ]
