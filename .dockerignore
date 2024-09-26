@@ -9,9 +9,5 @@ temp/
 .classpath
 .project
 QAiOFFICECONNECT.iml
-allure-results/*container.json
-allure-results/*result.json
-allure-results/*attachment*
-screenshotsAndRecordings/
 test-output/
 .scannerwork/
