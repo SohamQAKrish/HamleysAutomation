@@ -24,12 +24,11 @@ jobs:
 
       - name: Run Tests and Generate Allure Report
         run: |
-          docker run --rm bateel-automation-demo:latest mvn allure:report
+          docker run --rm bateel-automation-demo:latest mvn clean test allure:report
 
       - name: Save Allure Report to Local Directory
         run: |
-          docker cp $(docker ps -lq):/usr/share/HamleysAutomation/allure-results ./allure-results
-          docker cp $(docker ps -lq):/usr/share/HamleysAutomation/allure-report ./allure-report
+          docker cp $(docker create bateel-automation-demo:latest):/usr/share/HamleysAutomation/allure-report ./allure-report
 
       - name: Install SSH Client
         run: sudo apt-get install -y openssh-client
@@ -42,13 +41,13 @@ jobs:
           chmod 600 private_key.pem
           ssh -o StrictHostKeyChecking=no -i private_key.pem -p 2255 bateel-automation-demo@bateel-automation-demo.magentoprojects.net "mkdir -p ~/allure-reports"
 
-      - name: Copy Allure Report to Docker Container
+      - name: Copy Allure Report to Server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Add your SSH key to GitHub secrets
         run: |
           echo "$SSH_PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
-          scp -o StrictHostKeyChecking=no -i private_key.pem -P 2255 -r ./allure-report bateel-automation-demo@bateel-automation-demo.magentoprojects.net:~/allure-reports
+          scp -o StrictHostKeyChecking=no -i private_key.pem -P 2255 -r ./allure-report/* bateel-automation-demo@bateel-automation-demo.magentoprojects.net:~/allure-reports
 
       - name: Cleanup
         run: |
