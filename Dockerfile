@@ -1,13 +1,20 @@
 FROM openjdk:17-alpine
 
-RUN  apk update \
-  && apk upgrade \
-  && apk add ca-certificates \
-  && update-ca-certificates \
-  && apk add --update coreutils && rm -rf /var/cache/apk/*   \ 
-  && apk add --update openjdk17 tzdata curl unzip bash maven \
-  && apk add --no-cache nss \
-  && rm -rf /var/cache/apk/*
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache \
+        ca-certificates \
+        curl \
+        unzip \
+        bash \
+        maven \
+        tzdata \
+        coreutils \
+        openjdk17-jdk \
+        nss \
+        xvfb \
+        ttf-freefont && \
+    update-ca-certificates
   
 # Workspace Directory
 WORKDIR /usr/share/HamleysAutomation
@@ -22,5 +29,5 @@ RUN mvn clean package -DskipTests
 # Add allure reporting folder
 ADD allure-results/ /usr/share/HamleysAutomation/allure-results/
 
-## debug
-#CMD [ "tail", "-f", "/dev/null" ]
+# Start Xvfb and run tests in headless mode
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test allure:report"]
