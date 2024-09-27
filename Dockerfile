@@ -2,6 +2,7 @@ FROM openjdk:17-alpine
 
 # Install required packages
 RUN apk update \
+  && apk upgrade \
   && apk add --no-cache \
       ca-certificates \
       curl \
@@ -11,11 +12,11 @@ RUN apk update \
       tzdata \
       xvfb \
       ttf-freefont \
-      chromium \
-	  
-  RUN curl -L https://chromedriver.storage.googleapis.com/129.0.6667.24/chromedriver_linux64.zip -o /tmp/chromedriver.zip
+      chromium
 
-RUN unzip /tmp/chromedriver.zip -d /usr/local/bin/ \
+# Download and install ChromeDriver
+RUN curl -L https://chromedriver.storage.googleapis.com/129.0.6667.24/chromedriver_linux64.zip -o /tmp/chromedriver.zip \
+  && unzip /tmp/chromedriver.zip -d /usr/local/bin/ \
   && chmod +x /usr/local/bin/chromedriver \
   && ln -s /usr/bin/chromium-browser /usr/bin/google-chrome \
   && rm /tmp/chromedriver.zip
