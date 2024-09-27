@@ -10,12 +10,9 @@ RUN apk update && \
         unzip \
         bash \
         maven \
-        chromium \
+		chromium \
         && ln -s /usr/bin/chromium-browser /usr/bin/chrome
-
-# Ensure chromedriver is executable
-RUN chmod +x /usr/bin/chromedriver
-
+		
 # Set up a workspace directory
 WORKDIR /usr/share/HamleysAutomation
 
