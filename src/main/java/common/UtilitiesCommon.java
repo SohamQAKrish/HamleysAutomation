@@ -415,8 +415,8 @@ public class UtilitiesCommon {
 		    try {
 		        // Initialize the RemoteWebDriver with the specified options
 		        driver = new RemoteWebDriver(new URL(HUB_URL), chromeOptions);
-		        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS); // Increased page load timeout
-		        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS); // Increased implicit wait timeout
+//		        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS); // Increased page load timeout
+//		        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS); // Increased implicit wait timeout
 		    } catch (MalformedURLException e) {
 		        throw new CustomExceptions("URL is bad: " + e.getMessage()); // Include original exception
 		    }
