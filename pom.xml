@@ -17,7 +17,7 @@
         <suiteXmlFile>LocalTestSuite.xml</suiteXmlFile>
 		<environment>QA</environment>
         <browser>chrome</browser>
-        <defaultTimeout>60</defaultTimeout>
+        <defaultTimeout>30</defaultTimeout>
     </properties>
 
     <name>Hamleys QA Automation</name>
