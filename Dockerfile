@@ -2,7 +2,6 @@ FROM openjdk:17-alpine
 
 # Install required packages
 RUN apk update \
-  && apk upgrade \
   && apk add --no-cache \
       ca-certificates \
       curl \
@@ -11,10 +10,10 @@ RUN apk update \
       maven \
       tzdata \
       xvfb \
-      ttf-freefont
-	  chromium \
+      ttf-freefont \
+      chromium \
       chromium-chromedriver \
-      && ln -s /usr/bin/chromium-browser /usr/bin/google-chrome
+  && ln -s /usr/bin/chromium-browser /usr/bin/google-chrome
 
 # Workspace Directory
 WORKDIR /usr/share/HamleysAutomation
