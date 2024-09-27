@@ -46,11 +46,10 @@
     </dependency>
 
         <dependency>
-        <groupId>org.testng</groupId>
-        <artifactId>testng</artifactId>
-        <version>7.7.1</version> <!-- Adjust based on your testing framework -->
-        <scope>test</scope>
-    </dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.4.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
