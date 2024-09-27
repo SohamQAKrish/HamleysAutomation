@@ -14,13 +14,14 @@ RUN apk update && \
         chromium \
         xvfb-run
 
-# Set environment variables for display and ChromeDriver version
+# Set environment variables for display
 ENV DISPLAY=:99
-ENV CHROME_DRIVER_VERSION=latest
 
-# Install the latest ChromeDriver
-RUN LATEST_CHROME_DRIVER=$(curl -sSL https://chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
-    curl -sSL "https://chromedriver.storage.googleapis.com/$LATEST_CHROME_DRIVER/chromedriver_linux64.zip" -o /tmp/chromedriver.zip && \
+# Set ChromeDriver version
+ENV CHROME_DRIVER_VERSION=129.0.6668.70
+
+# Install the specified ChromeDriver
+RUN curl -sSL "https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip" -o /tmp/chromedriver.zip && \
     unzip /tmp/chromedriver.zip -d /usr/bin/ && \
     chmod +x /usr/bin/chromedriver && \
     rm /tmp/chromedriver.zip
