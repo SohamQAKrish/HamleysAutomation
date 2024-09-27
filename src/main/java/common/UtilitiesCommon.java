@@ -401,7 +401,9 @@ public class UtilitiesCommon {
 		    chromeOptions.addArguments("--disable-setuid-sandbox");
 		    chromeOptions.addArguments("--disable-dev-shm-usage");
 		    chromeOptions.addArguments("--disable-extensions");
-		    chromeOptions.addArguments("incognito"); // Moved for clarity
+		    chromeOptions.addArguments("incognito"); 
+		    chromeOptions.addArguments("--enable-logging");
+		    chromeOptions.addArguments("--v=1");
 
 		    if (SystemUtils.IS_OS_MAC) {
 		        chromeOptions.addArguments("start-fullscreen");
