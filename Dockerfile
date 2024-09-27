@@ -1,5 +1,6 @@
 FROM openjdk:17-slim
 
+# Install necessary packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
@@ -7,27 +8,9 @@ RUN apt-get update && \
         unzip \
         bash \
         maven \
-        chromium \
-        chromium-driver \
+        tzdata \
         xvfb \
-        fonts-liberation \
-        libappindicator3-1 \
-        libatk-bridge2.0-0 \
-        libatk1.0-0 \
-        libcups2 \
-        libdbus-glib-1-2 \
-        libgdk-pixbuf2.0-0 \
-        libgtk-3-0 \
-        libnspr4 \
-        libnss3 \
-        libx11-xcb1 \
-        libxcomposite1 \
-        libxcursor1 \
-        libxi6 \
-        libxtst6 \
-        libxrandr2 \
-        x11-utils \
-        ttf-freefont || { echo 'apt-get install failed'; exit 1; } && \
+        fonts-freefont && \
     rm -rf /var/lib/apt/lists/*
 
 # Set environment variables for display and Chromium
