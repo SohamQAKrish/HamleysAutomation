@@ -386,7 +386,7 @@ public class UtilitiesCommon {
 							+ "TestDataDownload");
 			chromeOptions.setExperimentalOption("prefs", preferences);
 		  //run test with headless mode for git actions
-			//chromeOptions.addArguments("--headless");
+			chromeOptions.addArguments("--headless");
 
 			driver = new ChromeDriver(chromeOptions);
 		}
