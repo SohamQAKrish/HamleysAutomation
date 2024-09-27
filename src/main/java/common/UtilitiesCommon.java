@@ -60,7 +60,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.ElementNotVisibleException;
+//import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.TimeoutException;
 import org.testng.ITestClass;
 import org.testng.ITestContext;
@@ -159,9 +159,9 @@ public class UtilitiesCommon {
 	 * @author spandit
 	 * @lastmodifiedby kdave
 	 */
-	public static void setupWebdriverWait(int waitTimeInSeconds) {
-	    wait = new WebDriverWait(driver, waitTimeInSeconds);
-	}
+//	public static void setupWebdriverWait(int waitTimeInSeconds) {
+//	    wait = new WebDriverWait(driver, waitTimeInSeconds);
+//	}
 
 	/**
 	 * This method is used to setup the JavaScript Executor Instance.
@@ -729,15 +729,15 @@ public class UtilitiesCommon {
 		return driver.findElements(By.xpath(xpathExpression));
 	}
 	
-	public static void waitForElementIsClickable(Enum<?> enumValue) {
-	    By locator = getLocator(enumValue);
-	    if (locator == null) {
-	        throw new IllegalArgumentException("Locator is null for enum value: " + enumValue);
-	    }
-	    long timeoutSeconds = Long.parseLong(DEFAULT_TIMEOUT);
-	    WebDriverWait wait = new WebDriverWait(driver, timeoutSeconds);
-	    wait.until(ExpectedConditions.elementToBeClickable(locator));
-	}
+//	public static void waitForElementIsClickable(Enum<?> enumValue) {
+//	    By locator = getLocator(enumValue);
+//	    if (locator == null) {
+//	        throw new IllegalArgumentException("Locator is null for enum value: " + enumValue);
+//	    }
+//	    long timeoutSeconds = Long.parseLong(DEFAULT_TIMEOUT);
+//	    WebDriverWait wait = new WebDriverWait(driver, timeoutSeconds);
+//	    wait.until(ExpectedConditions.elementToBeClickable(locator));
+//	}
 	/**
 	 * This method is used to generate the Dynamic Xpath
 	 * @param xpath        XPATH
@@ -1150,17 +1150,17 @@ public class UtilitiesCommon {
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
-	public static boolean verifyElementIsVisible(Enum<?> enumValue) {
-		boolean isElementVisible;
-		try {
-			wait.until(ExpectedConditions.visibilityOfElementLocated(getLocator(enumValue)));
-			isElementVisible = true;
-		} catch (ElementNotVisibleException | TimeoutException exception) {
-			isElementVisible = false;
-		}
-		return isElementVisible;
-	}
-	
+//	public static boolean verifyElementIsVisible(Enum<?> enumValue) {
+//		boolean isElementVisible;
+//		try {
+//			wait.until(ExpectedConditions.visibilityOfElementLocated(getLocator(enumValue)));
+//			isElementVisible = true;
+//		} catch (ElementNotVisibleException | TimeoutException exception) {
+//			isElementVisible = false;
+//		}
+//		return isElementVisible;
+//	}
+//	
 	public static boolean waitForElementIsNotVisible(By locator) {
 	    boolean isElementNotVisible;
 	    try {
@@ -1224,17 +1224,17 @@ public class UtilitiesCommon {
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
-	public static boolean verifyDynamicElementIsVisible(Enum<?> enumValue, String dynamicValue) {
-		String xpathExpression = generateDynamicXpath(enumValue.toString(), dynamicValue);
-		boolean isElementVisible;
-		try {
-			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathExpression)));
-			isElementVisible = true;
-		} catch (ElementNotVisibleException | TimeoutException exception) {
-			isElementVisible = false;
-		}
-		return isElementVisible;
-	}
+//	public static boolean verifyDynamicElementIsVisible(Enum<?> enumValue, String dynamicValue) {
+//		String xpathExpression = generateDynamicXpath(enumValue.toString(), dynamicValue);
+//		boolean isElementVisible;
+//		try {
+//			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathExpression)));
+//			isElementVisible = true;
+//		} catch (ElementNotVisibleException | TimeoutException exception) {
+//			isElementVisible = false;
+//		}
+//		return isElementVisible;
+//	}
 	/**
 	 * This method will check if the dynamically generated element is not visible.
 	 * 
@@ -1976,17 +1976,17 @@ public class UtilitiesCommon {
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
-	public static void waitForMilliseconds(int milliseconds) {
-		try {
-			int timeInSeconds = milliseconds / 1000;
-			WebDriverWait customWait = new WebDriverWait(driver, timeInSeconds);
-			customWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//falseosElem/s")));
-		} catch (TimeoutException e) {
-			log("Waited for: " + milliseconds + " ms");
-		} catch (Exception e) {
-			log(e.getMessage());
-		}
-	}
+//	public static void waitForMilliseconds(int milliseconds) {
+//		try {
+//			int timeInSeconds = milliseconds / 1000;
+//			WebDriverWait customWait = new WebDriverWait(driver, timeInSeconds);
+//			customWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//falseosElem/s")));
+//		} catch (TimeoutException e) {
+//			log("Waited for: " + milliseconds + " ms");
+//		} catch (Exception e) {
+//			log(e.getMessage());
+//		}
+//	}
 	/**
 	 * This method will scroll to the specified web element using javascript
 	 * executor.
@@ -2000,21 +2000,21 @@ public class UtilitiesCommon {
 		WebElement element = driver.findElement(locator);
 		executeJS("arguments[0].scrollIntoView(true);", element);
 	}
-	public static void waitForOverlayToDisappear() {
-
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-	    try {  
-	        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.loading-mask")));
-	    } catch (TimeoutException e) {
-	        // Log a message or take appropriate action if the overlay doesn't disappear within the timeout
-	        System.out.println("Overlay did not disappear within the timeout.");
-	    }
-	}
-	public static void waitForElementToDisappear(By cssSelector) {
-		// TODO Auto-generated method stub
-		WebDriverWait wait = new WebDriverWait(driver, 30); // Adjust timeout as needed
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(cssSelector));
-	}
+//	public static void waitForOverlayToDisappear() {
+//
+//		WebDriverWait wait = new WebDriverWait(driver, 30);
+//	    try {  
+//	        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.loading-mask")));
+//	    } catch (TimeoutException e) {
+//	        // Log a message or take appropriate action if the overlay doesn't disappear within the timeout
+//	        System.out.println("Overlay did not disappear within the timeout.");
+//	    }
+//	}
+//	public static void waitForElementToDisappear(By cssSelector) {
+//		// TODO Auto-generated method stub
+//		WebDriverWait wait = new WebDriverWait(driver, 30); // Adjust timeout as needed
+//        wait.until(ExpectedConditions.invisibilityOfElementLocated(cssSelector));
+//	}
 
 	public static String gettitle() {
 			String Pagetitle = driver.getTitle();

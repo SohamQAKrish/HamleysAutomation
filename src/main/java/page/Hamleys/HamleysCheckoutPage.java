@@ -16,7 +16,7 @@ public class HamleysCheckoutPage {
 	 * @lastmodifiedby RShivam
 	 */
 	public static void hamleysShopToyesCategorySelection() {
-		UtilitiesCommon.waitForMilliseconds(6000);
+//		UtilitiesCommon.waitForMilliseconds(6000);
 		UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_HOMEPAGE_SHOPTOYES_CATEGORIES_XPATH);
 		UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_HOMEPAGE_SHOPTOYES_CATEGORIES_XPATH);
 		UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_ADD_TO_PRODUCT_XPATH);
@@ -50,7 +50,7 @@ public class HamleysCheckoutPage {
 	 * @lastmodifiedby RShivam
 	 */
 	public static void hamleysChoosePaymentAsCreditCard() {
-		UtilitiesCommon.waitForMilliseconds(2000);
+//		UtilitiesCommon.waitForMilliseconds(2000);
 		UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_SELECT_CREDITCARD_AS_PAYMENTMETHOD_XPATH);
 		UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_SELECT_CREDITCARD_AS_PAYMENTMETHOD_XPATH);
 	}
@@ -61,7 +61,7 @@ public class HamleysCheckoutPage {
 	 * @lastmodifiedby RShivam
 	 */
 	public static void hamleysEnterCardNumber() {
-		UtilitiesCommon.waitForMilliseconds(1000);
+//		UtilitiesCommon.waitForMilliseconds(1000);
 		UtilitiesCommon.switchToFrame(HamleysCheckoutEnum.HAMLEYS_SWITCHTOIFRAM_CARD_CSS);
 		UtilitiesCommon.enterValue(HamleysCheckoutEnum.HAMLEYS_ENTER_CREDITCARD_XPATH, UtilitiesCommon.getTestData("CardNumber"));
 		UtilitiesCommon.switchToDefault();	
@@ -88,7 +88,7 @@ public class HamleysCheckoutPage {
 		UtilitiesCommon.enterValue(HamleysCheckoutEnum.HAMLEYS_ENTER_CVV_XPATH, UtilitiesCommon.getTestData("CVV"));
 		UtilitiesCommon.switchToDefault();
 	
-		UtilitiesCommon.waitForMilliseconds(2000);
+//		UtilitiesCommon.waitForMilliseconds(2000);
 		UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_SELECT_CHECKBOX_PRIVACY_XPATH);
 	}
 //		UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_SELECT_CHECKBOX_PRIVACY_XPATH);
@@ -107,7 +107,7 @@ public class HamleysCheckoutPage {
 	 * @lastmodifiedby RShivam
 	 */
 	public static void hamleysClickOnPlaceAnOrder() {
-	    UtilitiesCommon.waitForMilliseconds(2000);	   
+//	    UtilitiesCommon.waitForMilliseconds(2000);	   
 		UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_CLICK_ON_PLACE_ORDER_XPATH);
 		UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_CLICK_ON_PLACE_ORDER_XPATH);
 	}
@@ -118,7 +118,7 @@ public class HamleysCheckoutPage {
 	 * @lastmodifiedby RShivam
 	 */
 	public static void hamleysOrderPageGetText() {
-		UtilitiesCommon.waitForMilliseconds(1000);
+//		UtilitiesCommon.waitForMilliseconds(1000);
 		UtilitiesCommon.waitForElementIsPresent(HamleysCheckoutEnum.HAMLEYS_GETTEXT_THANK_XPATH);
 		UtilitiesCommon.click(HamleysCheckoutEnum.HAMLEYS_GETTEXT_THANK_XPATH);
 	}

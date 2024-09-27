@@ -22,19 +22,19 @@ public class SanityHamleysCheckoutAsGuestUser {
 	public void testCheckoutAsGuestUser(){
 		UtilitiesCommon.launchApplication();
 		HamleysCheckoutAsGuestUserPage.hamleysSelectProductFromHome();
-		UtilitiesCommon.waitForMilliseconds(5000);
+//		UtilitiesCommon.waitForMilliseconds(5000);
 		HamleysCheckoutAsGuestUserPage.hamleysAddtoCartProduct();
-		UtilitiesCommon.waitForMilliseconds(5000);
+//		UtilitiesCommon.waitForMilliseconds(5000);
 		HamleysCheckoutAsGuestUserPage.hamleysSelectMiniCart();
-		UtilitiesCommon.waitForMilliseconds(3000);
+//		UtilitiesCommon.waitForMilliseconds(3000);
 		HamleysCheckoutAsGuestUserPage.hamleysContinueToCheckoutScreen();
-		UtilitiesCommon.waitForMilliseconds(2000);
+//		UtilitiesCommon.waitForMilliseconds(2000);
 		HamleysCheckoutAsGuestUserPage.hamleysSelectCheckoutAsGuestUser();
-		UtilitiesCommon.waitForMilliseconds(2000);
+//		UtilitiesCommon.waitForMilliseconds(2000);
 		HamleysCheckoutAsGuestUserPage.hamleysEnterShippingAddressDetails();
-		UtilitiesCommon.waitForMilliseconds(2000);
+//		UtilitiesCommon.waitForMilliseconds(2000);
 		HamleysCheckoutAsGuestUserPage.hamleysEnterCardNumber();
-		UtilitiesCommon.waitForMilliseconds(2000);
+//		UtilitiesCommon.waitForMilliseconds(2000);
 		HamleysCheckoutAsGuestUserPage.hamleysPlaceOrder();
 	}
 	
@@ -48,19 +48,19 @@ public class SanityHamleysCheckoutAsGuestUser {
 	public void testCheckAllureTesting(){
 		UtilitiesCommon.launchApplication();
 		HamleysCheckoutAsGuestUserPage.hamleysSelectProductFromHome();
-		UtilitiesCommon.waitForMilliseconds(5000);
+//		UtilitiesCommon.waitForMilliseconds(5000);
 		HamleysCheckoutAsGuestUserPage.hamleysAddtoCartProduct();
-		UtilitiesCommon.waitForMilliseconds(5000);
+//		UtilitiesCommon.waitForMilliseconds(5000);
 		HamleysCheckoutAsGuestUserPage.hamleysSelectMiniCart();
-		UtilitiesCommon.waitForMilliseconds(3000);
+//		UtilitiesCommon.waitForMilliseconds(3000);
 		HamleysCheckoutAsGuestUserPage.hamleysContinueToCheckoutScreen();
-		UtilitiesCommon.waitForMilliseconds(2000);
+//		UtilitiesCommon.waitForMilliseconds(2000);
 		HamleysCheckoutAsGuestUserPage.hamleysSelectCheckoutAsGuestUser();
-		UtilitiesCommon.waitForMilliseconds(2000);
+//		UtilitiesCommon.waitForMilliseconds(2000);
 		HamleysCheckoutAsGuestUserPage.hamleysEnterShippingAddressDetails();
-		UtilitiesCommon.waitForMilliseconds(2000);
+//		UtilitiesCommon.waitForMilliseconds(2000);
 		HamleysCheckoutAsGuestUserPage.hamleysEnterCardNumber();
-		UtilitiesCommon.waitForMilliseconds(2000);
+//		UtilitiesCommon.waitForMilliseconds(2000);
 		HamleysCheckoutAsGuestUserPage.hamleysPlaceOrder();
 	}
 }
