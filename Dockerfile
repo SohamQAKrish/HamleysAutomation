@@ -1,6 +1,5 @@
 FROM openjdk:17-slim
 
-# Install necessary packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
@@ -28,7 +27,7 @@ RUN apt-get update && \
         libxtst6 \
         libxrandr2 \
         x11-utils \
-        ttf-freefont && \
+        ttf-freefont || { echo 'apt-get install failed'; exit 1; } && \
     rm -rf /var/lib/apt/lists/*
 
 # Set environment variables for display and Chromium
