@@ -1,14 +1,15 @@
-FROM openjdk:17-alpine
+FROM alpine:3.14
 
 # Install required packages
 RUN apk update \
   && apk upgrade \
   && apk add --no-cache \
+      openjdk17 \
+      maven \
       ca-certificates \
       curl \
       unzip \
       bash \
-      maven \
       tzdata \
       xvfb \
       ttf-freefont \
