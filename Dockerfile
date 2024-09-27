@@ -11,9 +11,25 @@ RUN apt-get update && \
         chromium \
         chromium-driver \
         xvfb \
-        fontconfig \
-        fonts-freefont-ttf && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+        fonts-liberation \
+        libappindicator3-1 \
+        libatk-bridge2.0-0 \
+        libatk1.0-0 \
+        libcups2 \
+        libdbus-glib-1-2 \
+        libgdk-pixbuf2.0-0 \
+        libgtk-3-0 \
+        libnspr4 \
+        libnss3 \
+        libx11-xcb1 \
+        libxcomposite1 \
+        libxcursor1 \
+        libxi6 \
+        libxtst6 \
+        libxrandr2 \
+        x11-utils \
+        ttf-freefont && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set environment variables for display and Chromium
 ENV DISPLAY=:99

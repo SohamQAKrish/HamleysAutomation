@@ -399,10 +399,9 @@ public class UtilitiesCommon {
 		    options.addArguments("--headless");
 		    options.addArguments("--no-sandbox");
 		    options.addArguments("--disable-dev-shm-usage");
-		    options.addArguments("--disable-gpu"); // Not usually needed for headless
-		    options.addArguments("--window-size=1920,1080");
-		    options.addArguments("--remote-debugging-port=9222"); // Enable debugging
-
+		    options.addArguments("--disable-gpu");
+		    options.addArguments("--window-size=1920x1080");
+		    
 		    if (SystemUtils.IS_OS_MAC) {
 		        chromeOptions.addArguments("start-fullscreen");
 		    } else {
