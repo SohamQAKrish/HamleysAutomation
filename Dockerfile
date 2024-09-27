@@ -14,6 +14,10 @@ RUN apk update && \
         chromium \
         xvfb-run
 
+
+# Link ChromeDriver
+RUN ln -s /usr/bin/chromedriver /usr/local/bin/chromedriver
+
 # Set environment variables for display
 ENV DISPLAY=:99
 
