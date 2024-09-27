@@ -1,17 +1,15 @@
-FROM openjdk:17
+FROM openjdk:17-alpine
 
 # Install necessary packages
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+RUN apk update && \
+    apk add --no-cache \
         ca-certificates \
         curl \
         unzip \
         bash \
         maven \
-        tzdata \
         xvfb \
-        fonts-freefont && \
-    rm -rf /var/lib/apt/lists/*
+        ttf-freefont
 
 # Set environment variables for display and Chromium
 ENV DISPLAY=:99
