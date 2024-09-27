@@ -19,7 +19,8 @@ RUN curl -L https://chromedriver.storage.googleapis.com/129.0.6667.24/chromedriv
   && unzip /tmp/chromedriver.zip -d /usr/local/bin/ \
   && chmod +x /usr/local/bin/chromedriver \
   && ln -s /usr/bin/chromium-browser /usr/bin/google-chrome \
-  && rm /tmp/chromedriver.zip
+  && rm /tmp/chromedriver.zip \
+  || { echo "Failed to install ChromeDriver"; exit 1; }
 
 # Workspace Directory
 WORKDIR /usr/share/HamleysAutomation
@@ -35,4 +36,5 @@ RUN mvn clean package -DskipTests
 COPY allure-results/ ./allure-results/
 
 # Start Xvfb and run tests in headless mode	
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test allure:report"]
 CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test allure:report"]
