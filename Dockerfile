@@ -10,7 +10,7 @@ RUN apk update && \
         maven \
         tzdata \
         coreutils \
-        openjdk17-jdk \
+        openjdk17 \
         nss \
         xvfb \
         ttf-freefont && \
