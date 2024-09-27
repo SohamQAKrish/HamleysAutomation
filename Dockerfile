@@ -18,8 +18,10 @@ RUN apk update && \
 ENV DISPLAY=:99
 
 # Install the latest ChromeDriver
-RUN CHROMIUM_VERSION=$(chromium-browser --version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+') && \
+RUN CHROMIUM_VERSION=$(chromium-browser --version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+') && \
+    echo "Chromium Version: $CHROMIUM_VERSION" && \
     CHROME_DRIVER_VERSION=$(curl -sSL "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROMIUM_VERSION") && \
+    echo "ChromeDriver Version: $CHROME_DRIVER_VERSION" && \
     curl -sSL "https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip" -o /tmp/chromedriver.zip && \
     unzip /tmp/chromedriver.zip -d /usr/bin/ && \
     chmod +x /usr/bin/chromedriver && \
