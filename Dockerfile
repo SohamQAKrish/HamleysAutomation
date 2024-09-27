@@ -2,6 +2,7 @@ FROM openjdk:17-alpine
 
 # Install required packages
 RUN apk update \
+  && apk upgrade \
   && apk add --no-cache \
       ca-certificates \
       curl \
@@ -13,12 +14,6 @@ RUN apk update \
       ttf-freefont \
       chromium \
   && ln -s /usr/bin/chromium-browser /usr/bin/google-chrome
-
-# Download and install ChromeDriver
-RUN curl -L https://chromedriver.storage.googleapis.com/129.0.6667.24/chromedriver_linux64.zip -o /tmp/chromedriver.zip \
-    && unzip /tmp/chromedriver.zip -d /usr/local/bin/ \
-    && chmod +x /usr/local/bin/chromedriver \
-    && rm /tmp/chromedriver.zip
 
 # Workspace Directory
 WORKDIR /usr/share/HamleysAutomation
