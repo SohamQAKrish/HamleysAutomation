@@ -23,9 +23,8 @@ jobs:
           docker build -t bateel-automation-demo:latest .  # Tagging the image
 
       - name: Run Tests and Generate Allure Report
-        continue-on-error: true
         run: |
-              docker run --rm -e DISPLAY=:99 bateel-automation-demo:latest mvn clean test
+            docker run --rm -e DISPLAY=:99 bateel-automation-demo:latest mvn clean test allure:report
 
       - name: Save Allure Report to Local Directory
         run: |

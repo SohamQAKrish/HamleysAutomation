@@ -21,7 +21,7 @@ ADD src/ /usr/share/HamleysAutomation/src/
 ADD pom.xml /usr/share/HamleysAutomation
 
 # Package the Project
-RUN mvn clean test -DskipTests
+RUN mvn clean package -DskipTests 
 
 # Add allure reporting folder
 COPY allure-results/ ./allure-results/
