@@ -392,27 +392,31 @@ public class UtilitiesCommon {
 		}
 
 		if (remoteWebDriver) {
-			UtilitiesCommon.log("Initializing Test case in docker container .....");
-			chromeOptions.addArguments("--disable-gpu");
-			chromeOptions.addArguments("--headless");
-			chromeOptions.addArguments("--no-sandbox");
-			chromeOptions.addArguments("--disable-setuid-sandbox");
-			chromeOptions.addArguments("--disable-dev-shm-usage");
-			chromeOptions.addArguments("--disable-extensions");
-			if (SystemUtils.IS_OS_MAC) {
-				chromeOptions.addArguments("start-fullscreen");
-			} else {
-				chromeOptions.addArguments("--window-size=1400,900");
-			}
-			chromeOptions.addArguments("disable-infobars");
+		    UtilitiesCommon.log("Initializing Test case in docker container .....");
 
-			try {
-				driver = new RemoteWebDriver(new URL(HUB_URL), chromeOptions);
-			} catch (MalformedURLException e) {
-				throw new CustomExceptions("URL is bad: " + e.getStackTrace());
-			}
+		    // Adding options
+		    chromeOptions.addArguments("--disable-gpu");
+		    chromeOptions.addArguments("--headless");
+		    chromeOptions.addArguments("--no-sandbox");
+		    chromeOptions.addArguments("--disable-setuid-sandbox");
+		    chromeOptions.addArguments("--disable-dev-shm-usage");
+		    chromeOptions.addArguments("--disable-extensions");
+		    chromeOptions.addArguments("incognito"); // Moved for clarity
+
+		    if (SystemUtils.IS_OS_MAC) {
+		        chromeOptions.addArguments("start-fullscreen");
+		    } else {
+		        chromeOptions.addArguments("--window-size=1400,900");
+		    }
+		    chromeOptions.addArguments("disable-infobars");
+
+		    try {
+		        driver = new RemoteWebDriver(new URL(HUB_URL), chromeOptions);
+		        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		    } catch (MalformedURLException e) {
+		        throw new CustomExceptions("URL is bad: " + e.getMessage()); // Include original exception
+		    }
 		}
-		chromeOptions.addArguments("incognito");
 	}
 
 	/**
