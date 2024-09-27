@@ -34,7 +34,7 @@ public class HamleysLoginLogoutPage {
 	 * @lastmodifiedby RShivam
 	 */
 	public static void logout() {
-		UtilitiesCommon.waitForMilliseconds(6000);
+//		UtilitiesCommon.waitForMilliseconds(6000);
 		UtilitiesCommon.applicationLogout();
 		UtilitiesCommon.waitForElementIsPresent(HamleysLoginLogoutEnum.LOGIN_SIGNOUT_CLICK_XPATH);
 		UtilitiesCommon.click(HamleysLoginLogoutEnum.LOGIN_SIGNOUT_CLICK_XPATH);

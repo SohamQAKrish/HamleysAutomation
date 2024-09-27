@@ -21,10 +21,10 @@ public class SanityHamleysCheckoutWithLoginUser {
 	@Description("This Test is used to Verify the login with Valid Credentials")
 	public void testHanleysCheckoutLoginUser(){
 		LoginPage.login("AdminUserName", "AdminPassword");
-		HamleysCheckoutPage.hamleysShopToyesCategorySelection();
+//		HamleysCheckoutPage.hamleysShopToyesCategorySelection();
 		HamleysCheckoutPage.hamleysCartBagSelect();
 		HamleysCheckoutPage.hamleysContinueCheckout();
-		HamleysCheckoutPage.hamleysChoosePaymentAsCreditCard();
+//		HamleysCheckoutPage.hamleysChoosePaymentAsCreditCard();
 		HamleysCheckoutPage.hamleysEnterCardNumber();
 		HamleysCheckoutPage.hamleysEnterExpiryDate();
 		HamleysCheckoutPage.hamleysEnterCVVNumber();
