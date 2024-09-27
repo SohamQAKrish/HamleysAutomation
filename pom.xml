@@ -15,7 +15,6 @@
         <maven.compiler.target>17</maven.compiler.target>
         <xmlPath>src/test/resources</xmlPath>
         <suiteXmlFile>LocalTestSuite.xml</suiteXmlFile>
-        <suiteXmlFile>SanityTestSuite.xml</suiteXmlFile>
 		<environment>QA</environment>
         <browser>chrome</browser>
         <defaultTimeout>30</defaultTimeout>

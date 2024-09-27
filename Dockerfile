@@ -1,16 +1,18 @@
 FROM openjdk:17-alpine
 
-RUN apk update \
-  && apk upgrade \
-  && apk add --no-cache \
-      ca-certificates \
-      coreutils \
-      nss \
-      tzdata \
-      curl \
-      unzip \
-      bash \
-      maven
+RUN apk update && \
+    apk add --no-cache \
+        ca-certificates \
+        coreutils \
+        nss \
+        tzdata \
+        curl \
+        unzip \
+        bash \
+        maven \
+        chromium \
+        chromium-chromedriver \
+        && ln -s /usr/bin/chromium-browser /usr/bin/chrome
 
 # Workspace Directory
 WORKDIR /usr/share/HamleysAutomation
