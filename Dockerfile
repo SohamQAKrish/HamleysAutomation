@@ -1,20 +1,15 @@
 FROM openjdk:17-alpine
 
 RUN apk update && \
-    apk upgrade && \
     apk add --no-cache \
         ca-certificates \
+        coreutils \
+        nss \
+        tzdata \
         curl \
         unzip \
         bash \
         maven \
-        tzdata \
-        coreutils \
-        openjdk17 \
-        nss \
-        xvfb \
-        ttf-freefont && \
-    update-ca-certificates
   
 # Workspace Directory
 WORKDIR /usr/share/HamleysAutomation
