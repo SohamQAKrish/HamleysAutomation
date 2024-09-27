@@ -386,7 +386,7 @@ public class UtilitiesCommon {
 							+ "TestDataDownload");
 			chromeOptions.setExperimentalOption("prefs", preferences);
 		  //run test with headless mode for git actions
-			chromeOptions.addArguments("--headless");
+			// chromeOptions.addArguments("--headless");
 
 			driver = new ChromeDriver(chromeOptions);
 		}
@@ -396,7 +396,7 @@ public class UtilitiesCommon {
 
 		    // Adding options
 		    chromeOptions.addArguments("--disable-gpu");
-		    chromeOptions.addArguments("--headless");
+		   // chromeOptions.addArguments("--headless");
 		    chromeOptions.addArguments("--no-sandbox");
 		    chromeOptions.addArguments("--disable-setuid-sandbox");
 		    chromeOptions.addArguments("--disable-dev-shm-usage");
