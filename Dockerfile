@@ -12,8 +12,10 @@ RUN apk update \
       xvfb \
       ttf-freefont \
       chromium \
-  && curl -L https://chromedriver.storage.googleapis.com/129.0.6667.24/chromedriver_linux64.zip -o /tmp/chromedriver.zip \
-  && unzip /tmp/chromedriver.zip -d /usr/local/bin/ \
+	  
+  RUN curl -L https://chromedriver.storage.googleapis.com/129.0.6667.24/chromedriver_linux64.zip -o /tmp/chromedriver.zip
+
+RUN unzip /tmp/chromedriver.zip -d /usr/local/bin/ \
   && chmod +x /usr/local/bin/chromedriver \
   && ln -s /usr/bin/chromium-browser /usr/bin/google-chrome \
   && rm /tmp/chromedriver.zip
