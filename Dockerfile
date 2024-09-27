@@ -20,7 +20,7 @@ ADD pom.xml /usr/share/HamleysAutomation
 RUN mvn clean package -DskipTests 
 
 # Add allure reporting folder
-ADD allure-results/ /usr/share/Krish_Automation/allure-results/
+ADD allure-results/ /usr/share/HamleysAutomation/allure-results/
 
 ## debug
 #CMD [ "tail", "-f", "/dev/null" ]
