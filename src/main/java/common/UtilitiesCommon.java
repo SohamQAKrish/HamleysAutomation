@@ -412,7 +412,7 @@ public class UtilitiesCommon {
 
 		    try {
 		        driver = new RemoteWebDriver(new URL(HUB_URL), chromeOptions);
-		        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		    } catch (MalformedURLException e) {
 		        throw new CustomExceptions("URL is bad: " + e.getMessage()); // Include original exception
 		    }
