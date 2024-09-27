@@ -24,7 +24,7 @@ jobs:
 
       - name: Run Tests and Generate Allure Report
         run: |
-          docker run --rm bateel-automation-demo:latest mvn clean test allure:report
+            docker run --rm -e DISPLAY=:99 bateel-automation-demo:latest mvn clean test allure:report
 
       - name: Save Allure Report to Local Directory
         run: |
