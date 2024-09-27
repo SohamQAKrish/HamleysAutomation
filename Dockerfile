@@ -1,48 +1,26 @@
 FROM openjdk:17-alpine
 
-# Install necessary packages
-RUN apk update && \
-    apk add --no-cache \
-        ca-certificates \
-        coreutils \
-        nss \
-        tzdata \
-        curl \
-        unzip \
-        bash \
-        maven \
-        chromium \
-        xvfb-run
-
-
-# Link ChromeDriver
-RUN ln -s /usr/bin/chromedriver /usr/local/bin/chromedriver
-
-# Set environment variables for display
-ENV DISPLAY=:99
-
-# Install the latest ChromeDriver
-RUN CHROMIUM_VERSION=$(chromium-browser --version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+') && \
-    echo "Chromium Version: $CHROMIUM_VERSION" && \
-    CHROME_DRIVER_VERSION=$(curl -sSL "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROMIUM_VERSION") && \
-    echo "ChromeDriver Version: $CHROME_DRIVER_VERSION" && \
-    curl -sSL "https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip" -o /tmp/chromedriver.zip && \
-    unzip /tmp/chromedriver.zip -d /usr/bin/ && \
-    chmod +x /usr/bin/chromedriver && \
-    rm /tmp/chromedriver.zip
-
-# Set the working directory
+RUN  apk update \
+  && apk upgrade \
+  && apk add ca-certificates \
+  && update-ca-certificates \
+  && apk add --update coreutils && rm -rf /var/cache/apk/*   \ 
+  && apk add --update openjdk17 tzdata curl unzip bash maven \
+  && apk add --no-cache nss \
+  && rm -rf /var/cache/apk/*
+  
+# Workspace Directory
 WORKDIR /usr/share/HamleysAutomation
 
-# Copy the project files
-COPY src/ /usr/share/HamleysAutomation/src/
-COPY pom.xml /usr/share/HamleysAutomation/
+# Add Project's required folders and files
+ADD src/ /usr/share/HamleysAutomation/src/
+ADD pom.xml /usr/share/HamleysAutomation
 
-# Package the project without running tests
+# Package the Project
 RUN mvn clean package -DskipTests 
 
-# Copy allure results if needed
-COPY allure-results/ /usr/share/HamleysAutomation/allure-results/
+# Add allure reporting folder
+ADD allure-results/ /usr/share/Krish_Automation/allure-results/
 
-# Command to run the tests with xvfb
-CMD ["xvfb-run", "mvn", "clean", "test"]
+## debug
+#CMD [ "tail", "-f", "/dev/null" ]
