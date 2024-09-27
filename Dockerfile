@@ -32,13 +32,9 @@ RUN apk update \
 
 # Download and install ChromeDriver
 RUN curl -L https://chromedriver.storage.googleapis.com/129.0.6667.24/chromedriver_linux64.zip -o /tmp/chromedriver.zip \
-  && echo "Downloaded ChromeDriver" \
-  && unzip /tmp/chromedriver.zip -d /usr/local/bin/ \
-  && echo "Unzipped ChromeDriver" \
-  && chmod +x /usr/local/bin/chromedriver \
-  && ln -s /usr/bin/chromium-browser /usr/bin/google-chrome \
-  && rm /tmp/chromedriver.zip \
-  || { echo "Failed to install ChromeDriver"; exit 1; }
+    && unzip /tmp/chromedriver.zip -d /usr/local/bin/ \
+    && chmod +x /usr/local/bin/chromedriver \
+    && rm /tmp/chromedriver.zip
 
 # Workspace Directory
 WORKDIR /usr/share/HamleysAutomation
