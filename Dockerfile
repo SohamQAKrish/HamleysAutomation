@@ -14,9 +14,27 @@ RUN apk update \
       ttf-freefont \
       chromium
 
+FROM openjdk:17-alpine
+
+# Install required packages
+RUN apk update \
+  && apk upgrade \
+  && apk add --no-cache \
+      ca-certificates \
+      curl \
+      unzip \
+      bash \
+      maven \
+      tzdata \
+      xvfb \
+      ttf-freefont \
+      chromium
+
 # Download and install ChromeDriver
 RUN curl -L https://chromedriver.storage.googleapis.com/129.0.6667.24/chromedriver_linux64.zip -o /tmp/chromedriver.zip \
+  && echo "Downloaded ChromeDriver" \
   && unzip /tmp/chromedriver.zip -d /usr/local/bin/ \
+  && echo "Unzipped ChromeDriver" \
   && chmod +x /usr/local/bin/chromedriver \
   && ln -s /usr/bin/chromium-browser /usr/bin/google-chrome \
   && rm /tmp/chromedriver.zip \
