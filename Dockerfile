@@ -1,5 +1,6 @@
 FROM openjdk:17-alpine
 
+# Install necessary packages
 RUN apk update && \
     apk add --no-cache \
         ca-certificates \
@@ -9,9 +10,9 @@ RUN apk update && \
         curl \
         unzip \
         bash \
-        maven \
-  
-# Workspace Directory
+        maven
+
+# Set the working directory
 WORKDIR /usr/share/HamleysAutomation
 
 # Add Project's required folders and files
