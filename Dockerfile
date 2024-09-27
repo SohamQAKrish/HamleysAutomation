@@ -1,8 +1,7 @@
 FROM alpine:3.14
 
 # Install required packages
-RUN apk update \
-  && apk upgrade \
+RUN apk update && apk upgrade \
   && apk add --no-cache \
       openjdk17 \
       maven \
