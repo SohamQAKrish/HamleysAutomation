@@ -402,8 +402,8 @@ public class UtilitiesCommon {
 		    chromeOptions.addArguments("--disable-dev-shm-usage");
 		    chromeOptions.addArguments("--disable-extensions");
 		    chromeOptions.addArguments("incognito"); 
-		    chromeOptions.addArguments("--enable-logging");
-		    chromeOptions.addArguments("--v=1");
+		    chromeOptions.addArguments("--enable-logging"); // Enable logging for troubleshooting
+		    chromeOptions.addArguments("--v=1"); // Set log verbosity level
 
 		    if (SystemUtils.IS_OS_MAC) {
 		        chromeOptions.addArguments("start-fullscreen");
@@ -413,8 +413,10 @@ public class UtilitiesCommon {
 		    chromeOptions.addArguments("disable-infobars");
 
 		    try {
+		        // Initialize the RemoteWebDriver with the specified options
 		        driver = new RemoteWebDriver(new URL(HUB_URL), chromeOptions);
-		        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS); // Increased page load timeout
+		        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS); // Increased implicit wait timeout
 		    } catch (MalformedURLException e) {
 		        throw new CustomExceptions("URL is bad: " + e.getMessage()); // Include original exception
 		    }
