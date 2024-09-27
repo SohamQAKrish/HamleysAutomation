@@ -1,29 +1,27 @@
-FROM alpine:3.14
+FROM openjdk:17-alpine
 
 # Install required packages
-RUN apk update && apk upgrade \
+RUN apk update \
+  && apk upgrade \
   && apk add --no-cache \
-      openjdk17 \
-      maven \
       ca-certificates \
       curl \
       unzip \
       bash \
+      maven \
       tzdata \
       xvfb \
-      ttf-freefont \
-      chromium \
-  && ln -s /usr/bin/chromium-browser /usr/bin/google-chrome
+      ttf-freefont
 
 # Workspace Directory
 WORKDIR /usr/share/HamleysAutomation
 
 # Add Project's required folders and files
-COPY src/ /usr/share/HamleysAutomation/src/
-COPY pom.xml /usr/share/HamleysAutomation
+ADD src/ /usr/share/HamleysAutomation/src/
+ADD pom.xml /usr/share/HamleysAutomation
 
 # Package the Project
-RUN mvn clean package -DskipTests
+RUN mvn clean test -DskipTests
 
 # Add allure reporting folder
 COPY allure-results/ ./allure-results/
