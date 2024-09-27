@@ -395,15 +395,13 @@ public class UtilitiesCommon {
 		    UtilitiesCommon.log("Initializing Test case in docker container .....");
 
 		    // Adding options
-		    chromeOptions.addArguments("--disable-gpu");
-		    chromeOptions.addArguments("--headless");
-		    chromeOptions.addArguments("--no-sandbox");
-		    chromeOptions.addArguments("--disable-setuid-sandbox");
-		    chromeOptions.addArguments("--disable-dev-shm-usage");
-		    chromeOptions.addArguments("--disable-extensions");
-		    chromeOptions.addArguments("incognito"); 
-		    chromeOptions.addArguments("--enable-logging"); // Enable logging for troubleshooting
-		    chromeOptions.addArguments("--v=1"); // Set log verbosity level
+		    ChromeOptions options = new ChromeOptions();
+		    options.addArguments("--headless");
+		    options.addArguments("--no-sandbox");
+		    options.addArguments("--disable-dev-shm-usage");
+		    options.addArguments("--disable-gpu"); // Not usually needed for headless
+		    options.addArguments("--window-size=1920,1080");
+		    options.addArguments("--remote-debugging-port=9222"); // Enable debugging
 
 		    if (SystemUtils.IS_OS_MAC) {
 		        chromeOptions.addArguments("start-fullscreen");

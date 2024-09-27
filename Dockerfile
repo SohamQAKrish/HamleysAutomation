@@ -1,29 +1,24 @@
-FROM openjdk:17-alpine
+FROM openjdk:17-slim
 
 # Install necessary packages
-RUN apk update && \
-    apk add --no-cache \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
         ca-certificates \
-        coreutils \
-        nss \
-        tzdata \
         curl \
         unzip \
         bash \
         maven \
         chromium \
-        chromium-chromedriver \
+        chromium-driver \
         xvfb \
         fontconfig \
-        ttf-freefont  # Install font package for better font rendering
-
-# Link ChromeDriver (this step is redundant if installed via apk, but keeping it for redundancy)
-RUN ln -s /usr/lib/chromium/chromedriver /usr/local/bin/chromedriver
+        fonts-freefont-ttf && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set environment variables for display and Chromium
 ENV DISPLAY=:99
-ENV CHROME_BIN=/usr/bin/chromium-browser
-ENV CHROME_DRIVER=/usr/local/bin/chromedriver
+ENV CHROME_BIN=/usr/bin/chromium
+ENV CHROME_DRIVER=/usr/bin/chromium-driver
 
 # Set the working directory
 WORKDIR /usr/share/HamleysAutomation
