@@ -19,6 +19,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,6 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
@@ -37,6 +40,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.assertj.core.api.Assertions;
 import org.json.simple.JSONObject;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -52,6 +56,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -65,15 +70,14 @@ import org.testng.asserts.SoftAssert;
 import org.yaml.snakeyaml.Yaml;
 import com.google.common.collect.Ordering;
 import com.opencsv.CSVReader;
+
+import enums.bateel.BateelLoginCheckoutEnum;
+import enums.bateel.BateelPLPPageEnum;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.AllureLifecycle;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
-import io.qameta.allure.TmsLink;
-import io.qameta.allure.TmsLinks;
-import testrail.APIClient;
-import testrail.APIException;
 
 /**
  * This class will contain all the common utility methods
@@ -84,12 +88,9 @@ import testrail.APIException;
 public class UtilitiesCommon {
 	private static final String DEFAULT_ENVIRONMENT = "QA";
 	private static final String DEFAULT_BROWSER = "chrome";
-	private static final String DEFAULT_TIMEOUT = "60";
+	private static final String DEFAULT_TIMEOUT = "30";
 	private static final String USER_DIR_CONSTANT = "user.dir";
 	private static final String ATTRIBUTE_APPLICATION = "ApplicationURL";
-	private static final String KEY_RUN_ID = "run_id";
-	private static final String KEY_CASE_ID = "case_id";
-	private static final String TEXT_TESTRAIL_CASE_ID = "Testrail CaseID = ";
 	private static final String JAVASCRIPT_BORDER = "arguments[0].style.border='3px solid green'";
 	private static Logger logger = null;
 	private static Map<String, HashMap<String, String>> testCasesData;
@@ -98,23 +99,15 @@ public class UtilitiesCommon {
 	private static Map<String, String> testrailAttributes;
 	private static WebDriver driver;
 	private static String applicationUrl;
-	private static APIClient client;
 	private static File fileObj;
 	private static String environment;
-	private static final int TESTRAIL_PROJECT_ID = 9;
-	private static final String TESTRAIL_KEY = "TESTRAIL";
-	private static final String TESTRAIL_SANITY_SUITE_ID = "303";
-	private static final String TESTRAIL_REGRESSION_SUITE_ID = "304";
-	private static final int TESTRAIL_DEV_MILESTONE_ID = 30;
-	private static final int TESTRAIL_QA_MILESTONE_ID = 35;
-	private static final int TESTRAIL_PROD_MILESTONE_ID = 32;
 	private static final String WARNING = "**********************WARNING*********************";
 	private static Long waitTime;
 	private static String defaultTimeout;
 	private static ChromeOptions chromeOptions;
 	private static String browser;
-	private static WebDriverWait wait;
-	private static JavascriptExecutor jsExecutor;
+	public static WebDriverWait wait;
+	public static JavascriptExecutor jsExecutor;
 	private static Actions builder;
 	private static Robot robot;
 	private static SoftAssert softAssert;
@@ -167,10 +160,10 @@ public class UtilitiesCommon {
 	 * This method is used to setup the webdriver wait instance.
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby kdave
 	 */
-	public static void setupWebdriverWait() {
-		wait = new WebDriverWait(driver, waitTime);
+	public static void setupWebdriverWait(int waitTimeInSeconds) {
+	    wait = new WebDriverWait(driver, waitTimeInSeconds);
 	}
 
 	/**
@@ -182,7 +175,9 @@ public class UtilitiesCommon {
 	public static void setupJavaScriptExecutor() {
 		jsExecutor = (JavascriptExecutor) driver;
 	}
-
+	 static {
+	        setupLogger();
+	    }
 	/**
 	 * This method will set up the log4j logger
 	 * 
@@ -190,10 +185,9 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static void setupLogger() {
-		logger = LogManager.getLogger(UtilitiesCommon.class);
+        logger = LogManager.getLogger(UtilitiesCommon.class);
 	}
-
-	/**
+		/**
 	 * This method is used to initialize the object for Actions class
 	 * 
 	 * @author spandit
@@ -202,8 +196,12 @@ public class UtilitiesCommon {
 	public static void setupActionsBuilder() {
 		builder = new Actions(driver);
 	}
-
-	/**
+	
+	 public static void clickWithMouseHover(WebElement element) {
+	        Actions actions = new Actions(driver);
+	        actions.moveToElement(element).click().perform();
+	    }
+	/**	
 	 * This method is used to initialize the object for SoftAssert class
 	 * 
 	 * @author spandit
@@ -212,7 +210,6 @@ public class UtilitiesCommon {
 	public static void setupSoftAssert() {
 		softAssert = new SoftAssert();
 	}
-
 	/**
 	 * This method will log the message in console as well as in allure report.
 	 * 
@@ -237,6 +234,11 @@ public class UtilitiesCommon {
 		return EncryptDecrypt.decryptPassword(encryptedPassword);
 	}
 
+	public static void scrolltillpageend() {
+		JavascriptExecutor js1 = (JavascriptExecutor) driver;
+		js1.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+	}
+	
 	/**
 	 * This method is used to read .yaml files
 	 * 
@@ -287,38 +289,9 @@ public class UtilitiesCommon {
 					"Invalid Environment detail is present in testng xml file or Environments.yaml file : "
 							+ environment);
 		}
-	}
-
+	}	
 	/**
-	 * This method is used to read Testrail details from Environments.yaml and store
-	 * it in map
-	 * 
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void readTestrailData() {
-		if (!isLocalSuite) {
-			log("Reading user credentials and URL for Testrail");
-			HashMap<String, Object> result = readYamlFile("Environments.yaml");
-			testrailAttributes = new HashMap<>();
-			HashMap<String, String> envDetails = (HashMap<String, String>) result.get(TESTRAIL_KEY);
-			try {
-				for (Entry<String, String> entry : envDetails.entrySet()) {
-					testrailAttributes.put(entry.getKey(), entry.getValue());
-				}
-			} catch (Exception e) {
-				throw new CustomExceptions("Expected Testrail key: " + TESTRAIL_KEY
-						+ " or values missing in Environments.yaml: " + e.getMessage());
-			}
-		} else {
-			log("Executing Local suite, Testrail data won't be read from Environments.yaml");
-		}
-	}
-
-	/**
-	 * This method is used to read Test Class Data from TestData.yaml and store it
-	 * in map
-	 * 
+	 * This method is used to read Test Class Data from TestData.yaml and store it in map
 	 * @param testClass Test Class
 	 * @author spandit
 	 * @lastmodifiedby spandit
@@ -340,11 +313,8 @@ public class UtilitiesCommon {
 			throw new CustomExceptions("Test Data is not present in TestData.yaml for Class : " + className);
 		}
 	}
-
 	/**
-	 * This method is used to read Test Case Data from TestData.yaml and store it in
-	 * map
-	 * 
+	 * This method is used to read Test Case Data from TestData.yaml and store it in map
 	 * @param result ITestResult
 	 * @author spandit
 	 * @lastmodifiedby spandit
@@ -369,7 +339,6 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method is used to set up the web driver using Bonigarcia.
-	 * 
 	 * @param context Context
 	 * @author spandit
 	 * @lastmodifiedby spandit
@@ -388,7 +357,6 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method is used to add arguments for chrome options
-	 * 
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
@@ -400,28 +368,34 @@ public class UtilitiesCommon {
 			chromeOptions.addArguments("start-maximized");
 		}
 		try {
-		    HttpURLConnection con = (HttpURLConnection) new URL(HUB_URL + "/status").openConnection();
-		    con.setRequestMethod("GET");
-		    remoteWebDriver = (con.getResponseCode() == HttpURLConnection.HTTP_OK);
-		    UtilitiesCommon.log("Connection status of HUB: " + remoteWebDriver);
-		} catch (IOException e) {
-		    UtilitiesCommon.log("Failed to connect to HUB: " + e.getMessage());
+			HttpURLConnection con = (HttpURLConnection) new URL(HUB_URL + "/status").openConnection();
+			try {
+				con.setRequestMethod("GET");
+				remoteWebDriver = con.getResponseCode() == HttpURLConnection.HTTP_OK;
+				UtilitiesCommon.log("Connection status of HUB: " + remoteWebDriver);
+			} finally {
+				con.disconnect();
+			}
+		} catch (IOException ignore) {
 		}
 
 		if (!remoteWebDriver) {
-		    UtilitiesCommon.log("Initializing Web Driver for Local Execution .....");
+			UtilitiesCommon.log("Initializing Web Driver for Local Execution .....");
+			WebDriverManager.chromedriver().setup();
+			Map<String, Object> preferences = new HashMap<String, Object>();
+			preferences.put("download.default_directory",
+					System.getProperty(USER_DIR_CONSTANT) + File.separator + "src" + File.separator + "test"
+							+ File.separator + "resources" + File.separator + "TestData" + File.separator
+							+ "TestDataDownload");
+			chromeOptions.setExperimentalOption("prefs", preferences);
+		  //run test with headless mode for git actions
+			//chromeOptions.addArguments("--headless");
 
-		    try {
-		        WebDriverManager.chromedriver().setup();
-		        driver = new ChromeDriver(chromeOptions);
-		        UtilitiesCommon.log("Local WebDriver initialized successfully.");
-		    } catch (Exception e) {
-		        UtilitiesCommon.log("Error initializing local WebDriver: " + e.getMessage());
-		    }
+			driver = new ChromeDriver(chromeOptions);
 		}
 
 		if (remoteWebDriver) {
-		    UtilitiesCommon.log("Initializing Test case in Docker container .....");
+			UtilitiesCommon.log("Initializing Test case in docker container .....");
 			chromeOptions.addArguments("--disable-gpu");
 			chromeOptions.addArguments("--headless");
 			chromeOptions.addArguments("--no-sandbox");
@@ -436,18 +410,16 @@ public class UtilitiesCommon {
 			chromeOptions.addArguments("disable-infobars");
 
 			try {
-		        driver = new RemoteWebDriver(new URL(HUB_URL), chromeOptions);
-		        UtilitiesCommon.log("Remote WebDriver initialized successfully.");
-		    } catch (MalformedURLException e) {
-		        UtilitiesCommon.log("Malformed URL for RemoteWebDriver: " + e.getMessage());
-		        throw new CustomExceptions("URL is bad: " + e.getMessage());
-		    }
+				driver = new RemoteWebDriver(new URL(HUB_URL), chromeOptions);
+			} catch (MalformedURLException e) {
+				throw new CustomExceptions("URL is bad: " + e.getStackTrace());
+			}
 		}
-		}
+		chromeOptions.addArguments("incognito");
+	}
 
 	/**
 	 * This method is used to get the web driver
-	 * 
 	 * @return driver
 	 * @author spandit
 	 * @lastmodifiedby spandit
@@ -458,7 +430,6 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method is used to get the Javascript Executor
-	 * 
 	 * @return javascript executor
 	 * @author spandit
 	 * @lastmodifiedby spandit
@@ -468,10 +439,7 @@ public class UtilitiesCommon {
 	}
 
 	/**
-	 * This method is used to open browser and initialize webdriver wait, javascript
-	 * executor, Action builder and then launch the application and starts screen
-	 * recording.
-	 * 
+	 * This method is used to open browser and initialize webdriver wait, javascript executor, Action builder and then launch the application and starts screen recording.
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
@@ -484,7 +452,7 @@ public class UtilitiesCommon {
 			driver.manage().window().maximize();
 		}
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		setupWebdriverWait();
+		//setupWebdriverWait(60);
 		setupJavaScriptExecutor();
 		setupActionsBuilder();
 		applicationUrl = UtilitiesCommon.getEnvironmentData(ATTRIBUTE_APPLICATION);
@@ -497,23 +465,21 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method is used to open url on same browser.
-	 * 
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
 	public static void openUrl() {
 		driver.get(applicationUrl);
-
 	}
 
 	/**
 	 * This method is used to Logout from the application.
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby shivamR
+	 * @lastmodifiedby kdave
 	 */
 	public static void applicationLogout() {
-		navigateToPage("https://mcstaging.hamleys.com/customer/account/");
+		// navigateToPage("https://staging2.bateel.com/en_in/");
 		// HomePage.logout();
 	}
 
@@ -521,22 +487,20 @@ public class UtilitiesCommon {
 	 * This method is used to close the web browser
 	 * 
 	 * @author spandit
-	 * @lastmodifiedby spandit
+	 * @lastmodifiedby kdave
 	 */
 	public static void closeDriver() {
-		if (driver != null) {
-			log("Closing Browser");
-			driver.quit();
-			driver = null;
-		} else {
-			log("Web Driver is NULL and it has not initialized properly");
-		}
+//		if (driver != null) {
+//			log("Closing Browser");
+//			driver.quit();
+//			driver = null;
+//		} else {
+//			log("Web Driver is NULL and it has not initialized properly");
+//		}
 	}
 
 	/**
-	 * This method is used to verify that the attribute is present in Test Case Data
-	 * map and then returns its value.
-	 * 
+	 * This method is used to verify that the attribute is present in Test Case Data map and then returns its value.
 	 * @param attributeKey Attribute Key
 	 * @return attributeValue Attribute Value
 	 * @author spandit
@@ -550,7 +514,6 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method is used to set the Test Data to map
-	 * 
 	 * @param attributeKey Attribute Key
 	 * @param value        Value
 	 * @author spandit
@@ -561,9 +524,7 @@ public class UtilitiesCommon {
 	}
 
 	/**
-	 * This method is used to verify that the attribute is present Environment Data
-	 * map and then returns its value.
-	 * 
+	 * This method is used to verify that the attribute is present Environment Data map and then returns its value.
 	 * @param attributeKey Attribute Key
 	 * @return attributeValue Attribute Value
 	 * @author spandit
@@ -577,9 +538,8 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method is used to set the Environment Data to map
-	 * 
 	 * @param attributeKey Attribute Key
-	 * @param value        Value
+	 * @param value Value
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
@@ -588,36 +548,10 @@ public class UtilitiesCommon {
 	}
 
 	/**
-	 * This method is used to get the Testrail Data from map
-	 * 
+	 * This method is used to verify the specified attribute is present in given map.
+	 * @param dataMap Data Map
 	 * @param attributeKey Attribute Key
-	 * @return attributeValue Attribute Value
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static String getTestrailData(String attributeKey) {
-		return testrailAttributes.get(attributeKey);
-	}
-
-	/**
-	 * This method is used to set the Testrail Data to map
-	 * 
-	 * @param attributeKey Attribute Key
-	 * @param value        Value
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void setTestrailData(String attributeKey, String value) {
-		testrailAttributes.put(attributeKey, value);
-	}
-
-	/**
-	 * This method is used to verify the specified attribute is present in given
-	 * map.
-	 * 
-	 * @param dataMap      Data Map
-	 * @param attributeKey Attribute Key
-	 * @param message      Error Message
+	 * @param message Error Message
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
@@ -629,7 +563,6 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method is used to navigate to the specified page
-	 * 
 	 * @param pageUrl Page URL
 	 * @author spandit
 	 * @lastmodifiedby spandit
@@ -640,7 +573,6 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method is used to get the Application Url
-	 * 
 	 * @return applicationUrl
 	 * @author spandit
 	 * @lastmodifiedby spandit
@@ -651,7 +583,6 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method will return locator of the web element.
-	 * 
 	 * @param enumValue Enum Value
 	 * @author spandit
 	 * @lastmodifiedby spandit
@@ -694,46 +625,53 @@ public class UtilitiesCommon {
 
 	/**
 	 * This method will return web element available on the web page.
-	 * 
 	 * @param enumValue Enum Value
 	 * @return webElement
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
 	public static WebElement getElement(Enum<?> enumValue) {
-		By locator = getLocator(enumValue);
-		waitForElementIsVisible(locator);
-		return driver.findElement(locator);
+	    By locator = getLocator(enumValue);
+	    if (locator == null) {
+	        throw new IllegalArgumentException("Locator is null for enum value: " + enumValue);
+	    }
+	    waitForElementIsVisible(locator);
+	    return driver.findElement(locator);
 	}
 
 	/**
 	 * This method will return list of web elements available on the web page.
-	 * 
 	 * @param enumValue Enum Value
 	 * @return WebElementList
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
 	public static List<WebElement> getElements(Enum<?> enumValue) {
-		return driver.findElements(getLocator(enumValue));
+	    By locator = getLocator(enumValue);
+	    if (locator == null) {
+	        throw new IllegalArgumentException("Locator is null for enum value: " + enumValue);
+	    }
+	    return driver.findElements(locator);
 	}
 
 	/**
 	 * This method will return web element text
-	 * 
 	 * @param enumValue Enum Value
 	 * @return ElementText
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
 	public static String getElementText(Enum<?> enumValue) {
-		WebElement element = getElement(enumValue);
-		return element.getText();
+	    try {
+	        WebElement element = getElement(enumValue);
+	        return element.getText();
+	    } catch (NoSuchElementException e) {
+	        System.out.println("Element not found for enum value: " + enumValue);
+	        return null;
+	    }
 	}
-
 	/**
 	 * This method will return web elements text
-	 * 
 	 * @param elementList Element List
 	 * @return ElementTextList
 	 * @author spandit
@@ -746,11 +684,9 @@ public class UtilitiesCommon {
 		}
 		return elementTextsList;
 	}
-
 	/**
 	 * This method will return specified web element attribute value.
-	 * 
-	 * @param enumValue     Enum Value
+	 * @param enumValue Enum Value
 	 * @param attributeName Attribute Name
 	 * @return Attribute Value
 	 * @author spandit
@@ -761,10 +697,8 @@ public class UtilitiesCommon {
 		executeJS(JAVASCRIPT_BORDER, element);
 		return element.getAttribute(attributeName);
 	}
-
 	/**
 	 * This method will return web element dynamically using specified dynamicValue.
-	 * 
 	 * @param enumValue    Enum Value
 	 * @param dynamicValue Dynamic Value
 	 * @return webElement
@@ -776,11 +710,8 @@ public class UtilitiesCommon {
 		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(xpathExpression)));
 		return driver.findElement(By.xpath(xpathExpression));
 	}
-
 	/**
-	 * This method will return List of web elements dynamically using specified
-	 * dynamicValue.
-	 * 
+	 * This method will return List of web elements dynamically using specified dynamicValue.
 	 * @param enumValue    Enum Value
 	 * @param dynamicValue Dynamic Value
 	 * @return webElementList
@@ -792,10 +723,18 @@ public class UtilitiesCommon {
 		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(xpathExpression)));
 		return driver.findElements(By.xpath(xpathExpression));
 	}
-
+	
+	public static void waitForElementIsClickable(Enum<?> enumValue) {
+	    By locator = getLocator(enumValue);
+	    if (locator == null) {
+	        throw new IllegalArgumentException("Locator is null for enum value: " + enumValue);
+	    }
+	    long timeoutSeconds = Long.parseLong(DEFAULT_TIMEOUT);
+	    WebDriverWait wait = new WebDriverWait(driver, timeoutSeconds);
+	    wait.until(ExpectedConditions.elementToBeClickable(locator));
+	}
 	/**
 	 * This method is used to generate the Dynamic Xpath
-	 * 
 	 * @param xpath        XPATH
 	 * @param dynamicValue Dynamic Value
 	 * @return String xpathExpression
@@ -805,7 +744,6 @@ public class UtilitiesCommon {
 	public static String generateDynamicXpath(String xpath, String dynamicValue) {
 		return String.format(xpath, dynamicValue);
 	}
-
 	/**
 	 * This method will perform click operation on the element available on the web
 	 * page.
@@ -820,7 +758,15 @@ public class UtilitiesCommon {
 		executeJS(JAVASCRIPT_BORDER, element);
 		element.click();
 	}
-
+	
+	public static boolean clickAndVerifyClickable(BateelLoginCheckoutEnum enumValue) {
+        try {
+            click(enumValue);
+            return true;
+        } catch (AssertionError e) {
+            return false;
+        }
+    }
 	/**
 	 * This method will perform click operation on the element available on the web
 	 * page by using dynamic xpath.
@@ -836,7 +782,6 @@ public class UtilitiesCommon {
 		executeJS(JAVASCRIPT_BORDER, element);
 		element.click();
 	}
-
 	/**
 	 * This method will enter the specified value in the text field.
 	 * 
@@ -852,7 +797,6 @@ public class UtilitiesCommon {
 		element.clear();
 		element.sendKeys(inputValue);
 	}
-
 	/**
 	 * This method will enter the specified value in the text field by using dynamic
 	 * xpath.
@@ -870,7 +814,6 @@ public class UtilitiesCommon {
 		element.clear();
 		element.sendKeys(inputValue);
 	}
-
 	/**
 	 * This method is used to select dropdown value by Text - This will used for
 	 * select tags
@@ -885,7 +828,6 @@ public class UtilitiesCommon {
 		Select select = new Select(element);
 		select.selectByVisibleText(selectOption);
 	}
-
 	/**
 	 * This method is used to get All drowpdown options Text - This will used for
 	 * select tags
@@ -900,7 +842,6 @@ public class UtilitiesCommon {
 		Select select = new Select(element);
 		return getElementsText(select.getOptions());
 	}
-
 	/**
 	 * This method is used to wait until web element is clickable
 	 * 
@@ -908,10 +849,9 @@ public class UtilitiesCommon {
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
-	private static void waitForElementIsClickable(WebElement element) {
+	public static void waitForElementIsClickable(WebElement element) {
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
-
 	/**
 	 * This method is used to wait until web element is located on DOM and visible
 	 * 
@@ -922,7 +862,6 @@ public class UtilitiesCommon {
 	private static void waitForElementIsVisible(By locator) {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
-
 	/**
 	 * This is used to check the web element is enabled or not
 	 * 
@@ -935,7 +874,6 @@ public class UtilitiesCommon {
 		WebElement element = getElement(enumValue);
 		return element.isEnabled();
 	}
-
 	/**
 	 * This is used to check the web element is present or not
 	 * 
@@ -948,7 +886,15 @@ public class UtilitiesCommon {
 		WebElement element = getElement(enumValue);
 		return element.isDisplayed();
 	}
-
+	
+	public static boolean isElementPresent(By locator) {
+	    try {
+	        driver.findElement(locator);
+	        return true;
+	    } catch (NoSuchElementException e) {
+	        return false;
+	    }
+	}
 	/**
 	 * This is used to check the web element is selected or not
 	 * 
@@ -961,7 +907,6 @@ public class UtilitiesCommon {
 		WebElement element = getElement(enumValue);
 		return element.isSelected();
 	}
-
 	/**
 	 * This method will perform click operation on the element available on the web
 	 * page using javascript executor.
@@ -971,10 +916,9 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static void javaScriptClick(Enum<?> enumValue) {
-		WebElement element = getElement(enumValue);
-		executeJS("arguments[0].click();", element);
+	    WebElement element = getElement(enumValue);
+	    executeJS("arguments[0].click();", element);
 	}
-
 	/**
 	 * This method will enter the specified value in the text field using javascript
 	 * executor.
@@ -990,7 +934,6 @@ public class UtilitiesCommon {
 		element.click();
 		executeJS("arguments[0].setAttribute('value', '" + inputValue + "')", element);
 	}
-
 	/**
 	 * This method will scroll to the specified web element using javascript
 	 * executor.
@@ -1003,7 +946,6 @@ public class UtilitiesCommon {
 		WebElement element = getElement(enumValue);
 		executeJS("arguments[0].scrollIntoView(true);", element);
 	}
-
 	/**
 	 * This method will scroll to the Dynamically generated web element using
 	 * javascript executor.
@@ -1017,7 +959,6 @@ public class UtilitiesCommon {
 		WebElement element = getDynamicElement(enumValue, dynamicValue);
 		executeJS("arguments[0].scrollIntoView(true);", element);
 	}
-
 	/**
 	 * This method will Click to the Dynamically generated web element using
 	 * javascript executor.
@@ -1031,7 +972,6 @@ public class UtilitiesCommon {
 		WebElement element = getDynamicElement(enumValue, dynamicValue);
 		executeJS("arguments[0].click();", element);
 	}
-
 	/**
 	 * This method will execute the java scripts.
 	 * 
@@ -1047,22 +987,17 @@ public class UtilitiesCommon {
 			throw new CustomExceptions("Failed in the JavaScript execution : " + e.getMessage());
 		}
 	}
-
 	/**
 	 * This method will perform mouse hover action on an element
 	 * 
 	 * @param enumValue Enum Value
 	 * @author spandit
-	 * @return
 	 * @lastmodifiedby spandit
 	 */
 	public static void hoverOverElement(Enum<?> enumValue) {
 		WebElement elementTobeHovered = getElement(enumValue);
-		wait.until(ExpectedConditions.presenceOfElementLocated(getLocator(enumValue)));
-
 		builder.moveToElement(elementTobeHovered).build().perform();
 	}
-
 	/**
 	 * This method will perform mouse hover action on an dynamically generated
 	 * element.
@@ -1076,7 +1011,6 @@ public class UtilitiesCommon {
 		WebElement elementTobeHovered = getDynamicElement(enumValue, dynamicValue);
 		builder.moveToElement(elementTobeHovered).build().perform();
 	}
-
 	/**
 	 * This method will perform double click on an element.
 	 * 
@@ -1088,7 +1022,6 @@ public class UtilitiesCommon {
 		WebElement elementTobeDoubleClicked = getElement(enumValue);
 		builder.doubleClick(elementTobeDoubleClicked).perform();
 	}
-
 	/**
 	 * This method will perform right click action on an element.
 	 * 
@@ -1100,7 +1033,6 @@ public class UtilitiesCommon {
 		WebElement elementTobeRightClicked = getElement(enumValue);
 		builder.contextClick(elementTobeRightClicked).perform();
 	}
-
 	/**
 	 * This method will perform drag and drop action on an element.
 	 * 
@@ -1114,7 +1046,6 @@ public class UtilitiesCommon {
 		WebElement destination = getElement(destinationEnumValue);
 		builder.dragAndDrop(source, destination).build().perform();
 	}
-
 	/**
 	 * This method will perform drag and drop action on an dynamically generated
 	 * element.
@@ -1132,7 +1063,6 @@ public class UtilitiesCommon {
 		WebElement destination = getDynamicElement(destinationEnumValue, dynamicDestinationValue);
 		builder.dragAndDrop(source, destination).build().perform();
 	}
-
 	/**
 	 * This method will perform browser search for specified String.
 	 * 
@@ -1163,7 +1093,6 @@ public class UtilitiesCommon {
 			throw new CustomExceptions("Failed to Search the text using Browser Search : " + e.getMessage());
 		}
 	}
-
 	/**
 	 * This method will compare and assert the expected and actual text
 	 * 
@@ -1176,7 +1105,6 @@ public class UtilitiesCommon {
 		String actualText = getElementAttribute(enumValue, "innerText");
 		Assertions.assertThat(actualText.trim()).isEqualTo(expectedText);
 	}
-
 	/**
 	 * This method will compare and Soft assert the expected and actual text
 	 * 
@@ -1189,7 +1117,6 @@ public class UtilitiesCommon {
 		String actualText = getElementText(enumValue);
 		softAssert.assertEquals(actualText, expectedText);
 	}
-
 	/**
 	 * This method will trigger the exception for failed assertion and needs to be
 	 * used at the end of the test
@@ -1200,7 +1127,6 @@ public class UtilitiesCommon {
 	public static void softAssertAll() {
 		softAssert.assertAll();
 	}
-
 	/**
 	 * This method will wait until the presence of element is located
 	 * 
@@ -1211,7 +1137,6 @@ public class UtilitiesCommon {
 	public static void waitForElementIsPresent(Enum<?> enumValue) {
 		wait.until(ExpectedConditions.presenceOfElementLocated(getLocator(enumValue)));
 	}
-
 	/**
 	 * This method will check if the element is visible
 	 * 
@@ -1230,7 +1155,17 @@ public class UtilitiesCommon {
 		}
 		return isElementVisible;
 	}
-
+	
+	public static boolean waitForElementIsNotVisible(By locator) {
+	    boolean isElementNotVisible;
+	    try {
+	        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+	        isElementNotVisible = true;
+	    } catch (TimeoutException exception) {
+	        isElementNotVisible = false;
+	    }
+	    return isElementNotVisible;
+	}
 	/**
 	 * This method will check if the dynamically generated element is displayed.
 	 * 
@@ -1248,7 +1183,6 @@ public class UtilitiesCommon {
 		}
 		return isElementDisplayed;
 	}
-
 	/**
 	 * This method will check if the element is displayed.
 	 * 
@@ -1265,7 +1199,6 @@ public class UtilitiesCommon {
 		}
 		return isElementDisplayed;
 	}
-
 	/**
 	 * This method will check if the element is not visible.
 	 * 
@@ -1277,7 +1210,6 @@ public class UtilitiesCommon {
 	public static boolean verifyElementIsNotVisible(Enum<?> enumValue) {
 		return wait.until(ExpectedConditions.invisibilityOfElementLocated(getLocator(enumValue)));
 	}
-
 	/**
 	 * This method will check if the dynamically generated element is visible.
 	 * 
@@ -1298,7 +1230,6 @@ public class UtilitiesCommon {
 		}
 		return isElementVisible;
 	}
-
 	/**
 	 * This method will check if the dynamically generated element is not visible.
 	 * 
@@ -1319,7 +1250,6 @@ public class UtilitiesCommon {
 		}
 		return isDynamicElementNotVisible;
 	}
-
 	/**
 	 * This method will check if the Text Field currently has Focus.
 	 * 
@@ -1333,7 +1263,6 @@ public class UtilitiesCommon {
 		WebElement expected = getElement(enumValue);
 		return actual.equals(expected);
 	}
-
 	/**
 	 * This method will switch the control to the child window
 	 * 
@@ -1346,7 +1275,6 @@ public class UtilitiesCommon {
 			driver.switchTo().window(winHandle);
 		}
 	}
-
 	/**
 	 * This method will switch the control back to the parent window
 	 * 
@@ -1356,7 +1284,6 @@ public class UtilitiesCommon {
 	public static void switchToParentWindow() {
 		driver.switchTo().window(parentWindowHandle);
 	}
-
 	/**
 	 * This method will fetch handle of the current window
 	 * 
@@ -1367,7 +1294,6 @@ public class UtilitiesCommon {
 	public static String getCurrentWindowHandle() {
 		return driver.getWindowHandle();
 	}
-
 	/**
 	 * This method will fetch handles of the child windows
 	 * 
@@ -1378,7 +1304,6 @@ public class UtilitiesCommon {
 	public static Set<String> getChildWindowHandles() {
 		return driver.getWindowHandles();
 	}
-
 	/**
 	 * This method will switch the control to a specific frame
 	 * 
@@ -1390,7 +1315,6 @@ public class UtilitiesCommon {
 		WebElement frameElement = getElement(enumValue);
 		driver.switchTo().frame(frameElement);
 	}
-
 	/**
 	 * This method will switch the control back to default content from iframe
 	 * 
@@ -1400,7 +1324,6 @@ public class UtilitiesCommon {
 	public static void switchToDefault() {
 		driver.switchTo().defaultContent();
 	}
-
 	/**
 	 * This method is used to get current date and time in dd-MM-yyyy HH-mm-ss
 	 * format
@@ -1413,7 +1336,6 @@ public class UtilitiesCommon {
 		SimpleDateFormat formDate = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
 		return formDate.format(new Date());
 	}
-
 	/**
 	 * This method is used to Generate 7 Digit Random number
 	 * 
@@ -1425,7 +1347,6 @@ public class UtilitiesCommon {
 		Random rand = new Random();
 		return rand.nextInt(9999999);
 	}
-
 	/**
 	 * This method is used to Generate Random string data
 	 * 
@@ -1437,243 +1358,6 @@ public class UtilitiesCommon {
 	public static String generateRandomText(int value) {
 		return RandomStringUtils.randomAlphabetic(value);
 	}
-
-	/**
-	 * This method is used to create a new test run dynamically in Testrail
-	 * 
-	 * @param context Context
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void createTestrailRun(ITestContext context) {
-		if (!isLocalSuite) {
-			int milestone;
-			switch (environment.toUpperCase()) {
-			case "DEV":
-				milestone = TESTRAIL_DEV_MILESTONE_ID;
-				break;
-			case "PROD":
-				milestone = TESTRAIL_PROD_MILESTONE_ID;
-				break;
-			case "QA":
-			default:
-				milestone = TESTRAIL_QA_MILESTONE_ID;
-				break;
-			}
-			String testrailSuiteID = context.getCurrentXmlTest().getParameter("testrailSuiteID");
-			if ((testrailSuiteID.equals(TESTRAIL_REGRESSION_SUITE_ID))
-					|| (testrailSuiteID.equals(TESTRAIL_SANITY_SUITE_ID))) {
-				client = new APIClient(getTestrailData("URL"));
-				client.setUser(getTestrailData("Username"));
-				client.setPassword(UtilitiesCommon.getDecryptedPassword(getTestrailData("Password")));
-				Map<String, Serializable> data = new HashMap<>();
-				data.put("suite_id", testrailSuiteID);
-				data.put("include_all", true);
-				data.put("name", "[" + environment + "]" + " Automated Test Run: " + getCurrentDateTimeStamp());
-				data.put("milestone_id", milestone);
-				JSONObject c = null;
-				try {
-					c = (JSONObject) client.sendPost("add_run/" + TESTRAIL_PROJECT_ID, data);
-					long runId = (long) c.get("id");
-					context.setAttribute(KEY_RUN_ID, runId);
-					log("Test Run created successfully in TestRail with RUN ID= " + runId + " on Environment = "
-							+ environment);
-				} catch (IOException e) {
-					log("Issue in creating JSON Object while adding Testrail Run: " + e.getMessage());
-				} catch (APIException e) {
-					log("Failed to create TestRail Run using Testrail API: " + e.getMessage());
-				} catch (Exception e) {
-					log("Failed to create TestRail Run: " + e.getMessage());
-				}
-			} else {
-				log("Value of Testrail Suite ID entered in XML file is '" + testrailSuiteID
-						+ "' which is not correct. Expected value for Sanity Suite is 303 and Regression Suite is 304");
-			}
-		} else {
-			log("Executing Local suite, Test Run won't be created in Testrail");
-		}
-	}
-
-	/**
-	 * This method is used to fetch the Testrail test case id using @TmsLink
-	 * or @TmsLinks annotations.
-	 * 
-	 * @param result result
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void getTestrailCaseID(ITestResult result) {
-		if (!isLocalSuite) {
-			Method m = result.getMethod().getConstructorOrMethod().getMethod();
-			if (m.isAnnotationPresent(TmsLink.class)) {
-				TmsLink tms = m.getAnnotation(TmsLink.class);
-				result.setAttribute(KEY_CASE_ID, tms.value());
-			} else if (m.isAnnotationPresent(TmsLinks.class)) {
-				TmsLinks tms = m.getAnnotation(TmsLinks.class);
-				result.setAttribute(KEY_CASE_ID, tms.value());
-			} else {
-				log(WARNING);
-				log("Testrail case id is missing in @TmsLink or @TmsLinks for method : " + result.getName()
-						+ " in Test Class : " + result.getTestClass().getName());
-				log(WARNING);
-			}
-		} else {
-			log("Executing Local suite, Testrail Case ID won't be fetched");
-		}
-	}
-
-	/**
-	 * This method is used to update success result in Testrail for Single Testrail
-	 * Test Case or Multiple Testrail Test Cases.
-	 * 
-	 * @param result result
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void setTestrailSuccessResults(ITestResult result) {
-		if (!isLocalSuite) {
-			if (result.getAttribute(KEY_CASE_ID) instanceof String) {
-				String caseId = (String) result.getAttribute(KEY_CASE_ID);
-				if (caseId != null) {
-					log(TEXT_TESTRAIL_CASE_ID + caseId);
-					setSuccessResult(result, caseId);
-				}
-			} else {
-				TmsLink[] caseIds = (TmsLink[]) result.getAttribute(KEY_CASE_ID);
-				for (TmsLink caseId : caseIds) {
-					if (caseIds != null) {
-						log(TEXT_TESTRAIL_CASE_ID + caseId);
-						setSuccessResult(result, caseId.value());
-					}
-				}
-			}
-		} else {
-			log("Executed Local suite, results won't be updated in Testrail");
-		}
-	}
-
-	/**
-	 * This method is used to update the Status and Comment in Testrail once the
-	 * test case is passed
-	 * 
-	 * @param result result
-	 * @param caseId Case Id
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	private static void setSuccessResult(ITestResult result, String caseId) {
-		Long runId = (Long) result.getTestContext().getAttribute(KEY_RUN_ID);
-		log("Passed TestRailCaseID = " + caseId + " in TestRailRunID = " + runId);
-		String comment = "Testrail case ID = " + caseId + " and Test Method name= "
-				+ result.getMethod().getMethodName();
-		boolean testResult = true;
-		Map<String, Serializable> data = new HashMap<>();
-		data.put("status_id", 1);
-		data.put("comment", comment);
-		try {
-			client.sendPost("add_result_for_case/" + runId + "/" + caseId, data);
-		} catch (IOException e) {
-			log(WARNING);
-			log("Unable to add results in Testrail using TestrailAPI. IOException: : " + e.getMessage());
-			log(WARNING);
-			testResult = false;
-		} catch (APIException e) {
-			log(WARNING);
-			log("Unable to add results in Testrail using TestrailAPI. APIException: : " + e.getMessage());
-			log(WARNING);
-			testResult = false;
-		}
-		if (testResult) {
-			log("Test Results are updated successfully in Testrail for Passed TestCase ID: " + caseId + " in Test Run: "
-					+ runId);
-			log("Corresponding Test Method name= " + result.getMethod().getMethodName());
-		}
-	}
-
-	/**
-	 * This method is used to update failure result in Testrail for Single Testrail
-	 * Test Case or Multiple Testrail Test Cases.
-	 * 
-	 * @param result result
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	public static void setTestrailFailureResults(ITestResult result) {
-		if (!isLocalSuite) {
-			if (result.getAttribute(KEY_CASE_ID) instanceof String) {
-				String caseId = (String) result.getAttribute(KEY_CASE_ID);
-				if (caseId != null) {
-					log(TEXT_TESTRAIL_CASE_ID + caseId);
-					setFailureResult(result, caseId);
-				}
-			} else {
-				TmsLink[] caseIds = (TmsLink[]) result.getAttribute(KEY_CASE_ID);
-				if (caseIds != null) {
-					for (TmsLink caseId : caseIds) {
-						log(TEXT_TESTRAIL_CASE_ID + caseId);
-						setFailureResult(result, caseId.value());
-					}
-				}
-			}
-		} else {
-			log("Executed Local suite, results won't be updated in Testrail");
-		}
-	}
-
-	/**
-	 * This method is used to update the Status, Comment with error stacktrace and
-	 * Attachment in Testrail once the test case is failed.
-	 * 
-	 * @param result result
-	 * @param caseId Case Id
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
-	private static void setFailureResult(ITestResult result, String caseId) {
-		Long runId = (Long) result.getTestContext().getAttribute(KEY_RUN_ID);
-		log("Failed TestRailCaseID = " + caseId + " in TestRailRunID = " + runId);
-		String comment = "Testrail case ID= " + caseId + ", Test Method name= " + result.getMethod().getMethodName()
-				+ '\n' + '\n' + "ERROR: " + result.getThrowable().toString();
-		Map<String, Serializable> data = new HashMap<>();
-		boolean testResult = true;
-		data.put("status_id", 5);
-		data.put("comment", comment);
-		try {
-			client.sendPost("add_result_for_case/" + runId + "/" + caseId, data);
-		} catch (IOException e) {
-			log(WARNING);
-			log("Unable to add results in Testrail using TestrailAPI. IOException: " + e.getMessage());
-			log(WARNING);
-			testResult = false;
-		} catch (APIException e) {
-			log(WARNING);
-			log("Unable to add results in Testrail using TestrailAPI. APIException: " + e.getMessage());
-			log(WARNING);
-			testResult = false;
-		}
-		if (driver != null) {
-			fileObj = captureScreenshot(result.getMethod().getMethodName());
-			try {
-				client.sendPost("add_attachment_to_case/" + caseId, fileObj.toString());
-			} catch (IOException e) {
-				log(WARNING);
-				log("Unable to add screenshot attachment for failed test case in Testrail" + e.getMessage());
-				log(WARNING);
-				testResult = false;
-			} catch (APIException e) {
-				log(WARNING);
-				log("Unable to add screenshot attachment for failed test case in Testrail " + e.getMessage());
-				log(WARNING);
-				testResult = false;
-			}
-		}
-		if (testResult) {
-			log("Test Results updated and screenshot attached successfully in Testrail for Failed TestCase ID: "
-					+ caseId + " in Test Run: " + runId);
-			log("Corresponding Test Method name= " + result.getMethod().getMethodName());
-		}
-	}
-
 	/**
 	 * This method is used to capture a screenshot for Testrail.
 	 * 
@@ -1694,7 +1378,6 @@ public class UtilitiesCommon {
 		}
 		return fileObj;
 	}
-
 	/**
 	 * This method is used to delete the allure reports and attachments like
 	 * screenshots and screen recordings.
@@ -1706,7 +1389,6 @@ public class UtilitiesCommon {
 		deleteExistingAllureReports();
 		deleteExistingAttachments();
 	}
-
 	/**
 	 * This method is used to delete the old allure reports.
 	 * 
@@ -1731,7 +1413,6 @@ public class UtilitiesCommon {
 			}
 		}
 	}
-
 	/**
 	 * This method is used to delete the old Screen Recordings and Screen shots.
 	 * 
@@ -1754,7 +1435,6 @@ public class UtilitiesCommon {
 			}
 		}
 	}
-
 	/**
 	 * This method is used to delete the Screen Recording of Passed Test case.
 	 * 
@@ -1780,7 +1460,6 @@ public class UtilitiesCommon {
 			}
 		}
 	}
-
 	/**
 	 * This method is used to set the environment details in allure report.
 	 * 
@@ -1824,7 +1503,6 @@ public class UtilitiesCommon {
 			}
 		}
 	}
-
 	/**
 	 * This method is used to take a screenshot and attach it to allure report.
 	 * 
@@ -1841,7 +1519,6 @@ public class UtilitiesCommon {
 			return new byte[0];
 		}
 	}
-
 	/**
 	 * This method is used to attach the recording of execution flow of test case to
 	 * allure report.
@@ -1867,7 +1544,6 @@ public class UtilitiesCommon {
 			return new byte[0];
 		}
 	}
-
 	/**
 	 * This method is used to start the recording of execution flow of test case.
 	 * 
@@ -1882,7 +1558,6 @@ public class UtilitiesCommon {
 			log("Error in starting recording: " + e.getMessage());
 		}
 	}
-
 	/**
 	 * This method is used to stop the recording of execution flow of test case.
 	 * 
@@ -1898,7 +1573,6 @@ public class UtilitiesCommon {
 			}
 		}
 	}
-
 	/**
 	 * This method is used to set the Testrail Test Case name corresponding to the
 	 * currently executing Test Method in Allure Report.
@@ -1919,7 +1593,6 @@ public class UtilitiesCommon {
 					+ result.getTestClass().getName());
 		}
 	}
-
 	/**
 	 * This method will validate if the Suite is Local, Sanity or Regression Suite
 	 * 
@@ -1936,7 +1609,6 @@ public class UtilitiesCommon {
 			isLocalSuite = true;
 		}
 	}
-
 	/**
 	 * This method is used to generate allure report automatically for windows,
 	 * Linux OS and Mac OS.
@@ -1972,7 +1644,6 @@ public class UtilitiesCommon {
 			}
 		}
 	}
-
 	/**
 	 * This method will accept the Alert message.
 	 * 
@@ -1983,7 +1654,6 @@ public class UtilitiesCommon {
 		waitUntilAlertIsVisible();
 		driver.switchTo().alert().accept();
 	}
-
 	/**
 	 * This method is used to wait until alert is visible.
 	 * 
@@ -1993,7 +1663,6 @@ public class UtilitiesCommon {
 	private static void waitUntilAlertIsVisible() {
 		wait.until(ExpectedConditions.alertIsPresent());
 	}
-
 	/**
 	 * This method is used to refresh the page.
 	 * 
@@ -2003,7 +1672,6 @@ public class UtilitiesCommon {
 	public static void refreshPage() {
 		driver.navigate().refresh();
 	}
-
 	/**
 	 * This method is used to upload file.
 	 * 
@@ -2020,7 +1688,6 @@ public class UtilitiesCommon {
 		element.sendKeys(filePath);
 		log("File has been uploaded. File Path: " + filePath);
 	}
-
 	/**
 	 * This method is used to create test file at
 	 * src\test\resources\TestData\TestDataUpload folder.
@@ -2044,7 +1711,6 @@ public class UtilitiesCommon {
 		log("File has been created successfully. File Path is : " + filePath);
 		return filePath;
 	}
-
 	/**
 	 * This method is used to delete test file at specified location.
 	 * 
@@ -2057,7 +1723,6 @@ public class UtilitiesCommon {
 		file.delete();
 		log("File has been deleted. File Path: " + filePath);
 	}
-
 	/**
 	 * This method is used to hit Enter Key.
 	 * 
@@ -2069,7 +1734,6 @@ public class UtilitiesCommon {
 		WebElement element = getElement(enumValue);
 		element.sendKeys(Keys.ENTER);
 	}
-
 	/**
 	 * This method is used to hit Tab Key.
 	 * 
@@ -2081,7 +1745,6 @@ public class UtilitiesCommon {
 		WebElement element = getElement(enumValue);
 		element.sendKeys(Keys.TAB);
 	}
-
 	/**
 	 * This method is used to verify if element List is sorted alphabetically.
 	 * 
@@ -2096,7 +1759,6 @@ public class UtilitiesCommon {
 		boolean isSorted = Ordering.allEqual().isOrdered(elementsText);
 		return isSorted;
 	}
-
 	/**
 	 * This method is used to verify if file has been downloaded successfully.
 	 * 
@@ -2121,7 +1783,6 @@ public class UtilitiesCommon {
 		}
 		return fileDownloaded;
 	}
-
 	/**
 	 * This method is used to delete file from TestDataDownload folder.
 	 * 
@@ -2138,7 +1799,6 @@ public class UtilitiesCommon {
 		file.delete();
 		log("File has been deleted. File Path: " + filePath);
 	}
-
 	/**
 	 * This method is used to get test file location.
 	 * 
@@ -2154,7 +1814,6 @@ public class UtilitiesCommon {
 		String filePath = folderPath + File.separator + fileName + "." + fileType;
 		return filePath;
 	}
-
 	/**
 	 * This method is used to drag and drop the upload file.
 	 * 
@@ -2188,7 +1847,6 @@ public class UtilitiesCommon {
 		}
 		input.sendKeys(filePath);
 	}
-
 	/**
 	 * This method is used to read csv file.
 	 * 
@@ -2214,7 +1872,6 @@ public class UtilitiesCommon {
 		}
 		return list;
 	}
-
 	/**
 	 * This method is used to verify CSV file data
 	 * 
@@ -2238,7 +1895,6 @@ public class UtilitiesCommon {
 		}
 		return dataVerified;
 	}
-
 	/**
 	 * This method used to enter data into alert popup.
 	 * 
@@ -2249,7 +1905,6 @@ public class UtilitiesCommon {
 	public static void enterDataIntoAlertPopup(String inputValue) {
 		driver.switchTo().alert().sendKeys(inputValue);
 	}
-
 	/**
 	 * This method will clear the specified value in the text field.
 	 * 
@@ -2261,7 +1916,6 @@ public class UtilitiesCommon {
 		WebElement element = getElement(enumValue);
 		element.clear();
 	}
-
 	/**
 	 * This method will perform select All operation on the text.
 	 * 
@@ -2271,7 +1925,6 @@ public class UtilitiesCommon {
 	public static void selectAllText() {
 		builder.keyDown(Keys.CONTROL).sendKeys(Keys.chord("A")).keyUp(Keys.CONTROL).build().perform();
 	}
-
 	/**
 	 * This method will scroll to the top of the page
 	 * 
@@ -2281,7 +1934,6 @@ public class UtilitiesCommon {
 	public static void scrollToTop() {
 		builder.sendKeys(Keys.HOME).build().perform();
 	}
-
 	/**
 	 * This method will scroll up slightly
 	 * 
@@ -2291,7 +1943,6 @@ public class UtilitiesCommon {
 	public static void scrollUpSlightly() {
 		builder.keyDown(Keys.LEFT_ALT).sendKeys(Keys.ARROW_UP).keyUp(Keys.LEFT_ALT).build().perform();
 	}
-
 	/**
 	 * This method will scroll down slightly
 	 * 
@@ -2301,7 +1952,6 @@ public class UtilitiesCommon {
 	public static void scrollDownSlightly() {
 		builder.keyDown(Keys.LEFT_ALT).sendKeys(Keys.ARROW_DOWN).keyUp(Keys.LEFT_ALT).build().perform();
 	}
-
 	/**
 	 * This method will compare and assert the actual text contains expected text
 	 * 
@@ -2314,7 +1964,6 @@ public class UtilitiesCommon {
 		String actualText = getElementAttribute(enumValue, "innerText");
 		Assertions.assertThat(actualText.trim()).contains(expectedText);
 	}
-
 	/**
 	 * This method will wait till specified Milliseconds
 	 * 
@@ -2333,7 +1982,6 @@ public class UtilitiesCommon {
 			log(e.getMessage());
 		}
 	}
-
 	/**
 	 * This method will scroll to the specified web element using javascript
 	 * executor.
@@ -2347,4 +1995,73 @@ public class UtilitiesCommon {
 		WebElement element = driver.findElement(locator);
 		executeJS("arguments[0].scrollIntoView(true);", element);
 	}
+	public static void waitForOverlayToDisappear() {
+
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+	    try {  
+	        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.loading-mask")));
+	    } catch (TimeoutException e) {
+	        // Log a message or take appropriate action if the overlay doesn't disappear within the timeout
+	        System.out.println("Overlay did not disappear within the timeout.");
+	    }
+	}
+	public static void waitForElementToDisappear(By cssSelector) {
+		// TODO Auto-generated method stub
+		WebDriverWait wait = new WebDriverWait(driver, 30); // Adjust timeout as needed
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(cssSelector));
+	}
+
+	public static String gettitle() {
+			String Pagetitle = driver.getTitle();
+			return Pagetitle;
+	}
+	
+	public static void switchtoTab(int x) {
+		 ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+		    driver.switchTo().window(tabs.get(x));
+	}
+
+	public static void scrollDownByPixels(int pixels) {
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
+	    js.executeScript("window.scrollBy(0, arguments[0]);", pixels);
+	}
+
+	public static String getCurrentUrl() {
+		// TODO Auto-generated method stub
+        return driver.getCurrentUrl();
+	}
+
+	public static String getTextFromElement(BateelPLPPageEnum bateelPlpPageEnumCss) {
+	    WebElement element = UtilitiesCommon.getElement(bateelPlpPageEnumCss);
+	    if (element != null) {
+	        return element.getAttribute("alt");
+	    } else {
+	        return null;
+	    }
+	}
+
+	public static int getCartCount() {
+	    WebElement cartCountElement = driver.findElement(By.cssSelector(".counter-number"));
+	    String cartCountText = cartCountElement.getText().trim();
+
+	    if (cartCountText.isEmpty()) {
+	        System.out.println("Cart count text is empty.");
+	        return 0; 
+	    }
+
+	    int cartCount;
+	    try {
+	        cartCount = Integer.parseInt(cartCountText);
+	    } catch (NumberFormatException e) {
+	        System.out.println("Unable to parse cart count text: " + cartCountText);
+	        return 0; 
+	    }
+
+	    return cartCount;
+	}
+
+	  public static String isElementClickable(Enum<?> enumValue) {
+	        
+	        return "clickable";
+	    }	
 }
