@@ -19,8 +19,11 @@ WORKDIR /usr/share/HamleysAutomation
 ADD src/ /usr/share/HamleysAutomation/src/
 ADD pom.xml /usr/share/HamleysAutomation
 
-# Package the Project
-RUN mvn clean test -X
+# Clean the Maven project
+RUN mvn clean
+
+# Run tests with debug info
+RUN mvn test -X
 
 # Add allure reporting folder
 ADD allure-results/ /usr/share/HamleysAutomation/allure-results/
