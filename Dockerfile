@@ -9,14 +9,19 @@ RUN apk update && \
         bash \
         maven \
         chromium \
-        chromium-chromedriver \
         xvfb \
         ttf-freefont
 
 # Set environment variables for display and Chromium
 ENV DISPLAY=:99
 ENV CHROME_BIN=/usr/bin/chromium
-ENV CHROME_DRIVER=/usr/bin/chromium-chromedriver
+ENV CHROME_DRIVER=/usr/bin/chromedriver  # Use the path inside the Docker container
+
+# Copy the ChromeDriver from the local directory
+COPY chromedriver /usr/bin/chromedriver
+
+# Make sure the ChromeDriver is executable
+RUN chmod +x /usr/bin/chromedriver
 
 # Set the working directory
 WORKDIR /usr/share/HamleysAutomation
