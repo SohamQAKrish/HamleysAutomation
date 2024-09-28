@@ -1,27 +1,15 @@
-FROM openjdk:17-alpine
+FROM openjdk:17
 
 # Install necessary packages
-RUN apk update && \
-    apk add --no-cache \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
         unzip \
         bash \
-        maven \
-        chromium \
-        xvfb \
-        ttf-freefont
-
-# Set environment variables for display and Chromium
-ENV DISPLAY=:99
-ENV CHROME_BIN=/usr/bin/chromium
-ENV CHROME_DRIVER=/usr/bin/chromedriver  # Use the path inside the Docker container
-
-# Copy the ChromeDriver from the local directory
-COPY chromedriver /usr/bin/chromedriver
-
-# Make sure the ChromeDriver is executable
-RUN chmod +x /usr/bin/chromedriver
+        maven && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /usr/share/HamleysAutomation
@@ -30,11 +18,14 @@ WORKDIR /usr/share/HamleysAutomation
 COPY src/ /usr/share/HamleysAutomation/src/
 COPY pom.xml /usr/share/HamleysAutomation/
 
+# Verify installation
+RUN mvn --version
+
 # Package the project without running tests
 RUN mvn clean package -DskipTests
 
 # Copy allure results if needed
 COPY allure-results/ /usr/share/HamleysAutomation/allure-results/
 
-# Command to run the tests with Xvfb
-CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x24 & mvn clean test"]
+# Command to run the tests
+CMD ["mvn", "clean", "test"]

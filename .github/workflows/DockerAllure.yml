@@ -8,6 +8,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      selenium:
+        image: selenium/hub:latest
+        ports:
+          - 4444:4444
+        options: >-
+          --health-cmd "curl --silent --fail http://localhost:4444/wd/hub/status" 
+          --health-interval 30s 
+          --health-timeout 10s 
+          --health-retries 3
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -24,7 +35,7 @@ jobs:
 
       - name: Run Tests and Generate Allure Report
         run: |
-            docker run --rm -e DISPLAY=:99 bateel-automation-demo:latest /bin/sh -c "mvn clean test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml && mvn allure:report"
+          docker run --rm bateel-automation-demo:latest /bin/sh -c "mvn clean test -Dmaven.test.failure.ignore -DxmlPath=src/test/resources -DsuiteXmlFile=LocalTestSuite.xml && mvn allure:report"
 
       - name: Save Allure Report to Local Directory
         run: |
