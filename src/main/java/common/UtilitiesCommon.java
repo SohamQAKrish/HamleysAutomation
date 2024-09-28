@@ -400,8 +400,8 @@ public class UtilitiesCommon {
 		    options.addArguments("--no-sandbox");
 		    options.addArguments("--disable-dev-shm-usage");
 		    options.addArguments("--disable-gpu");
-		    options.addArguments("--window-size=1920x1080");
-		    
+		    options.addArguments("--window-size=1920,1080");
+		    WebDriver driver = new ChromeDriver(options);
 		    if (SystemUtils.IS_OS_MAC) {
 		        chromeOptions.addArguments("start-fullscreen");
 		    } else {

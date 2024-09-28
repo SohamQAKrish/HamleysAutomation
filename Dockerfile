@@ -8,13 +8,15 @@ RUN apk update && \
         unzip \
         bash \
         maven \
+        chromium \
+        chromium-chromedriver \
         xvfb \
         ttf-freefont
 
 # Set environment variables for display and Chromium
 ENV DISPLAY=:99
 ENV CHROME_BIN=/usr/bin/chromium
-ENV CHROME_DRIVER=/usr/bin/chromium-driver
+ENV CHROME_DRIVER=/usr/bin/chromium-chromedriver
 
 # Set the working directory
 WORKDIR /usr/share/HamleysAutomation
@@ -29,5 +31,5 @@ RUN mvn clean package -DskipTests
 # Copy allure results if needed
 COPY allure-results/ /usr/share/HamleysAutomation/allure-results/
 
-# Command to run the tests with xvfb
-CMD ["xvfb-run", "--server-args=-screen 0 1920x1080x24", "mvn", "clean", "test"]
+# Command to run the tests with Xvfb
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x24 & mvn clean test"]
