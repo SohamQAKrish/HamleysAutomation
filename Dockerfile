@@ -8,7 +8,22 @@ RUN apt-get update && \
         curl \
         unzip \
         bash \
-        maven && \
+        maven \
+        wget \
+        gnupg2 && \
+    # Install Google Chrome
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update && \
+    apt-get install -y google-chrome-stable && \
+    # Install ChromeDriver
+    CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+') && \
+    wget https://chromedriver.storage.googleapis.com/$CHROME_VERSION/chromedriver_linux64.zip && \
+    unzip chromedriver_linux64.zip && \
+    mv chromedriver /usr/local/bin/ && \
+    chmod +x /usr/local/bin/chromedriver && \
+    # Clean up
+    rm chromedriver_linux64.zip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -19,8 +34,8 @@ WORKDIR /usr/share/HamleysAutomation
 COPY src/ ./src/
 COPY pom.xml ./
 
-# Verify Maven installation
-RUN mvn --version
+# Verify Maven and Chrome installation
+RUN mvn --version && google-chrome --version && chromedriver --version
 
 # Package the project without running tests
 RUN mvn clean package -DskipTests

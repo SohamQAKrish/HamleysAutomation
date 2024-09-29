@@ -35,7 +35,7 @@ jobs:
 
       - name: Run Tests and Generate Allure Report
         run: |
-            docker run --rm bateel-automation-demo:latest /bin/sh -c "mvn clean test -X && ls -la target/surefire-reports"
+            docker run --rm bateel-automation-demo:latest /bin/sh -c "mvn clean test && ls -la target/surefire-reports"
 
       - name: Save Allure Report to Local Directory
         run: |
