@@ -1,8 +1,7 @@
-# Use a specific version of OpenJDK for better consistency
 FROM openjdk:17-slim
 
-# Install necessary packages
-RUN apt-get update && \
+RUN set -ex && \
+    apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
@@ -11,22 +10,19 @@ RUN apt-get update && \
         maven \
         wget \
         gnupg2 && \
-    # Install Google Chrome
     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
     apt-get update && \
     apt-get install -y google-chrome-stable && \
-    # Install ChromeDriver
-    CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+') && \
+    CHROME_VERSION=$(google-chrome --version | grep -oP '\\d+\\.\\d+\\.\\d+\\.\\d+') && \
     wget https://chromedriver.storage.googleapis.com/$CHROME_VERSION/chromedriver_linux64.zip && \
     unzip chromedriver_linux64.zip && \
     mv chromedriver /usr/local/bin/ && \
     chmod +x /usr/local/bin/chromedriver && \
-    # Clean up
     rm chromedriver_linux64.zip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
+	
 # Set the working directory
 WORKDIR /usr/share/HamleysAutomation
 
