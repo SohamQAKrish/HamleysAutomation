@@ -1,5 +1,6 @@
 FROM openjdk:17-slim
 
+# Install necessary packages and Chrome
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
@@ -14,8 +15,8 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y google-chrome-stable && \
     # Get Chrome version and install ChromeDriver
-    CHROME_VERSION=$(google-chrome --version | grep -oP '\\d+\\.\\d+\\.\\d+\\.\\d+') && \
-    wget https://chromedriver.storage.googleapis.com/$CHROME_VERSION/chromedriver_linux64.zip && \
+    CHROME_VERSION=$(google-chrome --version | awk '{print $3}') && \
+    wget "https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip" && \
     unzip chromedriver_linux64.zip && \
     mv chromedriver /usr/local/bin/ && \
     chmod +x /usr/local/bin/chromedriver && \
