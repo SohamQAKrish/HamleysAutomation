@@ -1,4 +1,5 @@
-FROM openjdk:17
+# Use a specific version of OpenJDK for better consistency
+FROM openjdk:17-slim
 
 # Install necessary packages
 RUN apt-get update && \
@@ -15,17 +16,18 @@ RUN apt-get update && \
 WORKDIR /usr/share/HamleysAutomation
 
 # Copy the project files
-COPY src/ /usr/share/HamleysAutomation/src/
-COPY pom.xml /usr/share/HamleysAutomation/
+COPY src/ ./src/
+COPY pom.xml ./
 
-# Verify installation
+# Verify Maven installation
 RUN mvn --version
 
 # Package the project without running tests
 RUN mvn clean package -DskipTests
 
-# Copy allure results if needed
-COPY allure-results/ /usr/share/HamleysAutomation/allure-results/
+# If you want to use allure, ensure results are copied
+# Uncomment this line if you have allure results to copy
+# COPY allure-results/ ./allure-results/
 
 # Command to run the tests
 CMD ["mvn", "clean", "test"]
