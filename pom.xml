@@ -159,7 +159,7 @@
                     -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                 </argLine>
                 <systemPropertyVariables>
-                    <environment>${environment}</environment>
+                    <propertyName>src/test/resources/allure-results/environment.properties</propertyName>
                     <browser>${browser}</browser>
                     <defaultTimeout>${defaultTimeout}</defaultTimeout>
                 </systemPropertyVariables>
