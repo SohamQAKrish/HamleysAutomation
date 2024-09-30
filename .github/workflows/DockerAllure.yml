@@ -33,6 +33,14 @@ jobs:
         run: |
           docker build -t bateel-automation-demo:latest . 
 
+      - name: Generate Environment Properties File
+        run: |
+          echo "#Mon Sep 30 16:56:22 IST 2024" > environment.properties
+          echo "OperatingSystem=Windows 10" >> environment.properties
+          echo "ApplicationURL=https://mcstaging.hamleys.com" >> environment.properties
+          echo "Environment=Qa" >> environment.properties
+          echo "Browser=Chrome" >> environment.properties
+
       - name: Run Tests and Generate Allure Report
         run: |
             docker run --rm bateel-automation-demo:latest /bin/sh -c "mvn clean test -X && ls -la target/surefire-reports"
