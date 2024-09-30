@@ -377,49 +377,38 @@ public class UtilitiesCommon {
 		}
 
 		if (!remoteWebDriver) {
-			UtilitiesCommon.log("Initializing Web Driver for Local Execution .....");
-			WebDriverManager.chromedriver().setup();
-			Map<String, Object> preferences = new HashMap<String, Object>();
-			preferences.put("download.default_directory",
-					System.getProperty(USER_DIR_CONSTANT) + File.separator + "src" + File.separator + "test"
-							+ File.separator + "resources" + File.separator + "TestData" + File.separator
-							+ "TestDataDownload");
-			chromeOptions.setExperimentalOption("prefs", preferences);
-		  //run test with headless mode for git actions
-			chromeOptions.addArguments("--headless");
+		    UtilitiesCommon.log("Initializing Web Driver for Local Execution .....");
 
-			driver = new ChromeDriver(chromeOptions);
-		}
+		    // Set up WebDriverManager for ChromeDriver
+		    WebDriverManager.chromedriver().setup();
 
-		if (remoteWebDriver) {
-		    UtilitiesCommon.log("Initializing Test case in docker container .....");
+		    // Initialize ChromeOptions
+		    ChromeOptions chromeOptions = new ChromeOptions();
 
-		    // Adding options
-		    ChromeOptions options = new ChromeOptions();
-		    options.addArguments("--headless");
-		    options.addArguments("--no-sandbox");
-		    options.addArguments("--disable-dev-shm-usage");
-		    options.addArguments("--disable-gpu");
-		    options.addArguments("--window-size=1920,1080");
-		    WebDriver driver = new ChromeDriver(options);
-		    if (SystemUtils.IS_OS_MAC) {
-		        chromeOptions.addArguments("start-fullscreen");
-		    } else {
-		        chromeOptions.addArguments("--window-size=1400,900");
-		    }
-		    chromeOptions.addArguments("disable-infobars");
+		    // Set download preferences
+		    Map<String, Object> preferences = new HashMap<>();
+		    preferences.put("download.default_directory",
+		            System.getProperty(USER_DIR_CONSTANT) + File.separator + "src" + File.separator + "test"
+		                    + File.separator + "resources" + File.separator + "TestData" + File.separator
+		                    + "TestDataDownload");
+		    chromeOptions.setExperimentalOption("prefs", preferences);
 
+		    // Add arguments for headless mode
+		    chromeOptions.addArguments("--headless");
+		    chromeOptions.addArguments("--no-sandbox");
+		    chromeOptions.addArguments("--disable-dev-shm-usage");
+		    chromeOptions.addArguments("--disable-gpu");
+		    chromeOptions.addArguments("--window-size=1920,1080");
+
+		    // Initialize the WebDriver
 		    try {
-		        // Initialize the RemoteWebDriver with the specified options
-		        driver = new RemoteWebDriver(new URL(HUB_URL), chromeOptions);
-//		        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS); // Increased page load timeout
-//		        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS); // Increased implicit wait timeout
-		    } catch (MalformedURLException e) {
-		        throw new CustomExceptions("URL is bad: " + e.getMessage()); // Include original exception
+		        driver = new ChromeDriver(chromeOptions);
+		    } catch (Exception e) {
+		        UtilitiesCommon.log("Error initializing ChromeDriver: " + e.getMessage());
+		        e.printStackTrace(); // Print stack trace for debugging
 		    }
 		}
 	}
-
 	/**
 	 * This method is used to get the web driver
 	 * @return driver
