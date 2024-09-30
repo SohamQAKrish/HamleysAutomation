@@ -1,0 +1,14 @@
+# Template for Allure Environment Properties
+# Update the values as needed for your environment
+
+# Operating System Information
+OperatingSystem=Windows 10
+
+# Application URL
+ApplicationURL=https://mcstaging.hamleys.com
+
+# Environment Details
+Environment=Qa
+
+# Browser Information
+Browser=Chrome
