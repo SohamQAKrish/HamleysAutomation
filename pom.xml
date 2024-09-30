@@ -143,29 +143,31 @@
         </dependency>
     </dependencies>
 
- <build>
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M7</version>
-            <configuration>
-                <testFailureIgnore>false</testFailureIgnore>
-                <suiteXmlFiles>
-                    <suiteXmlFile>${xmlPath}/${suiteXmlFile}</suiteXmlFile>
-                </suiteXmlFiles>
-                <argLine>
-                    -Dfile.encoding=${project.build.sourceEncoding}
-                    -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                </argLine>
-                <systemPropertyVariables>
-                    <env.properties>${project.basedir}/allure-results/environment.properties</env.properties>
-                    <browser>${browser}</browser>
-                    <defaultTimeout>${defaultTimeout}</defaultTimeout>
-                </systemPropertyVariables>
-                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-            </configuration>
-        </plugin>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M7</version>
+				<configuration>
+					<testFailureIgnore>false</testFailureIgnore>
+					<suiteXmlFiles>
+						<suiteXmlFile>${xmlPath}/${suiteXmlFile}</suiteXmlFile>
+					</suiteXmlFiles>
+					<argLine>
+						-Dfile.encoding=${project.build.sourceEncoding}
+						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+					</argLine>
+					<systemPropertyVariables>
+						<env.properties>
+							${project.basedir}/allure-results/environment.properties</env.properties>
+						<browser>${browser}</browser>
+						<defaultTimeout>${defaultTimeout}</defaultTimeout>
+					</systemPropertyVariables>
+					<reportsDirectory>
+						${project.build.directory}/surefire-reports</reportsDirectory>
+				</configuration>
+			</plugin>
 
         <plugin>
             <groupId>io.qameta.allure</groupId>
@@ -184,14 +186,14 @@
                 </execution>
             </executions>
         </plugin>
-        
-        <!-- Maven compiler plugin configuration -->
+
+			<!-- Maven compiler plugin configuration -->
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.13.0</version>
             <configuration>
-                <!-- Set compiler version to 17 -->
+					<!-- Set compiler version to 17 -->
                 <compilerVersion>17</compilerVersion>
                 <source>17</source>
                 <target>17</target>
