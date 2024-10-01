@@ -1,73 +1,49 @@
-name: Docker YML workflow
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
-      - dockerIntegration  # Adjust to your branch name
+      - dockerIntegration
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      selenium:
-        image: selenium/hub:latest
-        ports:
-          - 4444:4444
-        options: >-
-          --health-cmd "curl --silent --fail http://localhost:4444/wd/hub/status" 
-          --health-interval 30s 
-          --health-timeout 10s 
-          --health-retries 3
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-
       - name: Build Docker Image
         run: |
-          docker build -t bateel-automation-demo:latest . 
+          docker build -t bateel-automation-demo:latest .
 
-      - name: Generate Environment Properties File
+      - name: Stop and Remove Existing Container
         run: |
-          echo "#Mon Sep 30 16:56:22 IST 2024" > environment.properties
-          echo "OperatingSystem=Windows 10" >> environment.properties
-          echo "ApplicationURL=https://mcstaging.hamleys.com" >> environment.properties
-          echo "Environment=Qa" >> environment.properties
-          echo "Browser=Chrome" >> environment.properties
+          docker stop bateel-automation-demo || true
+          docker rm bateel-automation-demo || true
 
-      - name: Run Tests and Generate Allure Report
+      - name: Run Tests in Docker Container
         run: |
-            docker run --rm -e DISPLAY=:99 -v /tmp/.X11-unix:/tmp/.X11-unix bateel-automation-demo:latest /bin/sh -c "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test -X && ls -la target/surefire-reports"
+          docker run --name bateel-automation-demo -d -e DISPLAY=:99 -v /tmp/.X11-unix:/tmp/.X11-unix bateel-automation-demo:latest /bin/sh -c "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test"
 
       - name: Save Allure Report to Local Directory
         run: |
-          docker cp $(docker create bateel-automation-demo:latest):/usr/share/HamleysAutomation/allure-report ./allure-report
+          docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
 
       - name: Install SSH Client
         run: sudo apt-get install -y openssh-client
 
-      - name: Create Allure Reports Directory on Server
+      - name: Copy Allure Report to Remote Server
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Add your SSH key to GitHub secrets
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "$SSH_PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
-          ssh -o StrictHostKeyChecking=no -i private_key.pem -p 2255 bateel-automation-demo@bateel-automation-demo.magentoprojects.net "mkdir -p ~/allure-reports"
+          
+          # Create directory for allure results on the remote server
+          ssh -o StrictHostKeyChecking=no -i private_key.pem -p 2255 bateel-automation-demo@bateel-automation-demo.magentoprojects.net "mkdir -p ~/allure-results"
 
-      - name: Copy Allure Report to Server
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Add your SSH key to GitHub secrets
-        run: |
-          echo "$SSH_PRIVATE_KEY" > private_key.pem
-          chmod 600 private_key.pem
-          scp -o StrictHostKeyChecking=no -i private_key.pem -P 2255 -r ./allure-report/* bateel-automation-demo@bateel-automation-demo.magentoprojects.net:~/allure-reports
+          # Copy the allure results to the remote server
+          scp -o StrictHostKeyChecking=no -i private_key.pem -P 2255 ./allure-results/* bateel-automation-demo@bateel-automation-demo.magentoprojects.net:~/allure-results/
 
-      - name: Cleanup
-        run: |
-          docker rm $(docker ps -aq) || true
+          # If there's a running Docker container on the remote server, copy results to it
+          ssh -o StrictHostKeyChecking=no -i private_key.pem -p 2255 bateel-automation-demo@bateel-automation-demo.magentoprojects.net "docker cp ~/allure-results/. bateel-automation-demo:/var/www/html/allure-results"
