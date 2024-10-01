@@ -27,11 +27,11 @@ COPY src/ ./src/
 COPY pom.xml ./
 COPY allure-results/* ./allure-results/
 
+# Set the DISPLAY environment variable for headless execution
+ENV DISPLAY=:99
+
 # Start Xvfb in the background
 RUN Xvfb :99 -screen 0 1920x1080x24 &
-
-# Set the DISPLAY environment variable
-ENV DISPLAY=:99
 
 # Verify Maven installation
 RUN mvn --version
