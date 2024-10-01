@@ -24,12 +24,16 @@ WORKDIR /usr/share/HamleysAutomation
 # Copy the project files
 COPY src/ ./src/
 COPY pom.xml ./
+COPY allure-results/ ./allure-results/  # Copy allure-results directory
 
 # Verify Maven installation
 RUN mvn --version
 
 # Package the project without running tests
 RUN mvn clean package -DskipTests
+
+# Check the contents of allure-results to verify env.prop is present
+RUN ls -la ./allure-results
 
 # Command to run the tests
 CMD ["mvn", "clean", "test"]
