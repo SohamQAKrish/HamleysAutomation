@@ -1563,6 +1563,43 @@ public class UtilitiesCommon {
 			}
 		}
 	}
+	public static void startScreenRecordingHeadless(String methodName) {
+	    if (isHeadless()) {
+	        log("Headless mode: No screen recording started for method: " + methodName);
+	    } else {
+	        try {
+	            ScriptExecutionRecorder.startRecord(methodName);
+	        } catch (IOException | AWTException e) {
+	            log("Error in starting recording: " + e.getMessage());
+	        }
+	    }
+	}
+
+	public static void stopScreenRecordingeadless() {
+	    if (isHeadless()) {
+	        log("Headless mode: No screen recording to stop.");
+	    } else {
+	        if (ScriptExecutionRecorder.getScreenRecorder() != null) {
+	            try {
+	                ScriptExecutionRecorder.stopRecord();
+	            } catch (IOException e) {
+	                log("Error in stopping recording: " + e.getMessage());
+	            }
+	        }
+	    }
+	}
+
+	// Logging method
+	private static void log2(String message) {
+	    System.out.println(message);
+	}
+
+	// Check if in headless mode
+	private static boolean isHeadless() {
+	    return System.getProperty("headless.mode") != null;
+	}
+
+
 	/**
 	 * This method is used to set the Testrail Test Case name corresponding to the
 	 * currently executing Test Method in Allure Report.

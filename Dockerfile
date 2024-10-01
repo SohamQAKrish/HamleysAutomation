@@ -1,3 +1,4 @@
+# Use the OpenJDK 17 slim image
 FROM openjdk:17-slim
 
 # Install necessary packages and Google Chrome
@@ -9,7 +10,8 @@ RUN apt-get update && \
         bash \
         maven \
         wget \
-        gnupg && \
+        gnupg \
+        xvfb && \
     # Install Google Chrome
     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
@@ -26,6 +28,12 @@ COPY src/ ./src/
 COPY pom.xml ./
 COPY allure-results/* ./allure-results/
 
+# Set the environment variable for headless mode
+ENV headless.mode=true
+
+# Start Xvfb in the background
+RUN Xvfb :99 -screen 0 1920x1080x24 &
+
 # Verify Maven installation
 RUN mvn --version
 
@@ -33,4 +41,4 @@ RUN mvn --version
 RUN mvn clean package -DskipTests
 
 # Command to run tests
-CMD ["mvn", "clean", "test"]
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x24 & mvn clean test"]
