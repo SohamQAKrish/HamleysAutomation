@@ -24,7 +24,7 @@ WORKDIR /usr/share/HamleysAutomation
 # Copy the project files
 COPY src/ ./src/
 COPY pom.xml ./
-COPY allure-results/ ./allure-results/  # Copy allure-results directory
+COPY allure-results/* ./allure-results/
 
 # Verify Maven installation
 RUN mvn --version
