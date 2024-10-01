@@ -32,18 +32,28 @@ jobs:
       - name: Install SSH Client
         run: sudo apt-get install -y openssh-client
 
-      - name: Copy Allure Report to Remote Server
+        - name: Copy Allure Report to Remote Server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
+          # Write the private key to a file
           echo "$SSH_PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
-          
+      
+          # Check the permissions and existence of the private key file
+          echo "Checking private key file:"
+          ls -l private_key.pem
+      
           # Create directory for allure results on the remote server
-          ssh -o StrictHostKeyChecking=no -i private_key.pem -p 2255 bateel-automation-demo@bateel-automation-demo.magentoprojects.net "mkdir -p ~/allure-results"
-
+          echo "Creating directory on remote server..."
+          ssh -o StrictHostKeyChecking=no -i private_key.pem -p 2255 bateel-automation-demo@bateel-automation-demo.magentoprojects.net "mkdir -p ~/allure-results" || { echo "Failed to create directory"; exit 1; }
+      
           # Copy the allure results to the remote server
-          scp -o StrictHostKeyChecking=no -i private_key.pem -P 2255 ./allure-results/* bateel-automation-demo@bateel-automation-demo.magentoprojects.net:~/allure-results/
-
+          echo "Copying allure results to remote server..."
+          scp -o StrictHostKeyChecking=no -i private_key.pem -P 2255 ./allure-results/* bateel-automation-demo@bateel-automation-demo.magentoprojects.net:~/allure-results/ || { echo "Failed to copy allure results"; exit 1; }
+      
           # If there's a running Docker container on the remote server, copy results to it
-          ssh -o StrictHostKeyChecking=no -i private_key.pem -p 2255 bateel-automation-demo@bateel-automation-demo.magentoprojects.net "docker cp ~/allure-results/. bateel-automation-demo:/var/www/html/allure-results"
+          echo "Copying results to Docker container..."
+          ssh -o StrictHostKeyChecking=no -i private_key.pem -p 2255 bateel-automation-demo@bateel-automation-demo.magentoprojects.net "docker cp ~/allure-results/. bateel-automation-demo:/var/www/html/allure-results" || { echo "Failed to copy results to Docker container"; exit 1; }
+      
+          echo "Allure report copied successfully."
