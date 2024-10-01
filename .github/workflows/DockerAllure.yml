@@ -32,7 +32,7 @@ jobs:
       - name: Install SSH Client
         run: sudo apt-get install -y openssh-client
 
-        - name: Copy Allure Report to Remote Server
+      - name: Copy Allure Report to Remote Server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
