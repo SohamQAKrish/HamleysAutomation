@@ -42,5 +42,5 @@ RUN mvn clean package -DskipTests
 # Check the contents of allure-results to verify env.prop is present
 RUN ls -la ./allure-results
 
-# Command to run the tests
-CMD ["mvn", "clean", "test"]
+# Command to run Xvfb and tests
+CMD Xvfb :99 -screen 0 1920x1080x24 & mvn clean test
