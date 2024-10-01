@@ -11,7 +11,8 @@ RUN apt-get update && \
         maven \
         wget \
         gnupg \
-        xvfb && \
+        xvfb \
+        && \
     # Install Google Chrome
     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
@@ -27,9 +28,6 @@ WORKDIR /usr/share/HamleysAutomation
 COPY src/ ./src/
 COPY pom.xml ./
 COPY allure-results/* ./allure-results/
-
-# Set the environment variable for headless mode
-ENV headless.mode=true
 
 # Verify Maven installation
 RUN mvn --version
