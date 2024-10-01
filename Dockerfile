@@ -9,8 +9,7 @@ RUN apt-get update && \
         bash \
         maven \
         wget \
-        gnupg \
-        xvfb && \
+        gnupg && \
     # Install Google Chrome
     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
@@ -27,20 +26,11 @@ COPY src/ ./src/
 COPY pom.xml ./
 COPY allure-results/* ./allure-results/
 
-# Set the DISPLAY environment variable for headless execution
-ENV DISPLAY=:99
-
-# Start Xvfb in the background
-RUN Xvfb :99 -screen 0 1920x1080x24 &
-
 # Verify Maven installation
 RUN mvn --version
 
 # Package the project without running tests
 RUN mvn clean package -DskipTests
 
-# Check the contents of allure-results to verify env.prop is present
-RUN ls -la ./allure-results
-
-# Command to run Xvfb and tests
-CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x24 & mvn clean test"]
+# Command to run tests
+CMD ["mvn", "clean", "test"]
