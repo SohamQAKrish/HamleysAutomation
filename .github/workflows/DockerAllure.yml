@@ -56,4 +56,4 @@ jobs:
           echo "Copying results to Docker container..."
           ssh -o StrictHostKeyChecking=no -i private_key.pem -p 2255 bateel-automation-demo@bateel-automation-demo.magentoprojects.net "docker cp ~/allure-results/. bateel-automation-demo:/var/www/html/allure-results" || { echo "Failed to copy results to Docker container"; exit 1; }
       
-          echo "Allure report copied successfully from remote."
+          echo "Allure report copied successfully from remotly."
