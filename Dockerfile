@@ -43,4 +43,4 @@ RUN mvn clean package -DskipTests
 RUN ls -la ./allure-results
 
 # Command to run Xvfb and tests
-CMD Xvfb :99 -screen 0 1920x1080x24 & mvn clean test
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x24 & mvn clean test"]
