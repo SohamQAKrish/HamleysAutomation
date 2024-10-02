@@ -12,14 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16' 
-
-      - name: Install Allure CLI
-        run: npm install -g allure-commandline
-
       - name: Build Docker Image
         run: |
           docker build -t bateel-automation-demo:latest .
@@ -36,7 +28,12 @@ jobs:
       - name: Save Allure Report to Local Directory
         run: |
             docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
-        
+
+      - name: Install Allure Commandline
+        run: |
+            sudo apt-get update
+            sudo apt-get install -y allure # Ensure Allure is installed
+
       - name: Generate Allure HTML Report
         run: |
           allure generate ./allure-results --output ./allure-report --clean
