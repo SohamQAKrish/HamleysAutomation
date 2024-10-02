@@ -37,10 +37,9 @@ jobs:
       - name: Upload Allure Report to Docker Container
         env:
           USERNAME: bateel-automation-demo
-          PASSWORD: LaQSZC0byfgE4fxG
           PORT: 2255
         run: |
               # Loop through each file in the allure-results directory and upload it
               for file in ./allure-results/*; do
-                  scp -P "$PORT" "$file" "$USERNAME@bateel-automation-demo.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload $file"; exit 1; }
+                  scp -P "$PORT" -i ~/.ssh/id_ed25519 "$file" "$USERNAME@bateel-automation-demo.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload $file"; exit 1; }
               done
