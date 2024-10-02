@@ -31,13 +31,13 @@ jobs:
 
       - name: Install curl
         run: sudo apt-get install -y curl
-        
+          
       - name: Upload Allure Report to Docker Container
         env:
-            USERNAME: bateel-automation-demo
-            PASSWORD: LaQSZC0byfgE4fxG
-          run: |
-            # Loop through each file in the allure-results directory and upload it
-            for file in ./allure-results/*; do
-                curl -u "$USERNAME:$PASSWORD" -X POST -F "file=@$file" "https://bateel-automation-demo.magentoprojects.net/upload" || { echo "Failed to upload $file"; exit 1; }
-            done
+          USERNAME: bateel-automation-demo
+          PASSWORD: LaQSZC0byfgE4fxG
+        run: |
+              # Loop through each file in the allure-results directory and upload it
+              for file in ./allure-results/*; do
+                  curl -u "$USERNAME:$PASSWORD" -X POST -F "file=@$file" "https://bateel-automation-demo.magentoprojects.net/upload" || { echo "Failed to upload $file"; exit 1; }
+              done
