@@ -41,13 +41,15 @@ jobs:
 
       - name: Upload Allure Report to Docker Container
         env:
-            USERNAME: bateel-automation-demo
-            PORT: 2255
+          USERNAME: bateel-automation-demo
+          PORT: 2255
         run: |
-                # Clear SSH agent and add the private key
-                eval "$(ssh-agent -s)"
-                ssh-add -D
-                ssh-add ~/.ssh/id_ed25519
-                for file in ./allure-results/*; do
-                  scp -P "$PORT" -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes "$file" "$USERNAME@bateel-automation-demo.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload $file"; exit 1; }
-                done
+            # Clear SSH agent and add the private key
+            eval "$(ssh-agent -s)"
+            ssh-add -D
+            ssh-add ~/.ssh/id_ed25519
+            
+            # Loop through each file in the allure-results directory and upload it
+            for file in ./allure-results/*; do
+              scp -P "$PORT" -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -vvv "$file" "$USERNAME@bateel-automation.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload $file"; exit 1; }
+            done
