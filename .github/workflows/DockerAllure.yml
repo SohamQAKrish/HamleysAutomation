@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Docker Github Integration
 
 on:
   push:
