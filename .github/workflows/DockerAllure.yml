@@ -31,6 +31,10 @@ jobs:
       - name: Save Allure Report to Local Directory
         run: |
             docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
+       
+      - name: Clear Old Allure Reports Locally
+        run: |
+          rm -rf ./allure-report/*
 
       - name: Generate Allure HTML Report
         run: |
