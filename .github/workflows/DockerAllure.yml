@@ -31,7 +31,7 @@ jobs:
       - name: Save Allure Report to Local Directory
         run: |
             docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
-       
+
       - name: Clear Old Allure Reports Locally
         run: |
           rm -rf ./allure-report/*
@@ -44,8 +44,16 @@ jobs:
         run: |
             sudo apt-get update
             sudo apt-get install -y sshpass
-        
-      - name: Upload Allure Report to Docker Container
+
+      - name: Clear Old Allure Reports on Server
+        env:
+          USERNAME: bateel-automation-demo
+          PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          PORT: 2255
+        run: |
+          sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@bateel-automation.magentoprojects.net" "rm -rf /var/www/html/bateel-automation-demo/webroot/*"
+
+      - name: Upload Allure Report to Server
         env:
           USERNAME: bateel-automation-demo
           PASSWORD: ${{ secrets.SSH_PASSWORD }}
