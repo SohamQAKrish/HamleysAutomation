@@ -29,9 +29,11 @@ jobs:
         run: |
           docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
 
-      - name: Install curl
-        run: sudo apt-get install -y curl
-          
+      - name: Add SSH known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 2255 bateel-automation-demo.magentoprojects.net >> ~/.ssh/known_hosts
+
       - name: Upload Allure Report to Docker Container
         env:
           USERNAME: bateel-automation-demo
