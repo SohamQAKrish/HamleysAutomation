@@ -35,6 +35,10 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
+      - name: Add SSH Known Hosts
+        run: |
+          ssh-keyscan -H -p 2255 /var/www/html/bateel-automation-demo/.ssh
+
       - name: Upload Allure Report to Docker Container
         env:
           USERNAME: bateel-automation-demo
