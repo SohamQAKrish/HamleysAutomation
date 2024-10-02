@@ -36,10 +36,8 @@ jobs:
         
       - name: Upload Allure Report to Docker Container
         env:
-            USERNAME: bateel-automation-demo
-            PASSWORD: ${{ secrets.SSH_PASSWORD }} # Store your password as a GitHub secret
-            PORT: 2255
+          USERNAME: bateel-automation-demo
+          PASSWORD: ${{ secrets.SSH_PASSWORD }}  # Store your password as a GitHub secret
+          PORT: 2255
         run: |
-            for file in ./allure-results/*; do
-              sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no "$file" "$USERNAME@bateel-automation.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload $file"; exit 1; }
-            done
+              sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-results/* "$USERNAME@bateel-automation.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
