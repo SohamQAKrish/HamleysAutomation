@@ -43,7 +43,7 @@ jobs:
 
       - name: Clear Old Allure Reports Locally
         run: |
-          rm -rf ./allure-report/*
+          rm -rf ./allure-report/* #cleared report
 
       - name: Generate Allure HTML Report
         run: |
