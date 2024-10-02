@@ -31,13 +31,12 @@ jobs:
         
       - name: Install Allure Commandline
         run: |
-            sudo apt-get update
-            sudo apt-get install -y allure # Install Allure; make sure this command works in your environment
+              sudo apt-get update
+              sudo apt-get install -y allure # Ensure Allure is installed
         
       - name: Generate Allure HTML Report
         run: |
-            allure serve ./allure-results --clean # This will generate and serve the report
-        
+          allure generate ./allure-results --output ./allure-report --clean        
       - name: Install sshpass
         run: |
             sudo apt-get update
