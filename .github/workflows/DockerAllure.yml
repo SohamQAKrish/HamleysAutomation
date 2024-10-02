@@ -29,9 +29,14 @@ jobs:
         run: |
           docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
 
+      - name: Add SSH Key
+        run: |
+            mkdir -p ~/.ssh
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519   
+
       - name: Add SSH known hosts
         run: |
-          mkdir -p ~/.ssh
           ssh-keyscan -p 2255 bateel-automation-demo.magentoprojects.net >> ~/.ssh/known_hosts
 
       - name: Upload Allure Report to Docker Container
