@@ -31,22 +31,17 @@ jobs:
 
       - name: Add SSH Key
         run: |
-            mkdir -p ~/.ssh
-            echo "${{ secrets.SSH_PRIVATE_KEY_BASE64 }}" | base64 --decode > ~/.ssh/id_ed25519
-            chmod 600 ~/.ssh/id_ed25519   
-
-      - name: Add SSH known hosts
-        run: |
-          ssh-keyscan -p 2255 bateel-automation-demo.magentoprojects.net >> ~/.ssh/known_hosts
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
 
       - name: Upload Allure Report to Docker Container
         env:
           USERNAME: bateel-automation-demo
           PORT: 2255
         run: |
-            eval "$(ssh-agent -s)"
-            ssh-add -D
-            ssh-add ~/.ssh/id_ed25519
-            for file in ./allure-results/*; do
-              scp -P "$PORT" -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -vvv "$file" "$USERNAME@bateel-automation.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload $file"; exit 1; }
-            done
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_ed25519
+          for file in ./allure-results/*; do
+            scp -P "$PORT" -o IdentitiesOnly=yes "$file" "$USERNAME@bateel-automation.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload $file"; exit 1; }
+          done
