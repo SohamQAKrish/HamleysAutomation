@@ -31,9 +31,6 @@ COPY allure-results/* ./allure-results/
 # Verify Maven installation
 RUN mvn --version
 
-# Clear old Allure results
-RUN rm -rf ./allure-results/*
-
 # Package the project without running tests
 RUN mvn clean package -DskipTests
 
