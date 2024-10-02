@@ -11,8 +11,7 @@ RUN apt-get update && \
         maven \
         wget \
         gnupg \
-        xvfb \
-        && \
+        xvfb && \
     # Install Google Chrome
     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
@@ -31,6 +30,9 @@ COPY allure-results/* ./allure-results/
 
 # Verify Maven installation
 RUN mvn --version
+
+# Clear old Allure results
+RUN rm -rf ./allure-results/*
 
 # Package the project without running tests
 RUN mvn clean package -DskipTests
