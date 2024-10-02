@@ -31,9 +31,7 @@ jobs:
 
       - name: Save Allure Report to Local Directory
         run: |
-              docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results && \
-              # Clear everything except environment.properties and category.json
-              find ./allure-results -type f ! -name 'environment.properties' ! -name 'category.json' -exec rm -f {} +
+              docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
 
       - name: Clear Old Allure Reports on Server
         env:

@@ -24,7 +24,6 @@ public class SanityHamleyesAccountTestGithub {
 		HamleysLaunchBrowserTestGitHubActions.login();
 		UtilitiesCommon.log("URL launch successfully");
 		UtilitiesCommon.log("Docker generated allure report successfully");
-		UtilitiesCommon.log("Allure index.html file generated");
 
 	}
 }
