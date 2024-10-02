@@ -29,6 +29,15 @@ jobs:
         run: |
             docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
         
+      - name: Install Allure Commandline
+        run: |
+            sudo apt-get update
+            sudo apt-get install -y allure # Install Allure; make sure this command works in your environment
+        
+      - name: Generate Allure HTML Report
+        run: |
+            allure serve ./allure-results --clean # This will generate and serve the report
+        
       - name: Install sshpass
         run: |
             sudo apt-get update
