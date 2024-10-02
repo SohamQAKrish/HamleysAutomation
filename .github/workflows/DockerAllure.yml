@@ -48,8 +48,6 @@ jobs:
                 eval "$(ssh-agent -s)"
                 ssh-add -D
                 ssh-add ~/.ssh/id_ed25519
-        
-                # Loop through each file in the allure-results directory and upload it
                 for file in ./allure-results/*; do
-                    scp -P "$PORT" -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes -vvv "$file" "$USERNAME@bateel-automation-demo.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload $file"; exit 1; }
+                  scp -P "$PORT" -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes "$file" "$USERNAME@bateel-automation-demo.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload $file"; exit 1; }
                 done
