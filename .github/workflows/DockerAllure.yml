@@ -39,5 +39,5 @@ jobs:
         run: |
               # Loop through each file in the allure-results directory and upload it
               for file in ./allure-results/*; do
-                  curl -u "$USERNAME:$PASSWORD" -X POST -F "file=@$file" "https://bateel-automation-demo.magentoprojects.net/" || { echo "Failed to upload $file"; exit 1; }
+                  curl -u "$USERNAME:$PASSWORD" -X POST -F "file=@$file" "/var/www/html/bateel-automation-demo/webroot/" || { echo "Failed to upload $file"; exit 1; }
               done
