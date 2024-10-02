@@ -31,9 +31,9 @@ jobs:
 
       - name: Add SSH Key
         run: |
-              mkdir -p ~/.ssh
-              echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-              chmod 600 ~/.ssh/id_ed25519   
+            mkdir -p ~/.ssh
+            echo "${{ secrets.SSH_PRIVATE_KEY_BASE64 }}" | base64 --decode > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519   
 
       - name: Add SSH known hosts
         run: |
