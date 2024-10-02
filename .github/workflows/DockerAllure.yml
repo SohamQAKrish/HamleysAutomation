@@ -1,65 +1,54 @@
 name: Docker Github Integration
- 
+
 on:
   push:
     branches:
       - dockerIntegration
- 
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
- 
+
       - name: Install Allure CLI
         run: npm install -g allure-commandline
- 
+
       - name: Build Docker Image
         run: |
-          docker build --no-cache -t bateel-automation-demo:latest .
- 
+          docker build -t bateel-automation-demo:latest .
+
       - name: Stop and Remove Existing Container
         run: |
           docker stop bateel-automation-demo || true
           docker rm bateel-automation-demo || true
- 
+
       - name: Run Tests and Generate Allure Report
         run: |
           docker run --name bateel-automation-demo -e DISPLAY=:99 -v /tmp/.X11-unix:/tmp/.X11-unix bateel-automation-demo:latest /bin/sh -c "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test -X"
- 
-      - name: Clear Old Allure Results
-        run: |
-          docker exec bateel-automation-demo rm -rf /usr/share/HamleysAutomation/allure-results/*
- 
+
       - name: Save Allure Report to Local Directory
         run: |
-          docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
- 
-      - name: List Allure Results
-        run: |
-          ls -l ./allure-results
- 
+            docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
+       
       - name: Clear Old Allure Reports Locally
         run: |
           rm -rf ./allure-report/*
- 
+
       - name: Generate Allure HTML Report
         run: |
           allure generate ./allure-results --output ./allure-report --clean
- 
-      - name: Check Allure Report Contents
-        run: |
-          ls -l ./allure-report
- 
+
       - name: Install sshpass
         run: |
-          sudo apt-get update
-          sudo apt-get install -y sshpass
+            sudo apt-get update
+            sudo apt-get install -y sshpass
+        
       - name: Upload Allure Report to Docker Container
         env:
           USERNAME: bateel-automation-demo
           PASSWORD: ${{ secrets.SSH_PASSWORD }}
           PORT: 2255
         run: |
-          sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/* "$USERNAME@bateel-automation.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
+              sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/* "$USERNAME@bateel-automation.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
