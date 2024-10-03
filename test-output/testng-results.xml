@@ -2,12 +2,12 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-10-02T17:54:04 IST" name="Local Test Suite" finished-at="2024-10-02T17:54:33 IST" duration-ms="29103">
+  <suite started-at="2024-10-03T10:27:19 IST" name="Local Test Suite" finished-at="2024-10-03T10:27:47 IST" duration-ms="28189">
     <groups>
     </groups>
-    <test started-at="2024-10-02T17:54:04 IST" name="Local Tests" finished-at="2024-10-02T17:54:33 IST" duration-ms="29103">
+    <test started-at="2024-10-03T10:27:19 IST" name="Local Tests" finished-at="2024-10-03T10:27:47 IST" duration-ms="28189">
       <class name="sanity.hamleys.SanityHamleyesAccountTestGithub">
-        <test-method signature="testgitHubActions()[pri:0, instance:sanity.hamleys.SanityHamleyesAccountTestGithub@6b587673]" started-at="2024-10-02T17:54:09 IST" name="testgitHubActions" finished-at="2024-10-02T17:54:33 IST" duration-ms="24199" status="PASS">
+        <test-method signature="testgitHubActions()[pri:0, instance:sanity.hamleys.SanityHamleyesAccountTestGithub@27b71f50]" started-at="2024-10-03T10:27:24 IST" name="testgitHubActions" finished-at="2024-10-03T10:27:46 IST" duration-ms="22195" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testgitHubActions -->
