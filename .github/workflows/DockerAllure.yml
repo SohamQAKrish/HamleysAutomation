@@ -24,7 +24,7 @@ jobs:
 
       - name: Install Allure Commandline
         run: |
-          npm install -g allure-commandline
+          npm install -g allure-commandline --save-dev
 
       - name: Build Docker Image
         run: |
@@ -35,6 +35,11 @@ jobs:
           docker run --name hamleys-automation \
           -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results \
           hamleys-automation
+
+      - name: Inspect Hamleys Directory
+        run: |
+          echo "Contents of /usr/share/HamleysAutomation:"
+          docker run --rm hamleys-automation ls -la /usr/share/HamleysAutomation
 
       - name: Check Test Execution Exit Code
         run: |
@@ -50,11 +55,11 @@ jobs:
       - name: Inspect Allure Results
         run: |
           echo "Contents of allure-results:"
-          ls -la /usr/share/HamleysAutomation/allure-results
+          ls -la allure-results
 
       - name: Generate Allure HTML Report
         run: |
-          allure generate /usr/share/HamleysAutomation/allure-results --output ./allure-report --clean
+          allure generate allure-results --output ./allure-report --clean
 
       - name: Upload Allure Report
         uses: actions/upload-artifact@v3
@@ -75,7 +80,3 @@ jobs:
           PORT: 2255
         run: |
           sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/* "$USERNAME@$SERVER:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
-
-      - name: Cleanup Docker Container
-        run: |
-          docker rm -f hamleys-automation || true
