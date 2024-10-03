@@ -23,7 +23,9 @@ jobs:
 
       - name: Run Selenium Tests
         run: |
-          docker run --name hamleys-automation -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results hamleys-automation
+          docker run --name hamleys-automation \
+          -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results \
+          hamleys-automation
 
       - name: Check Test Execution Exit Code
         run: |
@@ -41,7 +43,7 @@ jobs:
           allure-tools/allure:latest generate /usr/share/HamleysAutomation/allure-results --output ./allure-report --clean
 
       - name: Upload Allure Report
-        uses: actions/upload-artifact@v3  # Updated to the latest version
+        uses: actions/upload-artifact@v3
         with:
           name: allure-report
           path: ./allure-report

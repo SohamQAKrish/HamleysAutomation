@@ -1,7 +1,6 @@
-# Use a base image that includes Java 17
 FROM openjdk:17-alpine
 
-# Install necessary packages
+# Install necessary packages including Chrome
 RUN apk update && apk upgrade && \
     apk add --no-cache \
       maven \
@@ -9,7 +8,9 @@ RUN apk update && apk upgrade && \
       curl \
       unzip \
       coreutils \
-      tzdata
+      tzdata \
+      chromium \
+      nss
 
 # Set the working directory
 WORKDIR /usr/share/HamleysAutomation
