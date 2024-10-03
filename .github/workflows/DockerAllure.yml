@@ -14,8 +14,11 @@ jobs:
 
       - name: Install Allure CLI
         run: |
-          sudo apt-get update
-          sudo apt-get install -y allure
+          # Download and install Allure
+          wget -q https://github.com/allure-framework/allure2/releases/latest/download/allure-2.20.1.zip -O allure.zip
+          unzip -q allure.zip -d allure
+          sudo mv allure /usr/local/bin/allure
+          echo 'export PATH=$PATH:/usr/local/bin/allure/bin' >> $GITHUB_ENV
 
       - name: Build Docker Image
         run: |
@@ -74,4 +77,4 @@ jobs:
           PASSWORD: ${{ secrets.SSH_PASSWORD }}
           PORT: 2255
         run: |
-          sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@bateel-automation.magentoprojects.net" "mv /tmp/env.prop /var/www/html/bateel-automation-demo/webroot/ || true"
+          sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@bateel-automation.magentoprojects.net" "mv /tmp/env.prop /var/www/html/bateel-automation.magentoprojects.net/webroot/ || true"
