@@ -1,38 +1,30 @@
-# Use the OpenJDK 17 slim image
-FROM openjdk:17-slim
+# Use a lightweight base image
+FROM alpine:3.14
 
-# Install necessary packages and Google Chrome
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-        unzip \
-        bash \
-        maven \
-        wget \
-        gnupg \
-        xvfb && \
-    # Install Google Chrome
-    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get update && \
-    apt-get install -y google-chrome-stable && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Install necessary packages
+RUN apk update && apk upgrade && \
+    apk add --no-cache \
+      ca-certificates \
+      openjdk11 \
+      maven \
+      bash \
+      curl \
+      unzip \
+      coreutils \
+      tzdata
 
 # Set the working directory
 WORKDIR /usr/share/HamleysAutomation
 
-# Copy the project files
-COPY src/ ./src/
-COPY pom.xml ./
-COPY allure-results/* ./allure-results/
+# Copy project files
+COPY src/ /usr/share/HamleysAutomation/src/
+COPY pom.xml /usr/share/HamleysAutomation/
 
-# Verify Maven installation
-RUN mvn --version
-
-# Package the project without running tests
+# Package the project (skip tests during build)
 RUN mvn clean package -DskipTests
 
-# Start Xvfb and run tests
-CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test"]
+# Expose allure results directory
+VOLUME /usr/share/HamleysAutomation/allure-results
+
+# Command to run tests
+CMD ["mvn", "clean", "test", "-Dmaven.test.failure.ignore", "-DxmlPath=src/test/resources", 

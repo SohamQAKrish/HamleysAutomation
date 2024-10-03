@@ -1,67 +1,61 @@
-name: Docker Github Integration
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
+      - main
       - dockerIntegration
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Install Allure CLI
-        run: npm install -g allure-commandline
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
       - name: Build Docker Image
         run: |
-          docker build -t bateel-automation-demo:latest .
+          docker build -t hamleys-automation .
 
-      - name: Stop and Remove Existing Container
+      - name: Run Selenium Tests
         run: |
-          docker stop bateel-automation-demo || true
-          docker rm bateel-automation-demo || true
+          docker run --name hamleys-automation -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results hamleys-automation
 
-      - name: Run Tests and Generate Allure Report
+      - name: Check Test Execution Exit Code
         run: |
-          docker run --name bateel-automation-demo -e DISPLAY=:99 -v /tmp/.X11-unix:/tmp/.X11-unix bateel-automation-demo:latest /bin/sh -c "
-          Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test -X"
-
-      - name: Save Allure Report to Local Directory
-        run: |
-              docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
-
-      - name: Clear Old Allure Reports on Servera
-        env:
-          USERNAME: bateel-automation-demo
-          PASSWORD: ${{ secrets.SSH_PASSWORD }}
-          PORT: 2255
-        run: |
-          sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@bateel-automation.magentoprojects.net" "rm -rf /var/www/html/bateel-automation-demo/webroot/*" || { echo "Failed to clear old reports"; exit 1; }
-
-      - name: Clear Old Allure Reports Locally
-        run: |
-          rm -rf ./allure-report/* #cleared report
+          EXIT_CODE=$(docker inspect -f '{{.State.ExitCode}}' hamleys-automation)
+          echo "Test execution exit code: $EXIT_CODE"
+          if [ "$EXIT_CODE" -ne 0 ]; then
+            echo "Tests failed, checking logs..."
+            docker logs hamleys-automation
+            exit 1
+          fi
 
       - name: Generate Allure HTML Report
         run: |
-          allure generate ./allure-results --output ./allure-report --clean
+          docker run --rm -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results \
+          allure-tools/allure:latest generate /usr/share/HamleysAutomation/allure-results --output ./allure-report --clean
+
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: ./allure-report
 
       - name: Install sshpass
         run: |
-            sudo apt-get update
-            sudo apt-get install -y sshpass
-        
-      - name: Upload Allure Report to Server
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
+      - name: Publish Allure Report to Server
         env:
           USERNAME: bateel-automation-demo
-          PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          PASSWORD: ${{ secrets.SSH_PASSWORD }}  # Store this in your repo secrets
+          SERVER: bateel-automation-demo.magentoprojects.net
           PORT: 2255
         run: |
-              # Clear the old reports on the server
-              sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@bateel-automation.magentoprojects.net" "rm -rf /var/www/html/bateel-automation-demo/webroot/*" || { echo "Failed to clear old reports"; exit 1; }
-
-              # Upload new reports
-              sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/* "$USERNAME@bateel-automation.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
+          sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/* "$USERNAME@$SERVER:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
