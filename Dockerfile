@@ -21,7 +21,7 @@ RUN apt-get update && \
 
 # Install Allure
 ENV ALLURE_VERSION=2.27.0
-RUN wget -q "https://repo.maven.apache.org/allure/${ALLURE_VERSION}/allure-${ALLURE_VERSION}-zip" -O /tmp/allure.zip && \
+RUN wget "https://repo.maven.apache.org/allure/${ALLURE_VERSION}/allure-${ALLURE_VERSION}-zip" -O /tmp/allure.zip && \
     unzip /tmp/allure.zip -d /opt && \
     rm /tmp/allure.zip && \
     ln -s /opt/allure-${ALLURE_VERSION}/bin/allure /usr/local/bin/allure
