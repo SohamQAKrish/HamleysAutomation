@@ -1,34 +1,39 @@
-FROM openjdk:17-alpine
+FROM openjdk:17-slim
 
-# Install necessary packages including Chrome
-RUN apk update && apk upgrade && \
-    apk add --no-cache \
-      maven \
-      bash \
-      curl \
-      unzip \
-      coreutils \
-      tzdata \
-      chromium \
-      chromium-chromedriver \
-      nss
-
-# Set environment variables for Chrome and ChromeDriver
-ENV CHROME_BIN=/usr/bin/chromium-browser
-ENV CHROME_DRIVER=/usr/bin/chromedriver
+# Install necessary packages and Google Chrome
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        unzip \
+        bash \
+        maven \
+        wget \
+        gnupg \
+        xvfb && \
+    # Install Google Chrome
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update && \
+    apt-get install -y google-chrome-stable && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /usr/share/HamleysAutomation
 
-# Copy project files
-COPY src/ /usr/share/HamleysAutomation/src/
-COPY pom.xml /usr/share/HamleysAutomation/
+# Copy the project files
+COPY src/ ./src/
+COPY pom.xml ./
 
-# Package the project (skip tests during build)
+# Set the DISPLAY environment variable for headless execution
+ENV DISPLAY=:99
+
+# Verify Maven installation
+RUN mvn --version
+
+# Package the project without running tests
 RUN mvn clean package -DskipTests
 
-# Expose allure results directory
-VOLUME /usr/share/HamleysAutomation/allure-results
-
-# Command to run tests
-CMD ["mvn", "clean", "test", "-Dmaven.test.failure.ignore", "-DxmlPath=src/test/resources", "-DsuiteXmlFile=LocalTestSuite.xml"]
+# Command to run the tests with Xvfb
+CMD Xvfb :99 -screen 0 1920x1080x24 & mvn clean test
