@@ -38,6 +38,10 @@ jobs:
             echo "Not specified" > allure-results/env.properties
           fi
 
+      - name: Clean Allure Results in Container
+        run: |
+          docker run --rm hamleys-automation /bin/sh -c "rm -rf /usr/share/HamleysAutomation/allure-results/*"
+
       - name: Run Tests and Generate Allure Report
         run: |
           docker run --name hamleys-automation \
@@ -87,3 +91,9 @@ jobs:
           PORT: 2255
         run: |
           sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/$TIMESTAMP/* "$USERNAME@$SERVER:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
+
+      - name: Clean Up Allure Reports
+        run: |
+          # Remove local allure report and results
+          rm -rf ./allure-results/*
+          rm -rf ./allure-report/*
