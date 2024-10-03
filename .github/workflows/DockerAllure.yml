@@ -20,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16' # Specify the Node.js version
+          node-version: '16'
 
       - name: Install Allure Commandline
         run: |
@@ -32,7 +32,6 @@ jobs:
 
       - name: Ensure Allure Environment File Exists
         run: |
-          # Ensure the allure-results directory exists and create env.properties if it does not exist
           if [ ! -f allure-results/env.properties ]; then
             echo "Creating an empty env.properties file."
             echo "Not specified" > allure-results/env.properties
@@ -41,6 +40,7 @@ jobs:
       - name: Run Selenium Tests
         run: |
           docker run --name hamleys-automation \
+          -e CHROME_OPTIONS="--headless --no-sandbox --disable-dev-shm-usage --disable-gpu --window-size=1920,1080" \
           -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results \
           hamleys-automation
 
@@ -83,7 +83,7 @@ jobs:
       - name: Publish Allure Report to Server
         env:
           USERNAME: bateel-automation-demo
-          PASSWORD: ${{ secrets.SSH_PASSWORD }}  # Ensure this secret is set in your repo
+          PASSWORD: ${{ secrets.SSH_PASSWORD }}
           SERVER: bateel-automation-demo.magentoprojects.net
           PORT: 2255
         run: |

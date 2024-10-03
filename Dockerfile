@@ -30,6 +30,7 @@ ADD allure-results/ /usr/share/HamleysAutomation/allure-results/
 
 # Set display port to avoid crashes
 ENV DISPLAY=:99
+ENV CHROME_OPTIONS="--headless --no-sandbox --disable-dev-shm-usage --disable-gpu --window-size=1920,1080"
 
-# Command to run the tests (uncomment if needed)
-CMD ["mvn", "test", "-Dwebdriver.chrome.options='--headless --no-sandbox --disable-dev-shm-usage --disable-gpu --window-size=1920,1080'"]
+# Command to run the tests
+CMD ["mvn", "test"]
