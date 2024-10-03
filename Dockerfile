@@ -1,42 +1,34 @@
-FROM openjdk:17-slim
+FROM alpine:3.14
 
-# Install necessary packages and Google Chrome
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-        unzip \
-        bash \
-        maven \
-        wget \
-        gnupg \
-        xvfb \
-        libxtst6 \    # Add this line to install libXtst
-        libxrender1 \ # Also useful for rendering in headless environments
-        libxi6 && \   # For input events in AWT
-    # Install Google Chrome
-    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends google-chrome-stable && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apk update \
+  && apk upgrade \
+  && apk add --no-cache \
+      ca-certificates \
+      coreutils \
+      openjdk11 \
+      tzdata \
+      curl \
+      unzip \
+      bash \
+      maven \
+      nss \
+      libxtst \
+      libxrender \
+      libxi \
+  && update-ca-certificates
 
-# Set the working directory
+# Workspace Directory
 WORKDIR /usr/share/HamleysAutomation
 
-# Copy the project files
-COPY src/ ./src/
-COPY pom.xml ./
+# Add Project's required folders and files
+ADD src/ /usr/share/HamleysAutomation/src/
+ADD pom.xml /usr/share/HamleysAutomation
 
-# Set the DISPLAY environment variable for headless execution
-ENV DISPLAY=:99
-
-# Verify Maven installation
-RUN mvn --version
-
-# Package the project without running tests
+# Package the Project
 RUN mvn clean package -DskipTests
 
-# Command to run the tests with Xvfb
-CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x24 & mvn clean test"]
+# Add allure reporting folder
+ADD allure-results/ /usr/share/HamleysAutomation/allure-results/
+
+# Command to run the tests (uncomment if needed)
+# CMD [ "tail", "-f", "/dev/null" ]
