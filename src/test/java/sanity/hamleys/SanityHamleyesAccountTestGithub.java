@@ -28,6 +28,9 @@ public class SanityHamleyesAccountTestGithub {
 		UtilitiesCommon.log("Docker generated allure report successfully");
 		UtilitiesCommon.log("Docker generated allure report successfully");
 		UtilitiesCommon.log("Docker generated allure report successfully");
+		
+		UtilitiesCommon.log("Allure report generated in docker container");
+		UtilitiesCommon.log("Allure report generated in docker container as expected");
 
 	}
 }
