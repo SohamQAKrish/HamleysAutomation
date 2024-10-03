@@ -1,36 +1,38 @@
+# Use the OpenJDK 17 slim image
 FROM openjdk:17-slim
 
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-      ca-certificates \
-      curl \
-      unzip \
-      bash \
-      maven \
-      libxtst6 \
-      libxrender1 \
-      libxi6 \
-      chromium \
-      chromium-driver \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
+# Install necessary packages and Google Chrome
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        unzip \
+        bash \
+        maven \
+        wget \
+        gnupg \
+        xvfb && \
+    # Install Google Chrome
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update && \
+    apt-get install -y google-chrome-stable && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Workspace Directory
+# Set the working directory
 WORKDIR /usr/share/HamleysAutomation
 
-# Add Project's required folders and files
-ADD src/ /usr/share/HamleysAutomation/src/
-ADD pom.xml /usr/share/HamleysAutomation
+# Copy the project files
+COPY src/ ./src/
+COPY pom.xml ./
+COPY allure-results/* ./allure-results/
 
-# Package the Project
+# Verify Maven installation
+RUN mvn --version
+
+# Package the project without running tests
 RUN mvn clean package -DskipTests
 
-# Add allure reporting folder
-ADD allure-results/ /usr/share/HamleysAutomation/allure-results/
-
-# Set display port to avoid crashes
-ENV DISPLAY=:99
-ENV CHROME_OPTIONS="--headless --no-sandbox --disable-dev-shm-usage --disable-gpu --window-size=1920,1080"
-
-# Command to run the tests
-CMD ["mvn", "test"]
+# Start Xvfb and run tests
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test"]

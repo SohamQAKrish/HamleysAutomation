@@ -37,12 +37,10 @@ jobs:
             echo "Not specified" > allure-results/env.properties
           fi
 
-      - name: Run Selenium Tests
+      - name: Run Tests and Generate Allure Report
         run: |
-          docker run --name hamleys-automation \
-          -e CHROME_OPTIONS="--headless --no-sandbox --disable-dev-shm-usage --disable-gpu --window-size=1920,1080" \
-          -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results \
-          hamleys-automation
+            docker run --name bateel-automation-demo -e DISPLAY=:99 -v /tmp/.X11-unix:/tmp/.X11-unix bateel-automation-demo:latest /bin/sh -c "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test -X"
+  
 
       - name: Inspect Hamleys Directory
         run: |
