@@ -31,4 +31,4 @@ RUN mvn clean package -DskipTests
 VOLUME /usr/share/HamleysAutomation/allure-results
 
 # Command to run tests
-CMD ["mvn", "clean", "test", "-Dmaven.test.failure.ignore", "-DxmlPath=src/test/resources", 
+CMD ["mvn", "clean", "test", "-Dmaven.test.failure.ignore", "-DxmlPath=src/test/resources", "-DsuiteXmlFile=LocalTestSuite.xml"]
