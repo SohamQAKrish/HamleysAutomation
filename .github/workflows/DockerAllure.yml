@@ -90,10 +90,8 @@ jobs:
           SERVER: bateel-automation-demo.magentoprojects.net
           PORT: 2255
         run: |
-          sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/$TIMESTAMP/* "$USERNAME@$SERVER:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
-
-      - name: Clean Up Allure Reports
-        run: |
-          # Remove local allure report and results
-          rm -rf ./allure-results/*
-          rm -rf ./allure-report/*
+          # Remove existing report files on the server
+          sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@$SERVER" "rm -rf /var/www/html/bateel-automation-demo/webroot/*"
+          
+          # Upload new report files
+          sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/$TIMESTAMP/* "$USERNAME@$SERVER:/var/www/html/bateel-automation-demo/webroot/" || { echo "Failed to upload files"; exit 1; }
