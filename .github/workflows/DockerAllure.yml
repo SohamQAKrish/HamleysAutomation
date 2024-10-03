@@ -56,6 +56,10 @@ jobs:
         run: |
           docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
 
+      - name: Save env.prop from Container
+        run: |
+          docker cp bateel-automation-demo:/path/to/env.prop ./env.prop || echo "Failed to retrieve env.prop from container."
+
       - name: Check for Allure Results
         run: |
           if [ -z "$(ls -A ./allure-results)" ]; then
@@ -65,11 +69,17 @@ jobs:
 
       - name: Validate env.prop
         run: |
-          if ! grep -q "OperatingSystem=" env.prop; then
+          if [ ! -f ./env.prop ]; then
+            echo "env.prop file does not exist."
+            exit 1
+          fi
+
+          if ! grep -q "OperatingSystem=" ./env.prop; then
             echo "Missing OperatingSystem in env.prop"
             exit 1
           fi
-          if ! grep -q "ApplicationURL=" env.prop; then
+
+          if ! grep -q "ApplicationURL=" ./env.prop; then
             echo "Missing ApplicationURL in env.prop"
             exit 1
           fi
@@ -82,10 +92,6 @@ jobs:
       - name: List Allure Report
         run: |
           ls -l ./allure-report
-
-      - name: Save env.prop from Container
-        run: |
-          docker cp bateel-automation-demo:/path/to/env.prop ./env.prop || echo "Failed to retrieve env.prop from container."
 
       - name: Install sshpass
         run: |
@@ -128,6 +134,6 @@ jobs:
         run: |
           git config --local user.email "soham.pandit@krishtechnolabs.com"
           git config --local user.name "SohamQAKrish"
-          git add env.prop
-          git commit -m "Update env.prop after tests"
+          git add ./env.prop
+          git commit -m "Update env.prop after tests" || echo "No changes to commit"
           git push origin dockerIntegration
