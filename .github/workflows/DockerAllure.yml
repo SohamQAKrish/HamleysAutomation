@@ -63,6 +63,18 @@ jobs:
             exit 1
           fi
 
+      - name: Validate env.prop
+        run: |
+          if ! grep -q "OperatingSystem=" env.prop; then
+            echo "Missing OperatingSystem in env.prop"
+            exit 1
+          fi
+          if ! grep -q "ApplicationURL=" env.prop; then
+            echo "Missing ApplicationURL in env.prop"
+            exit 1
+          fi
+          # Add additional checks as necessary
+
       - name: Generate Allure HTML Report
         run: |
           allure generate ./allure-results --output ./allure-report --clean
@@ -70,6 +82,10 @@ jobs:
       - name: List Allure Report
         run: |
           ls -l ./allure-report
+
+      - name: Save env.prop from Container
+        run: |
+          docker cp bateel-automation-demo:/path/to/env.prop ./env.prop || echo "Failed to retrieve env.prop from container."
 
       - name: Install sshpass
         run: |
@@ -107,3 +123,11 @@ jobs:
           PORT: 2255
         run: |
           sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@bateel-automation.magentoprojects.net" "mv /tmp/env.prop /var/www/html/bateel-automation.magentoprojects.net/webroot/ || true"
+
+      - name: Commit and Push Updated env.prop
+        run: |
+          git config --local user.email "soham.pandit@krishtechnolabs.com"
+          git config --local user.name "SohamQAKrish"
+          git add env.prop
+          git commit -m "Update env.prop after tests"
+          git push origin dockerIntegration
