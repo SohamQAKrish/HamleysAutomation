@@ -62,7 +62,7 @@ jobs:
 
       - name: Check if env.prop exists
         run: |
-            if [ ! -f ./allure-results/env.prop ]; then
+            if [ ! -f ./dockerIntegration/allure-results/env.prop ]; then
               echo "env.prop file does not exist in allure-results."
               exit 1
             fi
