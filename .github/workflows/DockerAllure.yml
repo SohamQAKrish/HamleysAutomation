@@ -40,7 +40,7 @@ jobs:
       - name: Generate Allure HTML Report
         run: |
           docker run --rm -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results \
-          frapontillo/allure-docker generate /usr/share/HamleysAutomation/allure-results --output /usr/share/HamleysAutomation/allure-report --clean
+          allure/allure:latest generate /usr/share/HamleysAutomation/allure-results --output /usr/share/HamleysAutomation/allure-report --clean
 
       - name: Upload Allure Report
         uses: actions/upload-artifact@v3
