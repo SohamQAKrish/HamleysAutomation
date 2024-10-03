@@ -10,6 +10,8 @@ RUN apt-get update \
       libxtst6 \
       libxrender1 \
       libxi6 \
+      chromium \
+      chromium-driver \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
@@ -26,5 +28,8 @@ RUN mvn clean package -DskipTests
 # Add allure reporting folder
 ADD allure-results/ /usr/share/HamleysAutomation/allure-results/
 
+# Set display port to avoid crashes
+ENV DISPLAY=:99
+
 # Command to run the tests (uncomment if needed)
-# CMD [ "tail", "-f", "/dev/null" ]
+CMD ["mvn", "test"]
