@@ -24,7 +24,7 @@ jobs:
 
       - name: Install Allure Commandline
         run: |
-          npm install -g allure-commandline --save-dev
+          npm install -g allure-commandline
 
       - name: Build Docker Image
         run: |
@@ -46,6 +46,11 @@ jobs:
             docker rm hamleys-automation
             exit 1
           fi
+
+      - name: Inspect Allure Results
+        run: |
+          echo "Contents of allure-results:"
+          ls -la /usr/share/HamleysAutomation/allure-results
 
       - name: Generate Allure HTML Report
         run: |
@@ -70,3 +75,7 @@ jobs:
           PORT: 2255
         run: |
           sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/* "$USERNAME@$SERVER:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
+
+      - name: Cleanup Docker Container
+        run: |
+          docker rm -f hamleys-automation || true
