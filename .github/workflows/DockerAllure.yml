@@ -19,19 +19,12 @@ jobs:
 
       - name: Download and Install Allure CLI
         run: |
+          set -x  # Enable debug output
           ALLURE_VERSION=2.20.1
-          wget -q "https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}-zip.zip" -O allure.zip
-          if [ $? -ne 0 ]; then
-            echo "Failed to download Allure"
-            exit 1
-          fi
-
-          unzip -q allure.zip -d allure
-          if [ $? -ne 0 ]; then
-            echo "Failed to unzip Allure"
-            exit 1
-          fi
-
+          wget -q "https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}-zip.zip" -O allure.zip || { echo "Failed to download Allure"; exit 1; }
+          
+          unzip -q allure.zip -d allure || { echo "Failed to unzip Allure"; exit 1; }
+          
           sudo mv allure /usr/local/bin/allure
           echo 'export PATH=$PATH:/usr/local/bin/allure/bin' >> $GITHUB_ENV
 
