@@ -13,7 +13,7 @@ RUN apk update && apk upgrade && \
       chromium-chromedriver \
       nss
 
-# Set environment variables for Chrome
+# Set environment variables for Chrome and ChromeDriver
 ENV CHROME_BIN=/usr/bin/chromium-browser
 ENV CHROME_DRIVER=/usr/bin/chromedriver
 
