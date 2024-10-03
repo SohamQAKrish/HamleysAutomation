@@ -85,7 +85,7 @@ jobs:
       - name: Publish Allure Report to Server
         env:
           USERNAME: bateel-automation-demo
-          PASSWORD: ${{ secrets.SSH_PASSWORD }}  # Ensure this secret is set in your repo
+          PASSWORD: ${{ secrets.SSH_PASSWORD }}
           SERVER: bateel-automation-demo.magentoprojects.net
           PORT: 2255
         run: |
