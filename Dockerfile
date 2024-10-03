@@ -32,4 +32,4 @@ ADD allure-results/ /usr/share/HamleysAutomation/allure-results/
 ENV DISPLAY=:99
 
 # Command to run the tests (uncomment if needed)
-CMD ["mvn", "test"]
+CMD ["mvn", "test", "-Dwebdriver.chrome.options='--headless --no-sandbox --disable-dev-shm-usage --disable-gpu --window-size=1920,1080'"]
