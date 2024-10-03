@@ -31,11 +31,7 @@ jobs:
 
       - name: Remove Old Allure Results
         run: |
-          rm -rf ./dockerIntegration/allure-results/* || true
-
-      - name: Create allure-results directory
-        run: |
-          mkdir -p ./dockerIntegration/allure-results
+          rm -rf ./allure-results/*
 
       - name: Run Tests and Generate Allure Report
         run: |
@@ -58,15 +54,11 @@ jobs:
 
       - name: Save Allure Results to Local Directory
         run: |
-          docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./dockerIntegration/allure-results
-
-      - name: Save env.prop from Container
-        run: |
-          docker cp bateel-automation-demo:/usr/share/HamleysAutomation/env.prop ./env.prop || echo "Failed to retrieve env.prop from container."
+          docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./allure-results
 
       - name: Generate Allure HTML Report
         run: |
-          allure generate ./dockerIntegration/allure-results --output ./allure-report --clean
+          allure generate ./allure-results --output ./allure-report --clean
 
       - name: List Allure Report
         run: |
@@ -77,21 +69,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y sshpass
 
-      - name: Preserve Existing env.prop on Server
-        env:
-          USERNAME: bateel-automation-demo
-          PASSWORD: ${{ secrets.SSH_PASSWORD }}
-          PORT: 2255
-        run: |
-          sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@bateel-automation.magentoprojects.net" "cp /var/www/html/bateel-automation-demo/webroot/env.prop /tmp/ || true"
-
       - name: Clear Old Allure Reports on Server
         env:
           USERNAME: bateel-automation-demo
           PASSWORD: ${{ secrets.SSH_PASSWORD }}
           PORT: 2255
         run: |
-          sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@bateel-automation.magentoprojects.net" "rm -rf /var/www/html/bateel-automation.magentoprojects.net/webroot/allure-report/*" || { echo "Failed to clear old reports"; exit 1; }
+          sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@bateel-automation.magentoprojects.net" "rm -rf /var/www/html/bateel-automation-demo/webroot/allure-report/*" || { echo "Failed to clear old reports"; exit 1; }
 
       - name: Upload Allure Report to Server
         env:
@@ -100,19 +84,3 @@ jobs:
           PORT: 2255
         run: |
           sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/* "$USERNAME@bateel-automation.magentoprojects.net:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
-
-      - name: Restore env.prop on Server
-        env:
-          USERNAME: bateel-automation-demo
-          PASSWORD: ${{ secrets.SSH_PASSWORD }}
-          PORT: 2255
-        run: |
-          sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@bateel-automation.magentoprojects.net" "mv /tmp/env.prop /var/www/html/bateel-automation.magentoprojects.net/webroot/ || true"
-
-      - name: Commit and Push Updated env.prop
-        run: |
-          git config --local user.email "soham.pandit@krishtechnolabs.com"
-          git config --local user.name "SohamQAKrish"
-          git add ./env.prop
-          git commit -m "Update env.prop after tests" || echo "No changes to commit"
-          git push origin dockerIntegration
