@@ -41,7 +41,7 @@ jobs:
           allure-tools/allure:latest generate /usr/share/HamleysAutomation/allure-results --output ./allure-report --clean
 
       - name: Upload Allure Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # Updated to the latest version
         with:
           name: allure-report
           path: ./allure-report
@@ -53,7 +53,7 @@ jobs:
 
       - name: Publish Allure Report to Server
         env:
-          USERNAME: bateel-automation-demo
+          USERNAME: your_username_here
           PASSWORD: ${{ secrets.SSH_PASSWORD }}  # Store this in your repo secrets
           SERVER: bateel-automation-demo.magentoprojects.net
           PORT: 2255
