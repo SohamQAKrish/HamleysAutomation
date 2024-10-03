@@ -31,7 +31,11 @@ jobs:
 
       - name: Remove Old Allure Results
         run: |
-          rm -rf ./dockerIntegration/allure-results/*
+          rm -rf ./dockerIntegration/allure-results/* || true
+
+      - name: Create allure-results directory
+        run: |
+          mkdir -p ./dockerIntegration/allure-results
 
       - name: Run Tests and Generate Allure Report
         run: |
@@ -56,17 +60,9 @@ jobs:
         run: |
           docker cp bateel-automation-demo:/usr/share/HamleysAutomation/allure-results ./dockerIntegration/allure-results
 
-      # Ignored env.prop steps
-      # - name: Save env.prop from Container
-      #   run: |
-      #     docker cp bateel-automation-demo:/usr/share/HamleysAutomation/env.prop ./env.prop || echo "Failed to retrieve env.prop from container."
-      #
-      # - name: Check if env.prop exists
-      #   run: |
-      #     if [ ! -f ./dockerIntegration/allure-results/env.prop ]; then
-      #       echo "env.prop file does not exist in allure-results."
-      #       exit 1
-      #     fi
+      - name: Save env.prop from Container
+        run: |
+          docker cp bateel-automation-demo:/usr/share/HamleysAutomation/env.prop ./env.prop || echo "Failed to retrieve env.prop from container."
 
       - name: Generate Allure HTML Report
         run: |
