@@ -32,6 +32,7 @@ jobs:
 
       - name: Ensure Allure Environment File Exists
         run: |
+          mkdir -p allure-results  # Create directory if it doesn't exist
           if [ ! -f allure-results/env.properties ]; then
             echo "Creating an empty env.properties file."
             echo "Not specified" > allure-results/env.properties
@@ -39,13 +40,11 @@ jobs:
 
       - name: Run Tests and Generate Allure Report
         run: |
-            docker run --name bateel-automation-demo -e DISPLAY=:99 -v /tmp/.X11-unix:/tmp/.X11-unix bateel-automation-demo:latest /bin/sh -c "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test -X"
-  
-
-      - name: Inspect Hamleys Directory
-        run: |
-          echo "Contents of /usr/share/HamleysAutomation:"
-          docker run --rm hamleys-automation ls -la /usr/share/HamleysAutomation
+          docker run --name hamleys-automation \
+          -e DISPLAY=:99 \
+          -v /tmp/.X11-unix:/tmp/.X11-unix \
+          -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results \
+          hamleys-automation /bin/sh -c "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test -X"
 
       - name: Check Test Execution Exit Code
         run: |
@@ -57,6 +56,7 @@ jobs:
             docker rm hamleys-automation
             exit 1
           fi
+          docker rm hamleys-automation  # Ensure the container is removed after checking
 
       - name: Inspect Allure Results
         run: |
@@ -65,13 +65,14 @@ jobs:
 
       - name: Generate Allure HTML Report
         run: |
-          allure generate allure-results --output ./allure-report --clean
+          TIMESTAMP=$(date +%Y%m%d%H%M%S)
+          allure generate allure-results --output ./allure-report/$TIMESTAMP --clean
 
       - name: Upload Allure Report
         uses: actions/upload-artifact@v3
         with:
           name: allure-report
-          path: ./allure-report
+          path: ./allure-report/$TIMESTAMP
 
       - name: Install sshpass
         run: |
@@ -81,8 +82,8 @@ jobs:
       - name: Publish Allure Report to Server
         env:
           USERNAME: bateel-automation-demo
-          PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          PASSWORD: ${{ secrets.SSH_PASSWORD }}  # Ensure this secret is set in your repo
           SERVER: bateel-automation-demo.magentoprojects.net
           PORT: 2255
         run: |
-          sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/* "$USERNAME@$SERVER:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
+          sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/$TIMESTAMP/* "$USERNAME@$SERVER:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
