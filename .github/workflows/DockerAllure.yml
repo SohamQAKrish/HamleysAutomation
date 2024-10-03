@@ -40,8 +40,8 @@ jobs:
 
       - name: Generate Allure HTML Report
         run: |
-          docker run --rm -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results \
-            imanel/allure2 allure generate /usr/share/HamleysAutomation/allure-results --output ./allure-report --clean
+            docker run --rm -v ${{ github.workspace }}/allure-results:/allure-results \
+              hamleys-automation allure generate /allure-results --output ./allure-report --clean
 
       - name: Upload Allure Report
         uses: actions/upload-artifact@v3
@@ -57,7 +57,7 @@ jobs:
       - name: Publish Allure Report to Server
         env:
           USERNAME: bateel-automation-demo
-          PASSWORD: ${{ secrets.SSH_PASSWORD }}  # Store this in your repo secrets
+          PASSWORD: ${{ secrets.SSH_PASSWORD }}  # Ensure this secret is set in your repo
           SERVER: bateel-automation-demo.magentoprojects.net
           PORT: 2255
         run: |
