@@ -10,7 +10,12 @@ RUN apk update && apk upgrade && \
       coreutils \
       tzdata \
       chromium \
+      chromium-chromedriver \
       nss
+
+# Set environment variables for Chrome
+ENV CHROME_BIN=/usr/bin/chromium-browser
+ENV CHROME_DRIVER=/usr/bin/chromedriver
 
 # Set the working directory
 WORKDIR /usr/share/HamleysAutomation
@@ -26,4 +31,4 @@ RUN mvn clean package -DskipTests
 VOLUME /usr/share/HamleysAutomation/allure-results
 
 # Command to run tests
-CMD ["mvn", "clean", "test", "-Dmaven.test.failure.ignore", "-DxmlPath=src/test/resources", "-DsuiteXmlFile=LocalTestSuite.xml"]
+CMD ["mvn", "clean", "test", "-Dmaven.test.failure.ignore", "-DxmlPath=src/test/resources", 
