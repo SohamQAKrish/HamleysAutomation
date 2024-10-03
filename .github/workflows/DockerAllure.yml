@@ -12,11 +12,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Allure CLI
+      - name: Install Dependencies
         run: |
-          # Download and install Allure
-          wget -q https://github.com/allure-framework/allure2/releases/latest/download/allure-2.20.1.zip -O allure.zip
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+
+      - name: Download and Install Allure CLI
+        run: |
+          ALLURE_VERSION=2.20.1
+          wget -q "https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}-zip.zip" -O allure.zip
+          if [ $? -ne 0 ]; then
+            echo "Failed to download Allure"
+            exit 1
+          fi
+
           unzip -q allure.zip -d allure
+          if [ $? -ne 0 ]; then
+            echo "Failed to unzip Allure"
+            exit 1
+          fi
+
           sudo mv allure /usr/local/bin/allure
           echo 'export PATH=$PATH:/usr/local/bin/allure/bin' >> $GITHUB_ENV
 
@@ -61,7 +76,7 @@ jobs:
           PASSWORD: ${{ secrets.SSH_PASSWORD }}
           PORT: 2255
         run: |
-          sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@bateel-automation.magentoprojects.net" "rm -rf /var/www/html/bateel-automation-demo/webroot/allure-report/*" || { echo "Failed to clear old reports"; exit 1; }
+          sshpass -p "$PASSWORD" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USERNAME@bateel-automation.magentoprojects.net" "rm -rf /var/www/html/bateel-automation.magentoprojects.net/webroot/allure-report/*" || { echo "Failed to clear old reports"; exit 1; }
 
       - name: Upload Allure Report to Server
         env:
