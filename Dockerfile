@@ -1,11 +1,9 @@
-# Use a lightweight base image
-FROM alpine:3.14
+# Use a base image that includes Java 17
+FROM openjdk:17-alpine
 
 # Install necessary packages
 RUN apk update && apk upgrade && \
     apk add --no-cache \
-      ca-certificates \
-      openjdk11 \
       maven \
       bash \
       curl \
@@ -27,4 +25,4 @@ RUN mvn clean package -DskipTests
 VOLUME /usr/share/HamleysAutomation/allure-results
 
 # Command to run tests
-CMD ["mvn", "clean", "test", "-Dmaven.test.failure.ignore", "-DxmlPath=src/test/resources", 
+CMD ["mvn", "clean", "test", "-Dmaven.test.failure.ignore", "-DxmlPath=src/test/resources", "-DsuiteXmlFile=LocalTestSuite.xml"]
