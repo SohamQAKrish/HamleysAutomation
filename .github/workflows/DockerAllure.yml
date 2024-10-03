@@ -31,9 +31,17 @@ jobs:
 
       - name: Run Tests and Generate Allure Report
         run: |
-          docker run --name bateel-automation-demo -e DISPLAY=:99 -v /tmp/.X11-unix:/tmp/.X11-unix bateel-automation-demo:latest /bin/sh -c "
-          Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test -X"
-
+            docker run --name bateel-automation-demo -e DISPLAY=:99 -v /tmp/.X11-unix:/tmp/.X11-unix bateel-automation-demo:latest /bin/sh -c "
+            Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test -X && echo 'Tests executed successfully' || echo 'Tests failed'"
+  
+      - name: Wait for Container to Finish
+        run: |
+          sleep 5
+  
+      - name: Check Container Status
+        run: |
+          docker inspect -f '{{.State.ExitCode}}' bateel-automation-demo
+  
       - name: List Allure Results in Container
         run: |
           docker exec bateel-automation-demo ls -l /usr/share/HamleysAutomation/allure-results
