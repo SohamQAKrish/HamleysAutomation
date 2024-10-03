@@ -17,16 +17,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y wget unzip
 
-      - name: Download and Install Allure CLI
-        run: |
-          set -x  # Enable debug output
-          ALLURE_VERSION=2.20.1
-          wget "https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}-zip.zip" -O allure.zip || { echo "Failed to download Allure"; exit 1; }
-            
-          unzip -q allure.zip -d allure || { echo "Failed to unzip Allure"; exit 1; }
-            
-          sudo mv allure /usr/local/bin/allure
-          echo 'export PATH=$PATH:/usr/local/bin/allure/bin' >> $GITHUB_ENV
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline
 
       - name: Build Docker Image
         run: |
