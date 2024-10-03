@@ -11,7 +11,7 @@ RUN apt-get update && \
         wget \
         gnupg \
         xvfb \
-        libxtst6 \   # Add this line to install libXtst
+        libxtst6 \    # Add this line to install libXtst
         libxrender1 \ # Also useful for rendering in headless environments
         libxi6 && \   # For input events in AWT
     # Install Google Chrome
