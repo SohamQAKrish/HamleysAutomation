@@ -30,9 +30,10 @@ jobs:
         run: |
           docker build -t hamleys-automation .
 
-      - name: Clean Allure Results Directory
+      - name: Clean Allure Results Directory (Except env.properties)
         run: |
-          rm -rf allure-results/* || true  # Remove previous results if they exist
+            shopt -s extglob
+            rm -rf allure-results/!(*env.properties) || true  # Remove previous results except env.properties
 
       - name: Run Selenium Tests
         run: |
