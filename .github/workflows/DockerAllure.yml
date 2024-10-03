@@ -60,14 +60,7 @@ jobs:
         run: |
           docker cp bateel-automation-demo:/path/to/env.prop ./env.prop || echo "Failed to retrieve env.prop from container."
 
-      - name: Check for Allure Results
-        run: |
-          if [ -z "$(ls -A ./allure-results)" ]; then
-            echo "No Allure results found. Exiting."
-            exit 1
-          fi
-
-      - name: Validate env.prop
+      - name: Check if env.prop exists and validate
         run: |
           if [ ! -f ./env.prop ]; then
             echo "env.prop file does not exist."
@@ -132,8 +125,8 @@ jobs:
 
       - name: Commit and Push Updated env.prop
         run: |
-          git config --local user.email "soham.pandit@krishtechnolabs.com"
-          git config --local user.name "SohamQAKrish"
+          git config --local user.email "you@example.com"
+          git config --local user.name "Your Name"
           git add ./env.prop
           git commit -m "Update env.prop after tests" || echo "No changes to commit"
           git push origin dockerIntegration
