@@ -30,10 +30,13 @@ jobs:
         run: |
           docker build -t hamleys-automation .
 
-      - name: Clean Allure Results Directory (Except env.properties)
+      - name: Ensure Allure Environment File Exists
         run: |
-            shopt -s extglob
-            rm -rf allure-results/!(*env.properties) || true  # Remove previous results except env.properties
+          # Ensure the allure-results directory exists and create env.properties if it does not exist
+          if [ ! -f allure-results/env.properties ]; then
+            echo "Creating an empty env.properties file."
+            echo "Not specified" > allure-results/env.properties
+          fi
 
       - name: Run Selenium Tests
         run: |
