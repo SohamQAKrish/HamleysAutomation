@@ -10,7 +10,10 @@ RUN apt-get update && \
         maven \
         wget \
         gnupg \
-        xvfb && \
+        xvfb \
+        libxtst6 \   # Add this line to install libXtst
+        libxrender1 \ # Also useful for rendering in headless environments
+        libxi6 && \   # For input events in AWT
     # Install Google Chrome
     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
