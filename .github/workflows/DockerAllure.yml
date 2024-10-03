@@ -34,13 +34,14 @@ jobs:
           if [ "$EXIT_CODE" -ne 0 ]; then
             echo "Tests failed, checking logs..."
             docker logs hamleys-automation
+            docker rm hamleys-automation
             exit 1
           fi
 
       - name: Generate Allure HTML Report
         run: |
-            docker run --rm -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results \
-            allure/allure:latest generate /usr/share/HamleysAutomation/allure-results --output ./allure-report --clean
+          docker run --rm -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results \
+            solutis/allure generate /usr/share/HamleysAutomation/allure-results --output ./allure-report --clean
 
       - name: Upload Allure Report
         uses: actions/upload-artifact@v3
