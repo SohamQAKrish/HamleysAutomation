@@ -60,26 +60,22 @@ jobs:
         run: |
           docker cp bateel-automation-demo:/usr/share/HamleysAutomation/env.prop ./env.prop || echo "Failed to retrieve env.prop from container."
 
-      - name: List Files
-        run: |
-          ls -l .
-
       - name: Check if env.prop exists and validate
         run: |
-            if [ ! -f ./env.prop ]; then
-              echo "env.prop file does not exist."
-              exit 1
-            fi
+          if [ ! -f ./env.prop ]; then
+            echo "env.prop file does not exist."
+            exit 1
+          fi
         
-            if ! grep -q "OperatingSystem=" ./env.prop; then
-              echo "Missing OperatingSystem in env.prop"
-              exit 1
-            fi
+          if ! grep -q "OperatingSystem=" ./env.prop; then
+            echo "Missing OperatingSystem in env.prop"
+            exit 1
+          fi
         
-            if ! grep -q "ApplicationURL=" ./env.prop; then
-              echo "Missing ApplicationURL in env.prop"
-              exit 1
-            fi
+          if ! grep -q "ApplicationURL=" ./env.prop; then
+            echo "Missing ApplicationURL in env.prop"
+            exit 1
+          fi
 
       - name: Generate Allure HTML Report
         run: |
