@@ -1,21 +1,17 @@
-FROM alpine:3.14
+FROM openjdk:17-slim
 
-RUN apk update \
-  && apk upgrade \
-  && apk add --no-cache \
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
       ca-certificates \
-      coreutils \
-      openjdk11 \
-      tzdata \
       curl \
       unzip \
       bash \
       maven \
-      nss \
-      libxtst \
-      libxrender \
-      libxi \
-  && update-ca-certificates
+      libxtst6 \
+      libxrender1 \
+      libxi6 \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 # Workspace Directory
 WORKDIR /usr/share/HamleysAutomation
