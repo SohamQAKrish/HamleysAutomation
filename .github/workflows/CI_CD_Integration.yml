@@ -99,3 +99,7 @@ jobs:
           PORT: 2255
         run: |
           sshpass -p "$PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=no -r ./allure-report/* "$USERNAME@$SERVER:/var/www/html/bateel-automation-demo/webroot" || { echo "Failed to upload files"; exit 1; }
+
+      - name: Display Report Link
+        run: |
+          echo "Allure Report can be accessed at: https://bateel-automation-demo.magentoprojects.net/"
