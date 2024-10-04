@@ -2,16 +2,16 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-10-04T10:59:30 IST" name="Local Test Suite" finished-at="2024-10-04T11:00:04 IST" duration-ms="34050">
+  <suite started-at="2024-10-04T11:16:59 IST" name="Default suite" finished-at="2024-10-04T11:17:25 IST" duration-ms="25591">
     <groups>
     </groups>
-    <test started-at="2024-10-04T10:59:30 IST" name="Local Tests" finished-at="2024-10-04T11:00:04 IST" duration-ms="34050">
+    <test started-at="2024-10-04T11:16:59 IST" name="Default test" finished-at="2024-10-04T11:17:25 IST" duration-ms="25591">
       <class name="sanity.hamleys.SanityHamleyesAccountTestGithub">
-        <test-method signature="testgitHubActions()[pri:0, instance:sanity.hamleys.SanityHamleyesAccountTestGithub@ccd1bc3]" started-at="2024-10-04T10:59:34 IST" name="testgitHubActions" finished-at="2024-10-04T11:00:04 IST" duration-ms="29492" status="PASS">
+        <test-method signature="testgitHubActions()[pri:0, instance:sanity.hamleys.SanityHamleyesAccountTestGithub@f14e5bf]" started-at="2024-10-04T11:17:03 IST" name="testgitHubActions" finished-at="2024-10-04T11:17:24 IST" duration-ms="20627" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testgitHubActions -->
       </class> <!-- sanity.hamleys.SanityHamleyesAccountTestGithub -->
-    </test> <!-- Local Tests -->
-  </suite> <!-- Local Test Suite -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
 </testng-results>

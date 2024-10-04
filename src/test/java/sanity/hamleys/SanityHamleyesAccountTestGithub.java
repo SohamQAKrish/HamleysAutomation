@@ -21,14 +21,8 @@ public class SanityHamleyesAccountTestGithub {
 	@Test(testName = "Hamleys verify Github Actions")
 	@Description("This Test is used to Verify Launch the URL and Close the Browser")
 	public void testgitHubActions() {
-		HamleysLaunchBrowserTestGitHubActions.login(5);
-		UtilitiesCommon.log("Finally allure report generated at the docker container");
-		UtilitiesCommon.log("Finally allure report generated at the docker container");
-		UtilitiesCommon.log("Finally allure report generated at the docker container");
-		UtilitiesCommon.log("Finally allure report generated at the docker container");
-		UtilitiesCommon.log("Finally allure report generated at the docker container");
-		UtilitiesCommon.log("Finally allure report generated at the docker container");
-		UtilitiesCommon.log("Finally allure report generated at the docker container");
+		HamleysLaunchBrowserTestGitHubActions.login();
+		UtilitiesCommon.log("Finally allure report generated at the docker container successfully");
 
 	}
 }
