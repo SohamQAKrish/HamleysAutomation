@@ -23,7 +23,12 @@ public class SanityHamleyesAccountTestGithub {
 	public void testgitHubActions() {
 		HamleysLaunchBrowserTestGitHubActions.login();
 		UtilitiesCommon.log("Finally allure report generated at the docker container");
-		UtilitiesCommon.log("Removed dir from webroote success");
+		UtilitiesCommon.log("Finally allure report generated at the docker container");
+		UtilitiesCommon.log("Finally allure report generated at the docker container");
+		UtilitiesCommon.log("Finally allure report generated at the docker container");
+		UtilitiesCommon.log("Finally allure report generated at the docker container");
+		UtilitiesCommon.log("Finally allure report generated at the docker container");
+		UtilitiesCommon.log("Finally allure report generated at the docker container");
 
 	}
 }
