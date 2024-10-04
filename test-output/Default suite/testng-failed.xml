@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="sanity.hamleys.SanityHamleysAddProductToWishlist">
+      <class name="sanity.hamleys.SanityHamleysSearchProductToCart">
         <methods>
-          <include name="testAddProductToWishlist"/>
+          <include name="testSearchProductToCart"/>
         </methods>
-      </class> <!-- sanity.hamleys.SanityHamleysAddProductToWishlist -->
+      </class> <!-- sanity.hamleys.SanityHamleysSearchProductToCart -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

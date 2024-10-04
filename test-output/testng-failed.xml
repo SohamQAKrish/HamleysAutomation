@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Local Test Suite]" guice-stage="DEVELOPMENT">
-  <test thread-count="5" name="Local Tests(failed)">
-    <parameter name="environment" value="${environment}"/>
-    <parameter name="defaultTimeout" value="${defaultTimeout}"/>
-    <parameter name="browser" value="${browser}"/>
+<suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="sanity.hamleys.SanityHamleysCheckoutAsGuestUser">
+      <class name="sanity.hamleys.SanityHamleysSearchProductToCart">
         <methods>
-          <include name="testCheckAllureTesting"/>
+          <include name="testSearchProductToCart"/>
         </methods>
-      </class> <!-- sanity.hamleys.SanityHamleysCheckoutAsGuestUser -->
+      </class> <!-- sanity.hamleys.SanityHamleysSearchProductToCart -->
     </classes>
-  </test> <!-- Local Tests(failed) -->
-</suite> <!-- Failed suite [Local Test Suite] -->
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->
