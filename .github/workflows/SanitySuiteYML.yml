@@ -1,9 +1,6 @@
 name: Sanity Suite CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:  # Only trigger manually
     inputs:
       suite:
