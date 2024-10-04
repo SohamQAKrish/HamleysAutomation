@@ -12,8 +12,8 @@ on:
         default: 'local'
         type: choice
         options:
-          - local
-          - sanity 
+          - LocalSuite
+          - SanitySuite 
 
 jobs:
   build:
