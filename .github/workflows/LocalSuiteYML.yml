@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+  workflow_dispatch:  # Only trigger manually
     inputs:
       suite:
         description: 'Select test suite'
@@ -12,8 +12,7 @@ on:
         default: 'local'
         type: choice
         options:
-          - LocalTestSuite
-          - SanityTestSuite
+          - local
 
 jobs:
   build:
