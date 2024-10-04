@@ -24,6 +24,7 @@ public class SanityHamleyesAccountTestGithub {
 		HamleysLaunchBrowserTestGitHubActions.login();
 		UtilitiesCommon.log("Successfully launch browser");
 		UtilitiesCommon.log("Allure report generated on the docker container");
+		UtilitiesCommon.log("CI/CD pipeline works as expected");
 
 	}
 }
