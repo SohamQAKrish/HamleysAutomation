@@ -60,7 +60,7 @@ jobs:
             docker rm hamleys-automation
             exit 1
           fi
-          docker rm hamleys-automation  # Ensure the container is removed after checking
+          docker rm hamleys-automation 
  
       - name: Inspect Allure Results
         run: |
