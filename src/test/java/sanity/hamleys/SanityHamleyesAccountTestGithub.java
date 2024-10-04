@@ -23,5 +23,7 @@ public class SanityHamleyesAccountTestGithub {
 	public void testgitHubActions() {
 		HamleysLaunchBrowserTestGitHubActions.login();
 		UtilitiesCommon.log("Successfully launch browser");
+		UtilitiesCommon.log("Allure report generated on the docker container");
+
 	}
 }
