@@ -32,7 +32,7 @@ jobs:
  
       - name: Ensure Allure Environment File Exists
         run: |
-          mkdir -p allure-results  # Create directory if it doesn't exist
+          mkdir -p allure-results
           if [ ! -f allure-results/env.properties ]; then
             echo "Creating an empty env.properties file."
             echo "Not specified" > allure-results/env.properties
