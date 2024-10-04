@@ -9,42 +9,10 @@
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
 <tr><th colspan="8">Local Test Suite</th></tr>
-<tr><td><a href="#t0">Local Tests</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">1</td><td class="num">130,649</td><td></td><td></td></tr>
+<tr><td><a href="#t0">Local Tests</a></td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">32,799</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Local Test Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Local Tests &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">sanity.hamleys.SanityHamleysCheckoutAsGuestUser</td><td><a href="#m0">testCheckAllureTesting</a></td><td rowspan="1">1718350070175</td><td rowspan="1">100631</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Local Test Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Local Tests &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">sanity.hamleys.SanityHamleyesAccountTestGithub</td><td><a href="#m0">testgitHubActions</a></td><td rowspan="1">1728026834153</td><td rowspan="1">21824</td></tr></tbody>
 </table>
-<h2>Local Tests</h2><h3 id="m0">sanity.hamleys.SanityHamleysCheckoutAsGuestUser#testCheckAllureTesting</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.xpath: //button[contains(@class, &apos;amgdprcookie-button&apos;) and contains(text(), &apos;Accept&apos;)] (tried for 60 second(s) with 500 milliseconds interval)
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:95)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:272)
-	at common.UtilitiesCommon.waitForElementIsVisible(UtilitiesCommon.java:925)
-	at common.UtilitiesCommon.getElement(UtilitiesCommon.java:707)
-	at common.UtilitiesCommon.click(UtilitiesCommon.java:820)
-	at page.Hamleys.HamleysCheckoutAsGuestUserPage.hamleysSelectProductFromHome(HamleysCheckoutAsGuestUserPage.java:17)
-	at sanity.hamleys.SanityHamleysCheckoutAsGuestUser.testCheckAllureTesting(SanityHamleysCheckoutAsGuestUser.java:50)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-Caused by: org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//button[contains(@class, &apos;amgdprcookie-button&apos;) and contains(text(), &apos;Accept&apos;)]&quot;}
-  (Session info: chrome=126.0.6478.61)
-For documentation on this error, please visit: https://www.seleniumhq.org/exceptions/no_such_element.html
-Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
-System info: host: &apos;KRISH107&apos;, ip: &apos;172.20.10.12&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;21.0.2&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 126.0.6478.61, chrome: {chromedriverVersion: 126.0.6478.61 (8dc092df54ce..., userDataDir: C:\Users\SHIVAM~1.KRI\AppDa...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:53394}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 647b558515b66231d81d0886a202e069
-*** Element info: {Using=xpath, value=//button[contains(@class, &apos;amgdprcookie-button&apos;) and contains(text(), &apos;Accept&apos;)]}
-	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
-	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
-	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
-	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
-	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:323)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:428)
-	at org.openqa.selenium.By$ByXPath.findElement(By.java:353)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:315)
-	at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:205)
-	at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:201)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:249)
-	... 31 more
-... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>Local Tests</h2><h3 id="m0">sanity.hamleys.SanityHamleyesAccountTestGithub#testgitHubActions</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>

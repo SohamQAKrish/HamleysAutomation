@@ -19,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -55,7 +56,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.ElementNotVisibleException;
+//import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.TimeoutException;
 import org.testng.ITestClass;
 import org.testng.ITestContext;
@@ -168,10 +169,10 @@ public class UtilitiesCommon {
 	 * 
 	 * @author spandit
 	 * @lastmodifiedby spandit
-	 */
-	public static void setupWebdriverWait() {
-		wait = new WebDriverWait(driver, waitTime);
-	}
+//	 */
+//	public static void setupWebdriverWait() {
+//		wait = new WebDriverWait(driver, waitTime);
+//	}
 
 	/**
 	 * This method is used to setup the JavaScript Executor Instance.
@@ -412,15 +413,35 @@ public class UtilitiesCommon {
 		}
 
 		if (!remoteWebDriver) {
-			UtilitiesCommon.log("Initializing Web Driver for Local Execution .....");
-			WebDriverManager.chromedriver().setup();
-			Map<String, Object> preferences = new HashMap<String, Object>();
-			preferences.put("download.default_directory",
-					System.getProperty(USER_DIR_CONSTANT) + File.separator + "src" + File.separator + "test"
-							+ File.separator + "resources" + File.separator + "TestData" + File.separator
-							+ "TestDataDownload");
-			chromeOptions.setExperimentalOption("prefs", preferences);
-			driver = new ChromeDriver(chromeOptions);
+		    UtilitiesCommon.log("Initializing Web Driver for Local Execution .....");
+
+		    WebDriverManager.chromedriver().setup();
+
+		 // Initialize ChromeOptions
+		 ChromeOptions chromeOptions = new ChromeOptions();
+
+		 // Set download preferences
+		 Map<String, Object> preferences = new HashMap<>();
+		 preferences.put("download.default_directory",
+		         System.getProperty(USER_DIR_CONSTANT) + File.separator + "src" + File.separator + "test"
+		                 + File.separator + "resources" + File.separator + "TestData" + File.separator
+		                 + "TestDataDownload");
+		 chromeOptions.setExperimentalOption("prefs", preferences);
+
+		 // Add arguments for headless mode
+		 chromeOptions.addArguments("--headless");
+		 chromeOptions.addArguments("--no-sandbox");
+		 chromeOptions.addArguments("--disable-dev-shm-usage");
+		 chromeOptions.addArguments("--disable-gpu");
+		 chromeOptions.addArguments("--window-size=1920,1080");
+
+		 // Initialize the WebDriver
+		 try {
+		     driver = new ChromeDriver(chromeOptions);
+		 } catch (Exception e) {
+		     UtilitiesCommon.log("Error initializing ChromeDriver: " + e.getMessage());
+		     e.printStackTrace(); // Print stack trace for debugging
+		 }
 		}
 
 		if (remoteWebDriver) {
@@ -446,7 +467,6 @@ public class UtilitiesCommon {
 		}
 		chromeOptions.addArguments("incognito");
 	}
-
 	/**
 	 * This method is used to get the web driver
 	 * 
@@ -486,7 +506,7 @@ public class UtilitiesCommon {
 			driver.manage().window().maximize();
 		}
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		setupWebdriverWait();
+//		setupWebdriverWait();
 		setupJavaScriptExecutor();
 		setupActionsBuilder();
 		applicationUrl = UtilitiesCommon.getEnvironmentData(ATTRIBUTE_APPLICATION);
@@ -1222,16 +1242,16 @@ public class UtilitiesCommon {
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
-	public static boolean verifyElementIsVisible(Enum<?> enumValue) {
-		boolean isElementVisible;
-		try {
-			wait.until(ExpectedConditions.visibilityOfElementLocated(getLocator(enumValue)));
-			isElementVisible = true;
-		} catch (ElementNotVisibleException | TimeoutException exception) {
-			isElementVisible = false;
-		}
-		return isElementVisible;
-	}
+//	public static boolean verifyElementIsVisible(Enum<?> enumValue) {
+//		boolean isElementVisible;
+//		try {
+//			wait.until(ExpectedConditions.visibilityOfElementLocated(getLocator(enumValue)));
+//			isElementVisible = true;
+//		} catch (ElementNotVisibleException | TimeoutException exception) {
+//			isElementVisible = false;
+//		}
+//		return isElementVisible;
+//	}
 
 	/**
 	 * This method will check if the dynamically generated element is displayed.
@@ -1289,17 +1309,17 @@ public class UtilitiesCommon {
 	 * @author spandit
 	 * @lastmodifiedby spandit
 	 */
-	public static boolean verifyDynamicElementIsVisible(Enum<?> enumValue, String dynamicValue) {
-		String xpathExpression = generateDynamicXpath(enumValue.toString(), dynamicValue);
-		boolean isElementVisible;
-		try {
-			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathExpression)));
-			isElementVisible = true;
-		} catch (ElementNotVisibleException | TimeoutException exception) {
-			isElementVisible = false;
-		}
-		return isElementVisible;
-	}
+//	public static boolean verifyDynamicElementIsVisible(Enum<?> enumValue, String dynamicValue) {
+//		String xpathExpression = generateDynamicXpath(enumValue.toString(), dynamicValue);
+//		boolean isElementVisible;
+//		try {
+//			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathExpression)));
+//			isElementVisible = true;
+//		} catch (ElementNotVisibleException | TimeoutException exception) {
+//			isElementVisible = false;
+//		}
+//		return isElementVisible;
+//	}
 
 	/**
 	 * This method will check if the dynamically generated element is not visible.
@@ -1885,12 +1905,6 @@ public class UtilitiesCommon {
 		}
 	}
 
-	/**
-	 * This method is used to stop the recording of execution flow of test case.
-	 * 
-	 * @author spandit
-	 * @lastmodifiedby spandit
-	 */
 	public static void stopScreenRecording() {
 		if (ScriptExecutionRecorder.getScreenRecorder() != null) {
 			try {
@@ -1899,6 +1913,41 @@ public class UtilitiesCommon {
 				log("Error in stopping recording: " + e.getMessage());
 			}
 		}
+	}
+	public static void startScreenRecordingHeadless(String methodName) {
+	    if (isHeadless()) {
+	        log("Headless mode: No screen recording started for method: " + methodName);
+	    } else {
+	        try {
+	            ScriptExecutionRecorder.startRecord(methodName);
+	        } catch (IOException | AWTException e) {
+	            log("Error in starting recording: " + e.getMessage());
+	        }
+	    }
+	}
+
+	public static void stopScreenRecordingeadless() {
+	    if (isHeadless()) {
+	        log("Headless mode: No screen recording to stop.");
+	    } else {
+	        if (ScriptExecutionRecorder.getScreenRecorder() != null) {
+	            try {
+	                ScriptExecutionRecorder.stopRecord();
+	            } catch (IOException e) {
+	                log("Error in stopping recording: " + e.getMessage());
+	            }
+	        }
+	    }
+	}
+
+	// Logging method
+	private static void log2(String message) {
+	    System.out.println(message);
+	}
+
+	// Check if in headless mode
+	private static boolean isHeadless() {
+	    return System.getProperty("headless.mode") != null;
 	}
 
 	/**
@@ -2325,15 +2374,15 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static void waitForMilliseconds(int milliseconds) {
-		try {
-			int timeInSeconds = milliseconds / 1000;
-			WebDriverWait customWait = new WebDriverWait(driver, timeInSeconds);
-			customWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//falseosElem/s")));
-		} catch (TimeoutException e) {
-			log("Waited for: " + milliseconds + " ms");
-		} catch (Exception e) {
-			log(e.getMessage());
-		}
+	    try {
+	        Duration waitDuration = Duration.ofMillis(milliseconds);
+	        WebDriverWait customWait = new WebDriverWait(driver, waitDuration);
+	        customWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//falseosElem/s")));
+	    } catch (TimeoutException e) {
+	        log("Waited for: " + milliseconds + " ms");
+	    } catch (Exception e) {
+	        log(e.getMessage());
+	    }
 	}
 
 	/**
