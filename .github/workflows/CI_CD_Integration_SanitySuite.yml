@@ -46,7 +46,7 @@ jobs:
           -e DISPLAY=:99 \
           -v /tmp/.X11-unix:/tmp/.X11-unix \
           -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results \
-          HamleysAutomation /bin/sh -c "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test -DtestSuite=SanityTestSuite.xml || true"
+          hamleys-automation /bin/sh -c "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test -DtestSuite=SanityTestSuite.xml || true"
 
       - name: Check Test Execution Exit Code
         run: |
