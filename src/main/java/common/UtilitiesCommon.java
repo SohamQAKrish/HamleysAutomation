@@ -444,6 +444,7 @@ public class UtilitiesCommon {
 		 }
 		}
 
+
 		if (remoteWebDriver) {
 			UtilitiesCommon.log("Initializing Test case in docker container .....");
 			chromeOptions.addArguments("--disable-gpu");
@@ -2374,15 +2375,15 @@ public class UtilitiesCommon {
 	 * @lastmodifiedby spandit
 	 */
 	public static void waitForMilliseconds(int milliseconds) {
-	    try {
-	        Duration waitDuration = Duration.ofMillis(milliseconds);
-	        WebDriverWait customWait = new WebDriverWait(driver, waitDuration);
-	        customWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//falseosElem/s")));
-	    } catch (TimeoutException e) {
-	        log("Waited for: " + milliseconds + " ms");
-	    } catch (Exception e) {
-	        log(e.getMessage());
-	    }
+		try {
+			int timeInSeconds = milliseconds / 1000;
+			WebDriverWait customWait = new WebDriverWait(driver, timeInSeconds);
+			customWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//falseosElem/s")));
+		} catch (TimeoutException e) {
+			log("Waited for: " + milliseconds + " ms");
+		} catch (Exception e) {
+			log(e.getMessage());
+		}
 	}
 
 	/**
