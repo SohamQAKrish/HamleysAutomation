@@ -45,7 +45,7 @@ jobs:
           docker run --name hamleys-automation \
           -e DISPLAY=:99 \
           -v /tmp/.X11-unix:/tmp/.X11-unix \
-          -v ${{ github.workspace }}/allure-results:/usr/share/hamleys-automation/allure-results \
+          -v ${{ github.workspace }}/allure-results:/usr/share/HamleysAutomation/allure-results \
           hamleys-automation /bin/sh -c "Xvfb :99 -screen 0 1920x1080x24 & DISPLAY=:99 mvn clean test -DsuiteXmlFile=LocalTestSuite.xml || true"
 
       - name: Check Test Execution Exit Code
